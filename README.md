@@ -1,4 +1,5 @@
 # lc-frontend
+##Attention. Use Yarn to add dependencies and libraries to this project.
 Web application for Location Chat
 
 🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline, feel free to add your own flare to it.
