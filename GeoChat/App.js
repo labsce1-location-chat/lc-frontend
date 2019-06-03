@@ -21,9 +21,10 @@ export default class App extends React.Component {
   getUsersCoords = () => {
     if(navigator.geolocation){
       // console.log(navigator.geolocation.getCurrentPosition())
+      // gets users current coordinates and passes it to parse coords
       navigator.geolocation.getCurrentPosition(this.parseCoords)
     }else{
-      this.setState({coords : "could not find coords"})
+      this.setState({coords : "Please allow this app to use your location"})
     }
   }
 
@@ -35,8 +36,8 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Adding firebase</Text>
-        <Text>{this.state.coords}</Text>
+        <Text>Welcome To GeoChat</Text>
+        <Text>{this.state.coords ? this.state.coords : "Loading Coordinates..."}</Text>
       </View>
     );
   }
