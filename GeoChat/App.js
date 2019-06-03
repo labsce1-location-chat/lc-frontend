@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 // import { API_KEY } from 'react-native-dotenv'
 import InitializeFirebase from './firebaseConfig';
 import * as firebase from 'firebase'
@@ -38,6 +38,11 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <Text>Welcome To GeoChat</Text>
         <Text>{this.state.coords ? this.state.coords : "Loading Coordinates..."}</Text>
+        <Button 
+          onPress={this.getUsersCoords} 
+          disabled={this.state.coords.length ? false : true} 
+          title="Continue Anonymously" 
+        />
       </View>
     );
   }
