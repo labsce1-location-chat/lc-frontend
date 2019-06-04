@@ -6,7 +6,6 @@ function Test(props){
     return(
         <View>
             <Text>{props.test}</Text>
-            <Text>{props.test2}</Text>
         </View>
     )
 }
@@ -14,7 +13,6 @@ function Test(props){
 const mapStateToProps = state => {
     return {
         test : state.test,
-        test2 : state.test2
     };
 };
 

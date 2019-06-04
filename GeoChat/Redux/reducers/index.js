@@ -4,7 +4,6 @@
 
 const initialState = {
     test : "Redux is working fine",
-    test2:"or is it"
 }
 
 export const reducer = (state = initialState, action) => {
