@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import {connect} from 'react-redux';
+import {handleSignOut} from '../Redux/actions/index';
+import * as firebase from 'firebase';
 
 class ChatList extends React.Component{
     constructor(){
@@ -8,8 +10,12 @@ class ChatList extends React.Component{
     }
 
     logOut() {
-      console.log("logout button pressed")
+      this.props.handleSignOut(this.props.user)
+      // this tests writing data
+      // firebase.database().ref("hello").set({thing: "world"})
+
     }
+
 
     render(){
         return(
@@ -20,6 +26,7 @@ class ChatList extends React.Component{
                 <Text>{this.props.loggedIn ? "You are logged in" : "You are logged out"}</Text>
                 <Button
                   title="Log Out"
+                  disabled={this.props.loggedIn ? false: true}
                   onPress={this.logOut} />
 
 
@@ -38,11 +45,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-    console.log("chatlist user", state.user)
     return {
         test : state.test,
         user : state.user,
-        loggedIn : state.loggedIn
+        loggedIn : state.loggedIn,
         
     };
 };
