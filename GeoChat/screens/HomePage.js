@@ -40,7 +40,7 @@ class HomePage extends React.Component {
         if(user){
             // console.log("user", user);
             console.log("Signing the user in")
-            handleSignIn(user);
+            this.props.handleSignIn(user);
             this.props.history.push("/chat-list")
         }
         else{
@@ -85,5 +85,5 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps, {handleSignIn})(HomePage);
 

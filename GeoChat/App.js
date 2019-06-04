@@ -11,6 +11,7 @@ import {reducer} from './Redux/reducers/index';
 // React Router and Component Imports
 import {NativeRouter, Route} from 'react-router-native';
 import HomePage from './screens/HomePage';
+import ChatList from './screens/ChatList';
 
 const store = createStore(
   reducer,
@@ -35,7 +36,7 @@ export default class App extends React.Component {
       <NativeRouter>
         <Provider store={store}>
           <Route exact path="/" render={(props) => <HomePage {...props}/>} />
-          <Route path="/chat-list" render={() => <View><Text>Test</Text></View>} />
+          <Route path="/chat-list" render={() => <ChatList />} />
         </Provider>
       </NativeRouter>
     );
