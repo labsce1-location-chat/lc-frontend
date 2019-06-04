@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import * as firebase from 'firebase';
 // Redux Imports
-import {Provider, connect} from 'react-redux'
-import Test from '../components/test';
+import {connect} from 'react-redux'
 import {handleSignIn} from '../Redux/actions/index';
-import { Redirect } from 'react-router'
+import TempLogo from '../assets/TempLogo.png';
 
 class HomePage extends React.Component {
 
@@ -31,7 +30,7 @@ class HomePage extends React.Component {
     }
 
     parseCoords = position => {
-        this.setState({coords : `${position.coords.latitude} + ${position.coords.longitude}`})
+        this.setState({coords : `X : ${position.coords.latitude} Y : ${position.coords.longitude}`})
         console.log(position.coords.latitude, position.coords.longitude)
     }
 
@@ -55,14 +54,18 @@ class HomePage extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Welcome To GeoChat</Text>
+                <Image 
+                    source={TempLogo}
+                    style={{width: 150, height: 150}} 
+                />
+                <Text style={styles.header}>Welcome To GeoChat</Text>
+                <Text style={styles.subText}>Chat with local people in your area anonymously and securely. </Text>
                 <Text>{this.state.coords ? this.state.coords : "Loading Coordinates..."}</Text>
                 <Button 
                     onPress={this.signInAnonymously} 
                     disabled={this.state.coords.length ? false : true} 
                     title="Continue Anonymously" 
                 />
-                <Test />
             </View>
         );
     }
@@ -75,6 +78,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    header : {
+        fontSize : 30
+    },
+    subText : {
+        fontSize : 12,
+        width : 200,
+        textAlign : "center",
+    }
 });
 
 const mapStateToProps = state => {
