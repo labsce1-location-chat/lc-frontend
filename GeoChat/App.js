@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+// Firebase Imports
 import InitializeFirebase from './firebaseConfig';
-import * as firebase from 'firebase';
 // Redux Imports
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux'
@@ -18,14 +17,8 @@ const store = createStore(
   applyMiddleware(thunk,logger)
 )
 
+// The goal of this component is to set up routes, the redux store, and initialize firebase
 export default class App extends React.Component {
-
-  constructor(){
-    super();
-    this.state = {
-      coords : '',
-    }
-  }
 
   componentDidMount(){
     InitializeFirebase();
@@ -33,8 +26,11 @@ export default class App extends React.Component {
 
   render() {
     return (
+      // Routing Component
       <NativeRouter>
+        {/* Provider for the redux store */}
         <Provider store={store}>
+          {/* Setting up routes here, will add more edge cases and routes later */}
           <Route exact path="/" render={(props) => <HomePage {...props}/>} />
           <Route path="/chat-list" render={() => <ChatList />} />
         </Provider>
@@ -42,21 +38,4 @@ export default class App extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-// const mapStateToProps = state => {
-//   return {
-//     test : state.test
-//   };
-// };
-
-// export default connect(mapStateToProps)(App);
 
