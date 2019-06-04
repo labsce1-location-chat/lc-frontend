@@ -2,7 +2,19 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 // import { API_KEY } from 'react-native-dotenv'
 import InitializeFirebase from './firebaseConfig';
-import * as firebase from 'firebase'
+// import * as firebase from 'firebase';
+// Redux Imports
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux'
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+import {reducer} from './Redux/reducers/index';
+import Test from './components/test';
+
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk,logger)
+)
 
 export default class App extends React.Component {
 
@@ -35,15 +47,19 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Welcome To GeoChat</Text>
-        <Text>{this.state.coords ? this.state.coords : "Loading Coordinates..."}</Text>
-        <Button 
-          onPress={this.getUsersCoords} 
-          disabled={this.state.coords.length ? false : true} 
-          title="Continue Anonymously" 
-        />
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <Text>Welcome To GeoChat</Text>
+          <Text>{this.state.coords ? this.state.coords : "Loading Coordinates..."}</Text>
+          <Button 
+            onPress={this.getUsersCoords} 
+            disabled={this.state.coords.length ? false : true} 
+            title="Continue Anonymously" 
+          />
+          <Text>{this.props.test}</Text>
+          <Test />
+        </View>
+      </Provider>
     );
   }
 }
@@ -56,3 +72,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+// const mapStateToProps = state => {
+//   return {
+//     test : state.test
+//   };
+// };
+
+// export default connect(mapStateToProps)(App);
+
