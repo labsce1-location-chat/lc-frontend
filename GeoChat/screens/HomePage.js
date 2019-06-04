@@ -12,6 +12,7 @@ class HomePage extends React.Component {
         super();
         this.state = {
             coords : '',
+            location:{},
         }
     }
 
@@ -31,6 +32,7 @@ class HomePage extends React.Component {
 
     parseCoords = position => {
         this.setState({coords : `X : ${position.coords.latitude} Y : ${position.coords.longitude}`})
+        this.setState({location : {lat : position.coords.latitude, lon : position.coords.longitude }})
         console.log(position.coords.latitude, position.coords.longitude)
     }
 
@@ -39,7 +41,7 @@ class HomePage extends React.Component {
         if(user){
             // console.log("user", user);
             console.log("Signing the user in")
-            this.props.handleSignIn(user);
+            this.props.handleSignIn(user, this.state.location);
             this.props.history.push("/chat-list")
         }
         else{
