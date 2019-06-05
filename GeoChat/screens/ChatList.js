@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import {Provider, connect} from 'react-redux';
+import {connect} from 'react-redux';
 import {handleSignOut, createChatRoom} from '../Redux/actions/index';
 import faker from 'faker'
 
@@ -12,14 +12,16 @@ class ChatList extends React.Component{
 
     logOut() {
       this.props.handleSignOut(this.props.user)
-      // this tests writing data
-      // firebase.database().ref("hello").set({thing: "world"})
-
     }
 
     newRoom() {
+      if (this.props) {
       console.log("new room button pressed line 24 chatlist.js")
       this.props.createChatRoom(this.props.user)
+
+      } else {
+        console.log("No props at this time. =>", this.props)
+      }
     }
 
 
@@ -63,7 +65,8 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    {handleSignOut, createChatRoom}
+    {handleSignOut, 
+    createChatRoom}
     )(ChatList);
 
 

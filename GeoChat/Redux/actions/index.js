@@ -11,7 +11,8 @@ export const handleSignIn = (payload) => dispatch => {
 }
 
 export const handleSignOut = (userID) => dispatch => {
-    dispatch({type : SIGN_OUT, payload : payload})
+  console.log('signed out')
+    // dispatch({type : SIGN_OUT, payload : payload})
 }
 
 export const createChatRoom = (userData) => dispatch =>{
