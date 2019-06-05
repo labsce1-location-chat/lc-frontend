@@ -42,6 +42,12 @@ class ChatList extends React.Component{
                     // showsUserLocation={true}
                     provider="google"
                 >
+
+                <MapView.Marker 
+                  coordinate={{latitude : this.props.location.lat - 1, longitude: this.props.location.lon - 1}}
+                  title="Not you"
+                  description="A ways away from you"
+                />
                 <MapView.Marker 
                     coordinate={{latitude : this.props.location.lat, longitude: this.props.location.lon}}
                     title="Current Location"
