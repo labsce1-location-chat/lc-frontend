@@ -4,27 +4,32 @@ import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import {MapView} from 'expo';
 import * as firebase from 'firebase';
-import {test} from '../Redux/actions/index';
+import {test, setChatRooms} from '../Redux/actions/index';
 
 class ChatList extends React.Component{
     constructor(){
         super();
+        this.state = {
+            chatrooms : [],
+        }
     }
 
     initMap = location => {
 
     }
 
-    filterChatrooms = () => {
+    getChatrooms = () => {
         console.log(this.props)
-        // const ref = firebase.database().ref('chatrooms');
-        // ref.startAt(this.props.location.lat - 10).endAt(this.props.location.lat + 10).once('value').then(snap => {
-        //     console.log(snap.val())
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        // })
-        this.props.test();
+        const ref = firebase.database().ref('chatrooms');
+        ref.once('value').then(snap => {
+            this.props.setChatRooms(snap.val())
+            this.setState({ chatrooms : snap.val() })
+            console.log("Changed state boii", console.log(this.state.chatrooms))
+        })
+        .catch(err => {
+            console.log(err);
+        })
+        // this.props.test();
     }
 
     render(){
@@ -45,19 +50,28 @@ class ChatList extends React.Component{
                     // showsUserLocation={true}
                     provider="google"
                 >
-
-                <MapView.Marker 
-                    coordinate={{latitude : this.props.location.lat - 1, longitude: this.props.location.lon - 1}}
-                    title="Not you"
-                    description="A ways away from you"
-                />
                 <MapView.Marker 
                     coordinate={{latitude : this.props.location.lat, longitude: this.props.location.lon}}
                     title="Current Location"
                     description="Your current location"
+                    color="blue"
                 />
+                {this.state.chatrooms 
+                    ? Object.keys(this.state.chatrooms).map(key => {
+                        const room = this.state.chatrooms[key];
+                        return(
+                            <MapView.Marker 
+                                description={room.description} 
+                                title={room.name} 
+                                coordinate={{latitude : room.lat, longitude: room.lon}}
+                                key={key}
+                            />
+                        )
+                    }) 
+                    : null}
                 </MapView>
-                <Button onPress={this.filterChatrooms} title="filter rooms" />
+                <Button onPress={this.getChatrooms} title="filter rooms" />
+                <Button onPress={()=>console.log(this.state)} title="Check state" />
             </View>
         )
     }
@@ -77,8 +91,9 @@ const mapStateToProps = state => {
         test : state.test,
         user : state.user,
         loggedIn : state.loggedIn,
-        location : state.location
+        location : state.location,
+        chatrooms : state.chatrooms,
     };
 };
 
-export default connect(mapStateToProps, {test})(ChatList);
+export default connect(mapStateToProps, {test, setChatRooms})(ChatList);
