@@ -28,8 +28,8 @@ class ChatList extends React.Component{
     }
 
     newRoom = (userId) => {
-      // console.log('user id', userId)
-      this.props.createChatRoom("user id")
+      console.log('user id', this.props.user.uid)
+      this.props.createChatRoom(this.props.user.uid)
     }
 
     render(){
@@ -59,6 +59,7 @@ class ChatList extends React.Component{
                 </MapView>
                 <Button onPress={this.filterChatrooms} title="filter rooms" />
                 <Button onPress={this.newRoom} title="New Room" />
+                {/* new chatroom button should go to the chat room screen*/}
             </View>
         )
     }

@@ -15,15 +15,13 @@ export const test = (payload) => dispatch => {
 
 
 export const createChatRoom= (userID) => dispatch => {
+
   console.log("user id in action", userID)
     dispatch({type : CREATE_CHATROOM})
     firebase.database().ref("chatroom").set({
       name: "new room",
       id: 999999,
       userID: userID,
-
     })
-    .then(res => console.log("response from Firebase promise", res))
-    .catch(err => console.log("catch from firebase promise", err))
 }
 
