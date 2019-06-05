@@ -63,6 +63,6 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps,{createChatRoom})(ChatList);
+export default connect(mapStateToProps, {createChatRoom})(ChatList);
 
 
