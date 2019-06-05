@@ -63,11 +63,6 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(
-    mapStateToProps,
-    {handleSignOut, 
-    createChatRoom}
-    )(ChatList);
-
+export default connect(mapStateToProps,{createChatRoom})(ChatList);
 
 
