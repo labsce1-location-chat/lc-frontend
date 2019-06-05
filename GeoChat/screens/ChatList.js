@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import {MapView} from 'expo';
 import * as firebase from 'firebase';
-import {test} from '../Redux/actions/index';
+import {test, createChatRoom} from '../Redux/actions/index';
 
 class ChatList extends React.Component{
     constructor(){
@@ -27,6 +27,11 @@ class ChatList extends React.Component{
         this.props.test();
     }
 
+    newRoom = (userId) => {
+      // console.log('user id', userId)
+      this.props.createChatRoom("user id")
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -47,17 +52,13 @@ class ChatList extends React.Component{
                 >
 
                 <MapView.Marker 
-                    coordinate={{latitude : this.props.location.lat - 1, longitude: this.props.location.lon - 1}}
-                    title="Not you"
-                    description="A ways away from you"
-                />
-                <MapView.Marker 
                     coordinate={{latitude : this.props.location.lat, longitude: this.props.location.lon}}
                     title="Current Location"
                     description="Your current location"
                 />
                 </MapView>
                 <Button onPress={this.filterChatrooms} title="filter rooms" />
+                <Button onPress={this.newRoom} title="New Room" />
             </View>
         )
     }
@@ -81,4 +82,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {test})(ChatList);
+export default connect(mapStateToProps, {test, createChatRoom})(ChatList);
