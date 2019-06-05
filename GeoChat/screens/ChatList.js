@@ -1,11 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import {connect} from 'react-redux';
+import {Provider, connect} from 'react-redux';
 import {handleSignOut, createChatRoom} from '../Redux/actions/index';
 import faker from 'faker'
-// faker example. faker.internet.userName() <= Creates a random username
-// import * as firebase from 'firebase';
-
 
 
 class ChatList extends React.Component{
@@ -23,7 +20,6 @@ class ChatList extends React.Component{
     newRoom() {
       console.log("new room button pressed line 24 chatlist.js")
       this.props.createChatRoom(this.props.user)
-
     }
 
 
@@ -56,6 +52,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  console.log("state in chatlist", state)
     return {
         test : state.test,
         user : state.user,

@@ -4,7 +4,7 @@ import * as firebase from 'firebase';
 // Redux Imports
 import {Provider, connect} from 'react-redux'
 import Test from '../components/test';
-import {handleSignIn} from '../Redux/actions/index';
+import {handleSignIn, createChatRoom} from '../Redux/actions/index';
 import { Redirect } from 'react-router'
 
 class HomePage extends React.Component {
@@ -13,6 +13,7 @@ class HomePage extends React.Component {
         super();
         this.state = {
             coords : '',
+            chatroom: []
         }
     }
 
@@ -35,11 +36,16 @@ class HomePage extends React.Component {
         console.log(position.coords.latitude, position.coords.longitude)
     }
 
+    testButton = () => {
+      this.props.createChatRoom(this.state)
+
+    }
+
     signInAnonymously = () => {
         firebase.auth().signInAnonymously().then(user => {
         if(user){
             // console.log("user", user);
-            console.log("Signing the user in")
+            console.log("Signing the user in", this.props)
             this.props.handleSignIn(user);
             this.props.history.push("/chat-list")
         }
@@ -62,6 +68,11 @@ class HomePage extends React.Component {
                     disabled={this.state.coords.length ? false : true} 
                     title="Continue Anonymously" 
                 />
+                <Button 
+                    onPress={this.testButton} 
+                    disabled={this.state.coords.length ? false : true} 
+                    title="Create Chatroom" 
+                />
                 <Test />
             </View>
         );
@@ -81,9 +92,10 @@ const mapStateToProps = state => {
     return {
         test : state.test,
         user : state.user,
-        loggedIn : state.loggedIn
+        loggedIn : state.loggedIn,
+        chatroom: state.chatroom
     };
 };
 
-export default connect(mapStateToProps, {handleSignIn})(HomePage);
+export default connect(mapStateToProps, {handleSignIn, createChatRoom})(HomePage);
 
