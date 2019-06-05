@@ -2,7 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import {connect} from 'react-redux';
 import {handleSignOut} from '../Redux/actions/index';
-import * as firebase from 'firebase';
+import faker from 'faker'
+// faker example. faker.internet.userName() <= Creates a random username
+// import * as firebase from 'firebase';
+
+
 
 class ChatList extends React.Component{
     constructor(){
