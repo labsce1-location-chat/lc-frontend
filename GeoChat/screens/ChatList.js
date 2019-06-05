@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import {MapView} from 'expo';
-import * as firebase from 'firebase';
 import {test, createChatRoom} from '../Redux/actions/index';
 
 class ChatList extends React.Component{
@@ -27,9 +26,10 @@ class ChatList extends React.Component{
         this.props.test();
     }
 
-    newRoom = (userId) => {
-      console.log('user id', this.props.user.uid)
-      this.props.createChatRoom(this.props.user.uid)
+    newRoom = () => {
+      // this.props.history.push("/create_chat_room")
+      console.log('user id', this.props.history.push("/create_chat_room"))
+      // this.props.createChatRoom(this.props.user.uid)
     }
 
     render(){
