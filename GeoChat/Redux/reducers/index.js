@@ -19,7 +19,7 @@ export const reducer = (state = initialState, action) => {
             return {...state, user : action.payload.user, loggedIn : false};
         case CREATE_CHATROOM:
             console.log("create chatroom functiion called ")
-            return {...state, test: "Create chat button works"};
+            return {...state, chatroom: {}};
         default:
             return state;
     }

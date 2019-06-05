@@ -13,7 +13,7 @@ class HomePage extends React.Component {
         super();
         this.state = {
             coords : '',
-            chatroom: []
+            chatroom: [] 
         }
     }
 
@@ -38,6 +38,8 @@ class HomePage extends React.Component {
 
     testButton = () => {
       this.props.createChatRoom(this.state)
+      console.log('state afte button press', this.state.chatroom)
+
 
     }
 
