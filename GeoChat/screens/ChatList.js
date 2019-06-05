@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import {connect} from 'react-redux';
-import {handleSignOut} from '../Redux/actions/index';
+import {handleSignOut, createChatRoom} from '../Redux/actions/index';
 import faker from 'faker'
 // faker example. faker.internet.userName() <= Creates a random username
 // import * as firebase from 'firebase';
@@ -20,6 +20,12 @@ class ChatList extends React.Component{
 
     }
 
+    newRoom() {
+      console.log("new room button pressed line 24 chatlist.js")
+      this.props.createChatRoom(this.props.user)
+
+    }
+
 
     render(){
         return(
@@ -32,8 +38,9 @@ class ChatList extends React.Component{
                   title="Log Out"
                   disabled={this.props.loggedIn ? false: true}
                   onPress={this.logOut} />
-
-
+                <Button
+                  title="New Chatroom"
+                  onPress={this.newRoom} />
             </View>
         )
     }
@@ -53,8 +60,14 @@ const mapStateToProps = state => {
         test : state.test,
         user : state.user,
         loggedIn : state.loggedIn,
-        
+        chatroom: state.chatroom
     };
 };
 
-export default connect(mapStateToProps)(ChatList);
+export default connect(
+    mapStateToProps,
+    {handleSignOut, createChatRoom}
+    )(ChatList);
+
+
+

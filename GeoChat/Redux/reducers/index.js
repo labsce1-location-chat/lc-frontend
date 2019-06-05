@@ -1,6 +1,6 @@
 // Reducers
 
-import {SIGN_IN, SIGN_OUT} from '../actions/index';
+import {SIGN_IN, SIGN_OUT, CREATE_CHATROOM} from '../actions/index';
 
 const initialState = {
     test : "Redux is working fine",
@@ -16,6 +16,9 @@ export const reducer = (state = initialState, action) => {
         case SIGN_OUT:
             console.log("SIGN OUT FUNCTION CALLED")
             return {...state, user : action.payload.user, loggedIn : false};
+        case CREATE_CHATROOM:
+            console.log("create chatroom functiion called ")
+            return {...state, chatroom: action.payload.chatroom};
         default:
             return state;
     }
