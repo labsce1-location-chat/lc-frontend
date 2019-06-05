@@ -70,8 +70,20 @@ class ChatList extends React.Component{
                     }) 
                     : null}
                 </MapView>
-                <Button onPress={this.getChatrooms} title="filter rooms" />
-                <Button onPress={()=>console.log(this.state)} title="Check state" />
+                <Button onPress={this.getChatrooms} title="Get rooms" />
+                <Button onPress={()=>console.log(this.state)} title="Console Log state" />
+                <Text>Available Chatrooms</Text>
+                {this.state.chatrooms 
+                    ? Object.keys(this.state.chatrooms).map(key => {
+                        const room = this.state.chatrooms[key];
+                        return(
+                            <View key={key}>
+                                <Text>Name : {room.name}</Text>
+                                <Text>Description : {room.description}</Text>
+                            </View>
+                        )
+                    }) 
+                    : <Text>No Chatrooms in your area</Text>}
             </View>
         )
     }
