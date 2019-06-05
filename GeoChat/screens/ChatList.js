@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import {MapView} from 'expo';
 import * as firebase from 'firebase';
+import {test} from '../Redux/actions/index';
 
 class ChatList extends React.Component{
     constructor(){
@@ -15,13 +16,15 @@ class ChatList extends React.Component{
     }
 
     filterChatrooms = () => {
-        const ref = firebase.database().ref('chatrooms');
-        ref.startAt(this.props.location.lat - 10).endAt(this.props.location.lat + 10).once('value').then(snap => {
-            console.log(snap.val())
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        console.log(this.props)
+        // const ref = firebase.database().ref('chatrooms');
+        // ref.startAt(this.props.location.lat - 10).endAt(this.props.location.lat + 10).once('value').then(snap => {
+        //     console.log(snap.val())
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        // })
+        this.props.test();
     }
 
     render(){
@@ -78,4 +81,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(ChatList);
+export default connect(mapStateToProps, {test})(ChatList);
