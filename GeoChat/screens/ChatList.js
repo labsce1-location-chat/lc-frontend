@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, ToolbarAndroid } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import {MapView} from 'expo';
+import * as firebase from 'firebase';
 
 class ChatList extends React.Component{
     constructor(){
@@ -11,6 +12,16 @@ class ChatList extends React.Component{
 
     initMap = location => {
 
+    }
+
+    filterChatrooms = () => {
+        const ref = firebase.database().ref('chatrooms');
+        ref.startAt(this.props.location.lat - 10).endAt(this.props.location.lat + 10).once('value').then(snap => {
+            console.log(snap.val())
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
     render(){
@@ -37,6 +48,7 @@ class ChatList extends React.Component{
                     description="Your current location"
                 />
                 </MapView>
+                <Button onPress={this.filterChatrooms} title="filter rooms" />
             </View>
         )
     }
