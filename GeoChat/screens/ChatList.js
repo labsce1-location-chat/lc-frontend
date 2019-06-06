@@ -1,16 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 'react-native';
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
-import {MapView} from 'expo';
 import * as firebase from 'firebase';
 import {test, setChatRooms} from '../Redux/actions/index';
+import Map from '../components/ChatList/Map'
 
 class ChatList extends React.Component{
     constructor(){
         super();
         this.state = {
             chatrooms : [],
+            loading : true,
+            view : "list"
         }
     }
 
@@ -19,12 +21,14 @@ class ChatList extends React.Component{
     }
 
     getChatrooms = () => {
+        this.setState({loading : true})
         console.log(this.props)
         const ref = firebase.database().ref('chatrooms');
         ref.once('value').then(snap => {
             this.props.setChatRooms(snap.val())
             this.setState({ chatrooms : snap.val() })
             console.log("Changed state boii", console.log(this.state.chatrooms))
+            this.setState({loading : false});
         })
         .catch(err => {
             console.log(err);
@@ -32,48 +36,43 @@ class ChatList extends React.Component{
         // this.props.test();
     }
 
+    filterChatrooms = () => {
+        console.log(Object.values(this.state.chatrooms))
+    }
+
+    componentDidMount(){
+        this.getChatrooms();
+    }
+
     render(){
         return(
             <View style={styles.container}>
-                <Text>This is the ChatList Component</Text>
-                <Text>User Id: {this.props.user.uid}</Text>
-                <Text>{this.props.loggedIn ? "You are logged in" : "You are logged out"}</Text>
-
-                <MapView
-                    style={{height:400, width:400 }}
-                    initialRegion={{
-                    latitude: this.props.location.lat,
-                    longitude: this.props.location.lon,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                    }}
-                    // showsUserLocation={true}
-                    provider="google"
-                >
-                <MapView.Marker 
-                    coordinate={{latitude : this.props.location.lat, longitude: this.props.location.lon}}
-                    title="Current Location"
-                    description="Your current location"
-                    color="blue"
-                />
-                {this.state.chatrooms 
-                    ? Object.keys(this.state.chatrooms).map(key => {
-                        const room = this.state.chatrooms[key];
-                        return(
-                            <MapView.Marker 
-                                description={room.description} 
-                                title={room.name} 
-                                coordinate={{latitude : room.lat, longitude: room.lon}}
-                                key={key}
-                            />
-                        )
-                    }) 
-                    : null}
-                </MapView>
-                <Button onPress={this.getChatrooms} title="Get rooms" />
+                <Button title="To Array test" onPress={this.filterChatrooms} />
                 <Button onPress={()=>console.log(this.state)} title="Console Log state" />
-                <Text>Available Chatrooms</Text>
-                {this.state.chatrooms 
+                <Text>Join a Chat Room</Text>
+                <TextInput 
+                    value="Search by zipcode"
+                />
+
+                <View style={styles.viewBtns}>
+
+                    <Text 
+                        style={this.state.view === "list" ? styles.selected : styles.viewBtn } 
+                        onPress={() => this.setState({view : "list"})}
+                    >List
+                    </Text>
+
+                    <Text 
+                        onPress={() => this.setState({view : "map"})}
+                        style={this.state.view === "map" ? styles.selected : styles.viewBtn } 
+                    >Map
+                    </Text>
+                </View>
+
+                { this.state.loading ? <ActivityIndicator size="large" color="#0000ff" /> : null }
+                {this.state.view === "list" 
+                ?
+                this.state.chatrooms 
                     ? Object.keys(this.state.chatrooms).map(key => {
                         const room = this.state.chatrooms[key];
                         return(
@@ -83,7 +82,11 @@ class ChatList extends React.Component{
                             </View>
                         )
                     }) 
-                    : <Text>No Chatrooms in your area</Text>}
+                    : 
+                    <Text>No Chatrooms in your area</Text>
+                :
+                <Map />
+                }
             </View>
         )
     }
@@ -96,6 +99,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    viewBtns : {
+        width:"100%",
+        height:100,
+        flexDirection : "row",
+        justifyContent : "center",
+        alignItems:"center"
+    },
+    viewBtn : {
+        width:"50%",
+        textAlign : "center"
+    },
+    selected : {
+        width:"50%",
+        borderBottomColor : "yellow",
+        borderWidth: 0.5,
+        textAlign : "center",
+    }
 });
 
 const mapStateToProps = state => {
