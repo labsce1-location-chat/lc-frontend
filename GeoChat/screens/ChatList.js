@@ -2,9 +2,15 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 'react-native';
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
+<<<<<<< HEAD
 import * as firebase from 'firebase';
 import {test, setChatRooms} from '../Redux/actions/index';
 import Map from '../components/ChatList/Map'
+=======
+import {MapView} from 'expo';
+import {test, createChatRoom} from '../Redux/actions/index';
+import {NativeRouter, Route, Link} from 'react-router-native';
+>>>>>>> 3f14783eb19338b1d620a42aea2f39e14fd48373
 
 class ChatList extends React.Component{
     constructor(){
@@ -42,6 +48,12 @@ class ChatList extends React.Component{
 
     componentDidMount(){
         this.getChatrooms();
+    }
+
+    newRoom = () => {
+      // this.props.history.push("/create_chat_room")
+      console.log('user id', this.props.history.push("/create_chat_room"))
+      // this.props.createChatRoom(this.props.user.uid)
     }
 
     render(){
@@ -87,6 +99,13 @@ class ChatList extends React.Component{
                 :
                 <Map />
                 }
+                <Button onPress={this.filterChatrooms} title="filter rooms" />
+                <Link
+                    to={"/create_chat_room"}
+                >
+                    <Text>New Room</Text>
+                </Link>
+                {/* new chatroom button should go to the chat room screen*/}
             </View>
         )
     }
@@ -128,4 +147,8 @@ const mapStateToProps = state => {
     };
 };
 
+<<<<<<< HEAD
 export default connect(mapStateToProps, {test, setChatRooms})(ChatList);
+=======
+export default connect(mapStateToProps, {test, createChatRoom})(ChatList);
+>>>>>>> 3f14783eb19338b1d620a42aea2f39e14fd48373
