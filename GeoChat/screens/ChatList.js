@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import {MapView} from 'expo';
-import * as firebase from 'firebase';
-import {test} from '../Redux/actions/index';
+import {test, createChatRoom} from '../Redux/actions/index';
+import {NativeRouter, Route, Link} from 'react-router-native';
 
 class ChatList extends React.Component{
     constructor(){
@@ -27,6 +27,12 @@ class ChatList extends React.Component{
         this.props.test();
     }
 
+    newRoom = () => {
+      // this.props.history.push("/create_chat_room")
+      console.log('user id', this.props.history.push("/create_chat_room"))
+      // this.props.createChatRoom(this.props.user.uid)
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -47,17 +53,18 @@ class ChatList extends React.Component{
                 >
 
                 <MapView.Marker 
-                    coordinate={{latitude : this.props.location.lat - 1, longitude: this.props.location.lon - 1}}
-                    title="Not you"
-                    description="A ways away from you"
-                />
-                <MapView.Marker 
                     coordinate={{latitude : this.props.location.lat, longitude: this.props.location.lon}}
                     title="Current Location"
                     description="Your current location"
                 />
                 </MapView>
                 <Button onPress={this.filterChatrooms} title="filter rooms" />
+                <Link
+                  to={"/create_chat_room"}
+                  >
+                    <Text>New Room</Text>
+                 </Link>
+                {/* new chatroom button should go to the chat room screen*/}
             </View>
         )
     }
@@ -81,4 +88,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {test})(ChatList);
+export default connect(mapStateToProps, {test, createChatRoom})(ChatList);
