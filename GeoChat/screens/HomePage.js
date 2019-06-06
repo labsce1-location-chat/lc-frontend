@@ -12,7 +12,9 @@ class HomePage extends React.Component {
         super();
         this.state = {
             coords : '',
+
             location:{},
+            // switch this to false to actually find your location.
             development: true
         }
     }
