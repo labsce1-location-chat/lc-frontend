@@ -2,15 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 'react-native';
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
-<<<<<<< HEAD
 import * as firebase from 'firebase';
 import {test, setChatRooms} from '../Redux/actions/index';
 import Map from '../components/ChatList/Map'
-=======
-import {MapView} from 'expo';
 import {test, createChatRoom} from '../Redux/actions/index';
 import {NativeRouter, Route, Link} from 'react-router-native';
->>>>>>> 3f14783eb19338b1d620a42aea2f39e14fd48373
 
 class ChatList extends React.Component{
     constructor(){
