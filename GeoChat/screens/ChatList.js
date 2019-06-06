@@ -3,9 +3,8 @@ import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 're
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
-import {test, setChatRooms} from '../Redux/actions/index';
+import {test, setChatRooms, createChatRoom} from '../Redux/actions/index';
 import Map from '../components/ChatList/Map'
-import {test, createChatRoom} from '../Redux/actions/index';
 import {NativeRouter, Route, Link} from 'react-router-native';
 
 class ChatList extends React.Component{
@@ -143,8 +142,4 @@ const mapStateToProps = state => {
     };
 };
 
-<<<<<<< HEAD
-export default connect(mapStateToProps, {test, setChatRooms})(ChatList);
-=======
-export default connect(mapStateToProps, {test, createChatRoom})(ChatList);
->>>>>>> 3f14783eb19338b1d620a42aea2f39e14fd48373
+export default connect(mapStateToProps, {test, setChatRooms, createChatRoom})(ChatList);
