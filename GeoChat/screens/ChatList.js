@@ -1,30 +1,48 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 'react-native';
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
-import {MapView} from 'expo';
-import {test, createChatRoom} from '../Redux/actions/index';
+import * as firebase from 'firebase';
+import {test, setChatRooms, createChatRoom} from '../Redux/actions/index';
+import Map from '../components/ChatList/Map'
 import {NativeRouter, Route, Link} from 'react-router-native';
 
 class ChatList extends React.Component{
     constructor(){
         super();
+        this.state = {
+            chatrooms : [],
+            loading : true,
+            view : "list"
+        }
     }
 
     initMap = location => {
 
     }
 
-    filterChatrooms = () => {
+    getChatrooms = () => {
+        this.setState({loading : true})
         console.log(this.props)
-        // const ref = firebase.database().ref('chatrooms');
-        // ref.startAt(this.props.location.lat - 10).endAt(this.props.location.lat + 10).once('value').then(snap => {
-        //     console.log(snap.val())
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        // })
-        this.props.test();
+        const ref = firebase.database().ref('chatrooms');
+        ref.once('value').then(snap => {
+            this.props.setChatRooms(snap.val())
+            this.setState({ chatrooms : snap.val() })
+            console.log("Changed state boii", console.log(this.state.chatrooms))
+            this.setState({loading : false});
+        })
+        .catch(err => {
+            console.log(err);
+        })
+        // this.props.test();
+    }
+
+    filterChatrooms = () => {
+        console.log(Object.values(this.state.chatrooms))
+    }
+
+    componentDidMount(){
+        this.getChatrooms();
     }
 
     newRoom = () => {
@@ -36,34 +54,52 @@ class ChatList extends React.Component{
     render(){
         return(
             <View style={styles.container}>
-                <Text>This is the ChatList Component</Text>
-                <Text>User Id: {this.props.user.uid}</Text>
-                <Text>{this.props.loggedIn ? "You are logged in" : "You are logged out"}</Text>
-
-                <MapView
-                    style={{height:400, width:400 }}
-                    initialRegion={{
-                    latitude: this.props.location.lat,
-                    longitude: this.props.location.lon,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                    }}
-                    // showsUserLocation={true}
-                    provider="google"
-                >
-
-                <MapView.Marker 
-                    coordinate={{latitude : this.props.location.lat, longitude: this.props.location.lon}}
-                    title="Current Location"
-                    description="Your current location"
+                <Button title="To Array test" onPress={this.filterChatrooms} />
+                <Button onPress={()=>console.log(this.state)} title="Console Log state" />
+                <Text>Join a Chat Room</Text>
+                <TextInput 
+                    value="Search by zipcode"
                 />
-                </MapView>
+
+                <View style={styles.viewBtns}>
+
+                    <Text 
+                        style={this.state.view === "list" ? styles.selected : styles.viewBtn } 
+                        onPress={() => this.setState({view : "list"})}
+                    >List
+                    </Text>
+
+                    <Text 
+                        onPress={() => this.setState({view : "map"})}
+                        style={this.state.view === "map" ? styles.selected : styles.viewBtn } 
+                    >Map
+                    </Text>
+                </View>
+
+                { this.state.loading ? <ActivityIndicator size="large" color="#0000ff" /> : null }
+                {this.state.view === "list" 
+                ?
+                this.state.chatrooms 
+                    ? Object.keys(this.state.chatrooms).map(key => {
+                        const room = this.state.chatrooms[key];
+                        return(
+                            <View key={key}>
+                                <Text>Name : {room.name}</Text>
+                                <Text>Description : {room.description}</Text>
+                            </View>
+                        )
+                    }) 
+                    : 
+                    <Text>No Chatrooms in your area</Text>
+                :
+                <Map />
+                }
                 <Button onPress={this.filterChatrooms} title="filter rooms" />
                 <Link
-                  to={"/create_chat_room"}
-                  >
+                    to={"/create_chat_room"}
+                >
                     <Text>New Room</Text>
-                 </Link>
+                </Link>
                 {/* new chatroom button should go to the chat room screen*/}
             </View>
         )
@@ -77,6 +113,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    viewBtns : {
+        width:"100%",
+        height:100,
+        flexDirection : "row",
+        justifyContent : "center",
+        alignItems:"center"
+    },
+    viewBtn : {
+        width:"50%",
+        textAlign : "center"
+    },
+    selected : {
+        width:"50%",
+        borderBottomColor : "yellow",
+        borderWidth: 0.5,
+        textAlign : "center",
+    }
 });
 
 const mapStateToProps = state => {
@@ -84,8 +137,9 @@ const mapStateToProps = state => {
         test : state.test,
         user : state.user,
         loggedIn : state.loggedIn,
-        location : state.location
+        location : state.location,
+        chatrooms : state.chatrooms,
     };
 };
 
-export default connect(mapStateToProps, {test, createChatRoom})(ChatList);
+export default connect(mapStateToProps, {test, setChatRooms, createChatRoom})(ChatList);
