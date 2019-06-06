@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import {MapView} from 'expo';
 import {test, createChatRoom} from '../Redux/actions/index';
+import {NativeRouter, Route, Link} from 'react-router-native';
 
 class ChatList extends React.Component{
     constructor(){
@@ -58,7 +59,11 @@ class ChatList extends React.Component{
                 />
                 </MapView>
                 <Button onPress={this.filterChatrooms} title="filter rooms" />
-                <Button onPress={this.newRoom} title="New Room" />
+                <Link
+                  to={"/create_chat_room"}
+                  >
+                    <Text>New Room</Text>
+                 </Link>
                 {/* new chatroom button should go to the chat room screen*/}
             </View>
         )

@@ -11,6 +11,7 @@ import {reducer} from './Redux/reducers/index';
 import {NativeRouter, Route} from 'react-router-native';
 import HomePage from './screens/HomePage';
 import ChatList from './screens/ChatList';
+import CreateChatRoom from './screens/CreateChatRoom';
 
 const store = createStore(
   reducer,

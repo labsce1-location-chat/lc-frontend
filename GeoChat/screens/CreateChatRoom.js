@@ -6,7 +6,7 @@ import TempLogo from '../assets/TempLogo.png';
 // import * as firebase from 'firebase';
 import {test, createChatRoom} from '../Redux/actions/index';
 
-class CreatChatRoom extends React.Component{
+class CreateChatRoom extends React.Component{
     constructor(){
         super();
     }
