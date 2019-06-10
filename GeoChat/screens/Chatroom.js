@@ -39,6 +39,10 @@ export default class Chatroom extends React.Component{
         })
     }
 
+    componentWillUnmount(){
+        firebase.database().ref('messages').child(this.props.match.params.id).off()
+    }
+
 
     render(){
         return(
