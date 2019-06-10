@@ -21,8 +21,8 @@ class HomePage extends React.Component {
 
     componentDidMount(){
       if(this.state.development) {
-        this.setState({location: {lat: 38.000, lon: -97.000}})
-        this.setState({coords: "X: 38.0000, Y: -97.0000"})
+        this.setState({location: {lat: 40.7484, lon: -73.9857}})
+        this.setState({coords: "X: 40.7484, Y: -73.9857"})
       } else {
         this.getUsersCoords()
       }
