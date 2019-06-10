@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Button, TextInput, StyleSheet} from 'react-native';
 import * as firebase from 'firebase';
+import {Link} from 'react-router-native';
 
 export default class Chatroom extends React.Component{
 
@@ -41,14 +42,14 @@ export default class Chatroom extends React.Component{
 
     render(){
         return(
-            <View>
-                <Text>This is the chatroom</Text>
+            <View style={styles.container}>
+                <Link to="/chat-list"><Text>Back to chat list</Text></Link>
                 {this.state.messages ? this.state.messages.map((message, index) => 
                     <View key={index}>
                         <Text>{message.content}</Text>
                     </View>
                 ) : <Text>Loading Messages... or no messages</Text>}
-                <Button onPress={()=>this.props.history.push('chat-list')} title="Go Back" />
+                
                 <TextInput 
                     style={styles.input}
                     value={this.state.newMessage} 
@@ -65,6 +66,11 @@ export default class Chatroom extends React.Component{
 }
 
 const styles = StyleSheet.create({
+    container : {
+        flex:1,
+        marginTop : 30,
+    },
+
     input: {
         position: 'relative',
         fontSize: 15,
