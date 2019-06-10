@@ -17,10 +17,6 @@ class ChatList extends React.Component{
         }
     }
 
-    initMap = location => {
-
-    }
-
     getChatrooms = () => {
         this.setState({loading : true})
         console.log(this.props)
@@ -84,6 +80,7 @@ class ChatList extends React.Component{
                         <View key={room.id}>
                             <Text>{room.name}</Text>
                             <Text>{room.description}</Text>
+                            <Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>
                         </View>
                     )
                     : 
@@ -126,6 +123,10 @@ const styles = StyleSheet.create({
         borderBottomColor : "yellow",
         borderWidth: 0.5,
         textAlign : "center",
+    },
+    joinBtn : {
+        backgroundColor : "red",
+        fontSize : 20,
     }
 });
 
