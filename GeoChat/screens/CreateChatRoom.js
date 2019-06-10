@@ -17,14 +17,17 @@ class CreateChatRoom extends React.Component{
     constructor(){
         super();
         this.state = {
-          roomName: ""
+          roomName: "",
+
         }
     }
 
 
 
     newRoom = (userId) => {
-      this.props.createChatRoom(this.props.user.uid)
+      // console.log("newRoom function: ", this.props.user.uid, "chatroom name", this.state.roomName)
+      console.log("location", this.props.location)
+      this.props.createChatRoom(this.props.user.uid, this.state.roomName, this.props.location)
     }
 
     handleChange = (e) => {

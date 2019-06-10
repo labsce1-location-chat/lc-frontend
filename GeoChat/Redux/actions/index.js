@@ -18,14 +18,17 @@ export const setChatRooms = chatrooms => dispatch => {
     dispatch({type: SET_CHATROOMS, payload : chatrooms});
 }
 
-export const createChatRoom= (user, chatRoomName) => dispatch => {
+export const createChatRoom = (userID, chatRoomName, location) => dispatch => {
 
-  console.log("user id in action", user.uid, chatRoomName)
+    // console.log("user id in action", userID, chatRoomName)
     dispatch({type : CREATE_CHATROOM})
-    // firebase.database().ref("chatroom").set({
+    firebase.database().ref("chatroom").set({
+      name: chatRoomName,
+      lat: location.lat,
+      lon: location.lon,
     //   name: "new room",
     //   id: 999999,
-    //   userID: user.uid,
-    // })
+      userID: userID,
+    })
 }
 
