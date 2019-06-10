@@ -27,7 +27,7 @@ class CreateChatRoom extends React.Component{
     newRoom = (userId) => {
       // console.log("newRoom function: ", this.props.user.uid, "chatroom name", this.state.roomName)
       console.log("location", this.props.location)
-      this.props.createChatRoom(this.props.user.uid, this.state.roomName, this.props.location)
+      this.props.createChatRoom("ChatRoomOWner", "avatar url", this.state.roomName, this.props.location)
     }
 
     handleChange = (e) => {
