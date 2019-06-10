@@ -15,7 +15,8 @@ export const handleSignIn = (payload, location) => dispatch => {
     console.log("key from FB", key)
 }
 
-export const handleLogOut = (payload, location) => dispatch => {
+export const handleLogOut = (user) => dispatch => {
+  console.log("get user logged out", user )
   dispatch({type: LOGOUT, payload: payload, location: location})
 }
 
@@ -29,7 +30,6 @@ export const setChatRooms = chatrooms => dispatch => {
 
 export const createChatRoom = (userName, avatarURL, chatRoomName, location) => dispatch => {
 
-    // console.log("user id in action", userID, chatRoomName)
     dispatch({type : CREATE_CHATROOM})
     const key = firebase.database().ref("chatrooms").push().key
 

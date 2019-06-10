@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 're
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
-import {test, setChatRooms, createChatRoom} from '../Redux/actions/index';
+import {test, setChatRooms, createChatRoom, handleLogOut} from '../Redux/actions/index';
 import Map from '../components/ChatList/Map'
 import {NativeRouter, Route, Link} from 'react-router-native';
 
@@ -52,7 +52,9 @@ class ChatList extends React.Component{
     }
 
     logout = () => {
-      console.log("props from chatlist LOGOUT button", this.props)
+      console.log("the props from logout ", this.props)
+      // this.handleLogOut("username")
+
     }
 
     render(){
@@ -145,4 +147,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {test, setChatRooms, createChatRoom })(ChatList);
+export default connect(mapStateToProps, {test, setChatRooms, createChatRoom, handleLogOut })(ChatList);
