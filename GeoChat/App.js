@@ -12,6 +12,7 @@ import {NativeRouter, Route} from 'react-router-native';
 import HomePage from './screens/HomePage';
 import ChatList from './screens/ChatList';
 import CreateChatRoom from './screens/CreateChatRoom';
+import Chatroom from './screens/Chatroom';
 
 const store = createStore(
   reducer,
@@ -35,6 +36,7 @@ export default class App extends React.Component {
           <Route exact path="/" render={(props) => <HomePage {...props}/>} />
           <Route path="/chat-list" render={() => <ChatList />} />
           <Route path="/create_chat_room" render={() => <CreateChatRoom />} />
+          <Route path="/chatroom/:id" render={() => <Chatroom />} />
         </Provider>
       </NativeRouter>
     );
