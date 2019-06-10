@@ -2,6 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {MapView} from 'expo';
 import {connect} from 'react-redux';
+import TempLogo from '../../assets/TempLogo.png'
 
 class Map extends React.Component{
     render(){
@@ -24,7 +25,7 @@ class Map extends React.Component{
                         description="Your current location"
                         color="blue"
                     />
-                    {this.props.chatrooms 
+                    {/* {this.props.chatrooms 
                     ? Object.keys(this.props.chatrooms).map(key => {
                         const room = this.props.chatrooms[key];
                         return(
@@ -33,10 +34,25 @@ class Map extends React.Component{
                                 title={room.name} 
                                 coordinate={{latitude : room.lat, longitude: room.lon}}
                                 key={key}
+                                image={TempLogo}
                             />
                         )
                     }) 
-                    : null}
+                    : null} */}
+                    {this.props.chatrooms
+                    ?
+                    this.props.chatrooms.map(room => 
+                        <MapView.Marker
+                            description={room.description} 
+                            title={room.name} 
+                            coordinate={{latitude : room.lat, longitude: room.lon}}
+                            key={room.id}
+                            image={TempLogo}
+                        />
+                        )
+                    :
+                    null
+                    }
                 </MapView>
             </View>
         );

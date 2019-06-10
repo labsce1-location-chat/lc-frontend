@@ -26,8 +26,8 @@ class ChatList extends React.Component{
         console.log(this.props)
         const ref = firebase.database().ref('chatrooms');
         ref.once('value').then(snap => {
-            this.props.setChatRooms(snap.val())
-            this.setState({ chatrooms : snap.val() })
+            this.props.setChatRooms(Object.values(snap.val()))
+            this.setState({ chatrooms : Object.values(snap.val()) })
             console.log("Changed state boii", console.log(this.state.chatrooms))
             this.setState({loading : false});
         })
@@ -47,7 +47,7 @@ class ChatList extends React.Component{
 
     newRoom = () => {
       // this.props.history.push("/create_chat_room")
-      console.log('user id', this.props.history.push("/create_chat_room"))
+        console.log('user id', this.props.history.push("/create_chat_room"))
       // this.props.createChatRoom(this.props.user.uid)
     }
 
@@ -80,15 +80,12 @@ class ChatList extends React.Component{
                 {this.state.view === "list" 
                 ?
                 this.state.chatrooms 
-                    ? Object.keys(this.state.chatrooms).map(key => {
-                        const room = this.state.chatrooms[key];
-                        return(
-                            <View key={key}>
-                                <Text>Name : {room.name}</Text>
-                                <Text>Description : {room.description}</Text>
-                            </View>
-                        )
-                    }) 
+                    ? this.state.chatrooms.map(room => 
+                        <View key={room.id}>
+                            <Text>{room.name}</Text>
+                            <Text>{room.description}</Text>
+                        </View>
+                    )
                     : 
                     <Text>No Chatrooms in your area</Text>
                 :
