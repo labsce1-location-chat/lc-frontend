@@ -8,6 +8,7 @@ export default class Chatroom extends React.Component{
     constructor(){
         super();
         this.state = {
+            chatroom : {},
             messages : [],
             newMessage : "",
             error : ''
@@ -15,6 +16,7 @@ export default class Chatroom extends React.Component{
     }
 
     componentDidMount(){
+        this.getChatroomDetails();
         this.messageListener();
     }
 
@@ -43,11 +45,22 @@ export default class Chatroom extends React.Component{
         firebase.database().ref('messages').child(this.props.match.params.id).off()
     }
 
+    getChatroomDetails = () => {
+        firebase.database().ref('/chatrooms/' + this.props.match.params.id).once('value').then(snap => {
+            console.log("Get chatroom details snap", snap.val());
+            this.setState({chatroom : snap.val()});
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
 
     render(){
         return(
             <View style={styles.container}>
                 <Link to="/chat-list"><Text>Back to chat list</Text></Link>
+                <Text>{this.state.chatroom ? this.state.chatroom.name : "Loading..."}</Text>
+                <Text>{this.state.chatroom ? this.state.chatroom.description : "Loading..."}</Text>
                 {this.state.messages ? this.state.messages.map((message, index) => 
                     <View key={index}>
                         <Text>{message.content}</Text>
