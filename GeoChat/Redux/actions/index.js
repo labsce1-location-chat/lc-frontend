@@ -15,8 +15,8 @@ export const handleSignIn = (payload, location) => dispatch => {
     console.log("key from FB", key)
 }
 
-export const handleLogOut = (user) => dispatch => {
-  console.log("get user logged out", user )
+export const userLogout = (user) => dispatch => {
+  console.log("Logout action")
   dispatch({type: LOGOUT, payload: payload, location: location})
 }
 
