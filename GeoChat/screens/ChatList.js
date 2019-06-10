@@ -80,7 +80,7 @@ class ChatList extends React.Component{
                         <View key={room.id}>
                             <Text>{room.name}</Text>
                             <Text>{room.description}</Text>
-                            <Link to="/chatroom/:id"><Text style={styles.joinBtn}>Join</Text></Link>
+                            <Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>
                         </View>
                     )
                     : 

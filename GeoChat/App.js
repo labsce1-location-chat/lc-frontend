@@ -36,7 +36,7 @@ export default class App extends React.Component {
           <Route exact path="/" render={(props) => <HomePage {...props}/>} />
           <Route path="/chat-list" render={() => <ChatList />} />
           <Route path="/create_chat_room" render={() => <CreateChatRoom />} />
-          <Route path="/chatroom/:id" render={() => <Chatroom />} />
+          <Route path="/chatroom/:id" render={(props) => <Chatroom {...props}/>} />
         </Provider>
       </NativeRouter>
     );
