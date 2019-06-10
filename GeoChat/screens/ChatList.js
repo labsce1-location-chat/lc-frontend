@@ -51,6 +51,10 @@ class ChatList extends React.Component{
       // this.props.createChatRoom(this.props.user.uid)
     }
 
+    logout = () => {
+      console.log("props from chatlist LOGOUT button", this.props)
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -97,7 +101,9 @@ class ChatList extends React.Component{
                 >
                     <Text>New Room</Text>
                 </Link>
-                {/* new chatroom button should go to the chat room screen*/}
+                <Button onPress={this.logout} title="Logout" />
+
+
             </View>
         )
     }
@@ -139,4 +145,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {test, setChatRooms, createChatRoom})(ChatList);
+export default connect(mapStateToProps, {test, setChatRooms, createChatRoom })(ChatList);

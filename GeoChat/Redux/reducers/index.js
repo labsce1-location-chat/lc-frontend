@@ -1,6 +1,11 @@
 // Reducers
 
-import {SIGN_IN, TEST, SET_CHATROOMS, CREATE_CHATROOM} from '../actions/index';
+import {SIGN_IN,
+        TEST,
+        SET_CHATROOMS,
+        CREATE_CHATROOM,
+        LOGOUT,
+       } from '../actions/index';
 
 const initialState = {
     test : "Redux is working fine",
@@ -26,6 +31,8 @@ export const reducer = (state = initialState, action) => {
 
         case CREATE_CHATROOM:
             return {...state, test : "this is the create chatroom reducer"}
+        case LOGOUT:
+            return {...state, test : "logout is true"}
         default:
             return state;
     }
