@@ -27,6 +27,7 @@ class HomePage extends React.Component {
       } else {
         this.getUsersCoords()
       }
+      console.log("Props from homepage", this.props.history)
     }
 
     getUsersCoords = () => {
@@ -60,6 +61,7 @@ class HomePage extends React.Component {
         console.log("Error signing in :", err)
         })
     }
+
 
     render() {
         return (

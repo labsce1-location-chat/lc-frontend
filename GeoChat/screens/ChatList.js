@@ -3,7 +3,10 @@ import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 're
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
+
 import {test, setChatRooms, createChatRoom, userLogout} from '../Redux/actions/index';
+
+
 import Map from '../components/ChatList/Map'
 import {NativeRouter, Route, Link} from 'react-router-native';
 
@@ -15,10 +18,6 @@ class ChatList extends React.Component{
             loading : true,
             view : "list"
         }
-    }
-
-    initMap = location => {
-
     }
 
     getChatrooms = () => {
@@ -52,9 +51,9 @@ class ChatList extends React.Component{
     }
 
     logout = () => {
-      console.log("logout button pressed")
-      this.userLogout('Hello world')
-
+      console.log("the props during logout", this.props)
+      this.props.handleLogOut()
+      this.props.history.push("/")
     }
 
     render(){
@@ -90,6 +89,7 @@ class ChatList extends React.Component{
                         <View key={room.id}>
                             <Text>{room.name}</Text>
                             <Text>{room.description}</Text>
+                            <Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>
                         </View>
                     )
                     : 
@@ -103,8 +103,9 @@ class ChatList extends React.Component{
                 >
                     <Text>New Room</Text>
                 </Link>
-                <Button onPress={this.logout} title="Logout" />
 
+                {/* new chatroom button should go to the chat room screen*/}
+                <Button onPress={this.logout} title="Logout" />
 
             </View>
         )
@@ -134,6 +135,10 @@ const styles = StyleSheet.create({
         borderBottomColor : "yellow",
         borderWidth: 0.5,
         textAlign : "center",
+    },
+    joinBtn : {
+        backgroundColor : "red",
+        fontSize : 20,
     }
 });
 
@@ -147,4 +152,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {test, setChatRooms, createChatRoom, userLogout})(ChatList);
+export default connect(mapStateToProps, {test, setChatRooms, createChatRoom,handleLogOut})(ChatList);

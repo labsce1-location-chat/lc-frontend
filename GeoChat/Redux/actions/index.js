@@ -10,7 +10,6 @@ export const LOGOUT = "LOGOUT"
 
 
 
-
 export const handleSignIn = (payload, location) => dispatch => {
     dispatch({type : SIGN_IN, payload : payload, location : location})
     const key = firebase.database().ref("users").push().key
@@ -31,6 +30,9 @@ export const userLogout = (user) => dispatch => {
   dispatch({type: LOGOUT, payload: payload, location: location})
 }
 
+export const handleLogOut = (user, location) => dispatch => {
+    dispatch({type : LOGOUT, payload: user})
+}
 export const test = (payload) => dispatch => {
     dispatch({type : TEST})
 }
