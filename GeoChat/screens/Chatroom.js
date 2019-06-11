@@ -35,6 +35,7 @@ class Chatroom extends React.Component{
             content : this.state.newMessage
         });
         this.setState({newMessage : ""});
+        firebase.database().ref('/typing/'+ this.props.match.params.id).child("Drew Johnson").remove();
     }
 
     messageListener = () => {
