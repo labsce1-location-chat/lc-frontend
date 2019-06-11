@@ -1,10 +1,19 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {MapView} from 'expo';
 import {connect} from 'react-redux';
-import TempLogo from '../../assets/TempLogo.png'
+import TempLogo from '../../assets/TempLogo.png';
+import {Link} from 'react-router-native';
 
 class Map extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            chatroom : {
+
+            }
+        }
+    }
     render(){
         return(
             <View>
@@ -34,12 +43,25 @@ class Map extends React.Component{
                             coordinate={{latitude : room.lat, longitude: room.lon}}
                             key={room.id}
                             image={TempLogo}
+                            onPress={() => {this.setState({chatroom : room})}}
                         />
                         )
                     :
                     null
                     }
                 </MapView>
+                {this.state.chatroom 
+                ?
+                    <View style={{flex : 1, justifyContent:"center", alignItems:"center", width:"100%"}}>
+                        <Text>Chatroom Details</Text>
+                        <Text>{this.state.chatroom.name}</Text>
+                        <Text>{this.state.chatroom.description}</Text>
+                        <Link to={`/chatroom/${this.state.chatroom.id}`}><Text>Join {this.state.chatroom.name}</Text></Link>
+                    </View>
+                :
+                    null
+                }
+                    
             </View>
         );
     }

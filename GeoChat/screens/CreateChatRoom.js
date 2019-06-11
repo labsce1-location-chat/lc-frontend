@@ -8,6 +8,7 @@ import TempLogo from '../assets/TempLogo.png';
 // import {MapView} from 'expo';
 // import * as firebase from 'firebase';
 import {test, createChatRoom} from '../Redux/actions/index';
+import {Link} from 'react-router-native';
 
 
 
@@ -43,6 +44,7 @@ class CreateChatRoom extends React.Component{
         return(
 
             <View style={styles.container}>
+                <Link to="/chat-list" ><Text>Back to Chat list</Text></Link>
                 <Text>This is where you create chat room</Text>
                 <Text>User Id: {this.props.user.uid}</Text>
                 <TextInput style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange} value={this.state.roomName} maxLength={20} />
