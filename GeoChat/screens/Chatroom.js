@@ -60,7 +60,7 @@ class Chatroom extends React.Component{
     }
 
     componentWillUnmount(){
-        firebase.database().ref('/typing/' + this.props.match.params.id).child("Drew Johnson").set(false)
+        firebase.database().ref('/typing/'+ this.props.match.params.id).child("Drew Johnson").remove();
         firebase.database().ref('messages').child(this.props.match.params.id).off()
         firebase.database().ref('/typing/' + this.props.match.params.id).off();
     }
