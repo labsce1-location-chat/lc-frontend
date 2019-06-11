@@ -6,7 +6,8 @@ import {connect} from 'react-redux'
 import {handleSignIn} from '../Redux/actions/index';
 import styles from '../styles/homepage'
 import TempLogo from '../assets/TempLogo.png';
-
+import faker from 'faker';
+console.log("facker name", faker.internet.userName())
 class HomePage extends React.Component {
 
     constructor(){
@@ -27,6 +28,7 @@ class HomePage extends React.Component {
       } else {
         this.getUsersCoords()
       }
+      console.log("Props from homepage", this.props.history)
     }
 
     getUsersCoords = () => {
@@ -60,6 +62,7 @@ class HomePage extends React.Component {
         console.log("Error signing in :", err)
         })
     }
+
 
     render() {
         return (

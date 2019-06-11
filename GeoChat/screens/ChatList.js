@@ -3,7 +3,10 @@ import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 're
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
-import {test, setChatRooms, createChatRoom} from '../Redux/actions/index';
+
+import {test, setChatRooms, createChatRoom, userLogout} from '../Redux/actions/index';
+
+
 import Map from '../components/ChatList/Map'
 import {NativeRouter, Route, Link} from 'react-router-native';
 
@@ -45,6 +48,12 @@ class ChatList extends React.Component{
       // this.props.history.push("/create_chat_room")
         console.log('user id', this.props.history.push("/create_chat_room"))
       // this.props.createChatRoom(this.props.user.uid)
+    }
+
+    logout = () => {
+      console.log("the props during logout", this.props)
+      this.props.handleLogOut()
+      this.props.history.push("/")
     }
 
     render(){
@@ -94,7 +103,10 @@ class ChatList extends React.Component{
                 >
                     <Text>New Room</Text>
                 </Link>
+
                 {/* new chatroom button should go to the chat room screen*/}
+                <Button onPress={this.logout} title="Logout" />
+
             </View>
         )
     }
@@ -140,4 +152,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {test, setChatRooms, createChatRoom})(ChatList);
+export default connect(mapStateToProps, {test, setChatRooms, createChatRoom,handleLogOut})(ChatList);
