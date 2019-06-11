@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
 
-import {test, setChatRooms, createChatRoom, userLogout} from '../Redux/actions/index';
+import {test, setChatRooms, createChatRoom, handleLogOut} from '../Redux/actions/index';
 
 
 import Map from '../components/ChatList/Map'
