@@ -16,27 +16,35 @@ import {test, createChatRoom} from '../Redux/actions/index';
 class CreateChatRoom extends React.Component{
     constructor(){
         super();
+        this.state = {
+          roomName: "",
+
+        }
     }
 
 
 
     newRoom = (userId) => {
-      console.log('user id', this.props.user.uid)
-      this.props.createChatRoom(this.props.user.uid)
+      // console.log("newRoom function: ", this.props.user.uid, "chatroom name", this.state.roomName)
+      console.log("location", this.props.location)
+      this.props.createChatRoom("ChatRoomOWner", "avatar url", this.state.roomName, this.props.location)
+    }
+
+    handleChange = (e) => {
+
+      this.setState({roomName: e})
+      // console.log("", e)
+      console.log("state change", this.state.roomName)
     }
 
     render(){
         return(
 
             <View style={styles.container}>
-            {console.log("props on create chat room page", this.props)}
                 <Text>This is where you create chat room</Text>
                 <Text>User Id: {this.props.user.uid}</Text>
-                <TextInput style={styles.textBox} placeholder="Chat room name" />
-
-
-
-
+                <TextInput style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange} value={this.state.roomName} maxLength={20} />
+                <Button title="Submit" onPress={this.newRoom} />
             </View>
         )
     }
@@ -54,8 +62,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 3,
     borderRightWidth: 3,
     borderBottomWidth: 3,
-    width: "100%",
-    height: 50,
+    width: "95%",
+    height: 100,
   }
 });
 
