@@ -1,7 +1,7 @@
 import React from 'react';
 import {  View, TextInput, ActivityIndicator } from 'react-native';
 import {  Text, Button, ThemeProvider  } from 'react-native-elements';
-import styles from '../styles/chatList'
+import styles from '../styles/chatListStyles'
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';

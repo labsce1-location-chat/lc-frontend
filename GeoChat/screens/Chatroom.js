@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Button, TextInput, StyleSheet} from 'react-native';
 import * as firebase from 'firebase';
 import {Link} from 'react-router-native';
-import styles from '../styles/Chatroom'
+import styles from '../styles/ChatroomStyles'
 
 export default class Chatroom extends React.Component{
 

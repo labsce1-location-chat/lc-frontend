@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
 import {FormLabel, FormInput, FormValidationMessage} from 'react'
-import styles from '../styles/createChatroom'
+import styles from '../styles/createChatroomStyles'
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 // import {MapView} from 'expo';

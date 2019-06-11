@@ -6,7 +6,7 @@ import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 // Redux Imports
 import {connect} from 'react-redux'
 import {handleSignIn} from '../Redux/actions/index';
-import styles from '../styles/homepage'
+import styles from '../styles/homepageStyles'
 import TempLogo from '../assets/TempLogo.png';
 class HomePage extends React.Component {
 
