@@ -1,6 +1,6 @@
 // Reducers
 
-import {SIGN_IN, TEST, SET_CHATROOMS, CREATE_CHATROOM} from '../actions/index';
+import {SIGN_IN, TEST, SET_CHATROOMS, CREATE_CHATROOM, LOGOUT} from '../actions/index';
 
 const initialState = {
     test : "Redux is working fine",
@@ -17,6 +17,10 @@ export const reducer = (state = initialState, action) => {
         case SIGN_IN:
             console.log("SIGN IN FUNCTION CALLED")
             return {...state, user : action.payload.user, loggedIn : true, location : action.location};
+
+        case LOGOUT:
+            console.log("LOGOUT IN FUNCTION CALLED")
+            return {...state, loggedIn : false };
 
         case TEST:
             return {...state, test : "The function was called and I changed"}
