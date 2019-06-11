@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 'react-native';
+import {  View, TextInput, ActivityIndicator } from 'react-native';
+import {  Text, Button, ThemeProvider  } from 'react-native-elements';
+import styles from '../styles/chatList'
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
 
-import {test, setChatRooms, createChatRoom, userLogout} from '../Redux/actions/index';
+import {test, setChatRooms, createChatRoom, handleLogOut} from '../Redux/actions/index';
 
 
 import Map from '../components/ChatList/Map'
@@ -47,6 +49,7 @@ class ChatList extends React.Component{
     newRoom = () => {
       // this.props.history.push("/create_chat_room")
         console.log('user id', this.props.history.push("/create_chat_room"))
+        this.props.history.push('/create_chat_room')
       // this.props.createChatRoom(this.props.user.uid)
     }
 
@@ -61,24 +64,24 @@ class ChatList extends React.Component{
             <View style={styles.container}>
                 <Button title="To Array test" onPress={this.filterChatrooms} />
                 <Button onPress={()=>console.log(this.state)} title="Console Log state" />
-                <Text>Join a Chat Room</Text>
+                <Text h3>Join a Chat Room</Text>
                 <TextInput 
                     value="Search by zipcode"
                 />
 
                 <View style={styles.viewBtns}>
 
-                    <Text 
-                        style={this.state.view === "list" ? styles.selected : styles.viewBtn } 
-                        onPress={() => this.setState({view : "list"})}
-                    >List
-                    </Text>
 
-                    <Text 
-                        onPress={() => this.setState({view : "map"})}
-                        style={this.state.view === "map" ? styles.selected : styles.viewBtn } 
-                    >Map
-                    </Text>
+                    <Button
+                      onPress={() => this.setState({view : "map"})}
+                      style={this.state.view === "map" ? styles.selected : styles.viewBtn } 
+                      title="Map View"
+                    />
+                    <Button
+                      onPress={() => this.setState({view : "list"})}
+                      style={this.state.view === "list" ? styles.selected : styles.viewBtn } 
+                      title="List View"
+                    />
                 </View>
 
                 { this.state.loading ? <ActivityIndicator size="large" color="#0000ff" /> : null }
@@ -98,49 +101,13 @@ class ChatList extends React.Component{
                 <Map />
                 }
                 <Button onPress={this.filterChatrooms} title="filter rooms" />
-                <Link
-                    to={"/create_chat_room"}
-                >
-                    <Text>New Room</Text>
-                </Link>
-
-                {/* new chatroom button should go to the chat room screen*/}
+                <Button onPress={this.newRoom} title="New Chatroom" />
                 <Button onPress={this.logout} title="Logout" />
 
             </View>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    viewBtns : {
-        width:"100%",
-        height:100,
-        flexDirection : "row",
-        justifyContent : "center",
-        alignItems:"center"
-    },
-    viewBtn : {
-        width:"50%",
-        textAlign : "center"
-    },
-    selected : {
-        width:"50%",
-        borderBottomColor : "yellow",
-        borderWidth: 0.5,
-        textAlign : "center",
-    },
-    joinBtn : {
-        backgroundColor : "red",
-        fontSize : 20,
-    }
-});
 
 const mapStateToProps = state => {
     return {

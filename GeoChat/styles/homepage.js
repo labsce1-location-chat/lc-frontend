@@ -6,15 +6,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+
     },
     header : {
         fontSize : 30
     },
     subText : {
-        fontSize : 12,
         width : 200,
         textAlign : "center",
- 
+
     },
 
   red: {
