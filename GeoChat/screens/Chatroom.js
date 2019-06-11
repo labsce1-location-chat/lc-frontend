@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, Button, TextInput, StyleSheet} from 'react-native';
+import {View,  TextInput, StyleSheet} from 'react-native';
+import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 import * as firebase from 'firebase';
 import {Link} from 'react-router-native';
 import styles from '../styles/ChatroomStyles'
@@ -66,17 +67,3 @@ export default class Chatroom extends React.Component{
 
 }
 
-// const styles = StyleSheet.create({
-//     container : {
-//         flex:1,
-//         marginTop : 30,
-//     },
-
-//     input: {
-//         position: 'relative',
-//         fontSize: 15,
-//         backgroundColor: 'lightblue',
-//         padding: 3,
-//         borderRadius: 5,
-//     }
-// })

@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, Image, ActivityIndicator, StyleSheet} from 'react-native';
+import {View,  Image, ActivityIndicator, StyleSheet} from 'react-native';
+import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 import TempLogo from '../assets/TempLogo.png'
 import styles from '../styles/LoadingScreenStyles'
 
