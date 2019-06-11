@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 // Redux Imports
 import {connect} from 'react-redux'
 import {handleSignIn} from '../Redux/actions/index';
+import styles from '../styles/homepage'
 import TempLogo from '../assets/TempLogo.png';
 
 class HomePage extends React.Component {
@@ -80,22 +81,6 @@ class HomePage extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    header : {
-        fontSize : 30
-    },
-    subText : {
-        fontSize : 12,
-        width : 200,
-        textAlign : "center",
-    }
-});
 
 const mapStateToProps = state => {
     return {
