@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import { StyleSheet, View,TextInput} from 'react-native';
+import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 import {FormLabel, FormInput, FormValidationMessage} from 'react'
+import styles from '../styles/createChatroomStyles'
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 // import {MapView} from 'expo';
@@ -52,22 +54,6 @@ class CreateChatRoom extends React.Component{
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-  textBox: {
-    borderLeftWidth: 3,
-    borderTopWidth: 3,
-    borderRightWidth: 3,
-    borderBottomWidth: 3,
-    width: "95%",
-    height: 100,
-  }
-});
 
 const mapStateToProps = state => {
     return {

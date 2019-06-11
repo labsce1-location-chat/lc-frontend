@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, View, Image} from 'react-native';
 import * as firebase from 'firebase';
+import {  Text, Button, ThemeProvider  } from 'react-native-elements';
+
 // Redux Imports
 import {connect} from 'react-redux'
 import {handleSignIn} from '../Redux/actions/index';
+import styles from '../styles/homepageStyles'
 import TempLogo from '../assets/TempLogo.png';
-import faker from 'faker';
-console.log("facker name", faker.internet.userName())
 class HomePage extends React.Component {
 
     constructor(){
@@ -70,7 +71,7 @@ class HomePage extends React.Component {
                     source={TempLogo}
                     style={{width: 150, height: 150}} 
                 />
-                <Text style={styles.header}>Welcome To GeoChat</Text>
+                <Text h3>Welcome To GeoChat</Text>
                 <Text style={styles.subText}>Chat with local people in your area anonymously and securely. </Text>
                 <Text>{this.state.coords ? this.state.coords : "Loading Coordinates..."}</Text>
                 <Button 
@@ -83,22 +84,6 @@ class HomePage extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    header : {
-        fontSize : 30
-    },
-    subText : {
-        fontSize : 12,
-        width : 200,
-        textAlign : "center",
-    }
-});
 
 const mapStateToProps = state => {
     return {

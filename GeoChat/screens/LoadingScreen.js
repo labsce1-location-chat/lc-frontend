@@ -1,6 +1,8 @@
 import React from 'react';
-import {View, Text, Image, ActivityIndicator, StyleSheet} from 'react-native';
+import {View,  Image, ActivityIndicator, StyleSheet} from 'react-native';
+import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 import TempLogo from '../assets/TempLogo.png'
+import styles from '../styles/LoadingScreenStyles'
 
 export default function LoadingScreen(){
     return(
@@ -12,10 +14,3 @@ export default function LoadingScreen(){
     );
 }
 
-const styles = StyleSheet.create({
-    container : {
-        height:"100%",
-        width : "100%",
-        backgroundColor : "#00B3DA"
-    }
-})
