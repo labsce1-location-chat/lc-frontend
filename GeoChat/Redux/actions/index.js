@@ -12,7 +12,16 @@ export const LOGOUT = "LOGOUT"
 export const handleSignIn = (payload, location) => dispatch => {
     dispatch({type : SIGN_IN, payload : payload, location : location})
     const key = firebase.database().ref("users").push().key
-    console.log("key from FB", key)
+    firebase.database().ref("users").child(key).update({
+      userName: faker.internet.userName(),
+      avatar: "https://i.imgur.com/59BvYHr.jpg",
+      dateCreate: new Date(),
+      id: key,
+      joinedRooms: [],
+      lat: location.lat,
+      lon: location.lon,
+    })
+    // console.log("key from FB", key)
 }
 
 export const userLogout = (user) => dispatch => {
