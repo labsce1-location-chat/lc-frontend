@@ -13,7 +13,7 @@ export const handleSignIn = (payload, location) => dispatch => {
 }
 
 export const handleLogOut = (user, location) => dispatch => {
-    dispatch({type : LOGOUT, payload: })
+    dispatch({type : LOGOUT, payload: user})
 }
 export const test = (payload) => dispatch => {
     dispatch({type : TEST})
