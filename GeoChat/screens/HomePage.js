@@ -5,7 +5,8 @@ import * as firebase from 'firebase';
 import {connect} from 'react-redux'
 import {handleSignIn} from '../Redux/actions/index';
 import TempLogo from '../assets/TempLogo.png';
-
+import faker from 'faker';
+console.log("facker name", faker.internet.userName())
 class HomePage extends React.Component {
 
     constructor(){
