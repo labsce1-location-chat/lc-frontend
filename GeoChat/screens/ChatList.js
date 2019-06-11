@@ -3,7 +3,10 @@ import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 're
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
-import {test, setChatRooms, createChatRoom, handleLogOut} from '../Redux/actions/index';
+
+import {test, setChatRooms, createChatRoom, userLogout} from '../Redux/actions/index';
+
+
 import Map from '../components/ChatList/Map'
 import {NativeRouter, Route, Link} from 'react-router-native';
 
@@ -53,7 +56,6 @@ class ChatList extends React.Component{
       this.props.history.push("/")
     }
 
-
     render(){
         return(
             <View style={styles.container}>
@@ -101,8 +103,10 @@ class ChatList extends React.Component{
                 >
                     <Text>New Room</Text>
                 </Link>
+
                 {/* new chatroom button should go to the chat room screen*/}
                 <Button onPress={this.logout} title="Logout" />
+
             </View>
         )
     }
