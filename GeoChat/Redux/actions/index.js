@@ -11,18 +11,25 @@ export const LOGOUT = "LOGOUT"
 
 
 export const handleSignIn = (payload, location) => dispatch => {
-    dispatch({type : SIGN_IN, payload : payload, location : location})
-    const key = firebase.database().ref("users").push().key
-    firebase.database().ref("users").child(key).update({
-      userName: faker.internet.userName(),
-      avatar: `${faker.internet.avatar()}`,
-      dateCreate: new Date(),
-      id: key,
-      joinedRooms: [],
-      lat: location.lat,
-      lon: location.lon,
-    })
-    // console.log("key from FB", key)
+         const key = firebase.database().ref("users").push().key
+           firebase.database().ref("users").child(key).update({
+             userName: faker.internet.userName(),
+             avatar: `${faker.internet.avatar()}`,
+             dateCreated: new Date(),
+             id: key,
+             joinedRooms: [],
+             lat: location.lat,
+             lon: location.lon,
+             accountType: "temp",
+           })
+         // there's got to be a better way to do this. 
+        const db = firebase.database().ref(`users/${key}`)
+          db.once("value")
+          .then(snapshot => {
+            dispatch({type : SIGN_IN, payload : snapshot.val(), location : location})
+          })
+
+
 }
 
 export const userLogout = (user) => dispatch => {
@@ -43,7 +50,7 @@ export const setChatRooms = chatrooms => dispatch => {
 
 export const createChatRoom = (userName, avatarURL, chatRoomName, location) => dispatch => {
 
-    dispatch({type : CREATE_CHATROOM})
+    dispatch({type : CREATE_CHATROOM, payload: "hello"})
     const key = firebase.database().ref("chatrooms").push().key
 
     firebase.database().ref("chatrooms").child(key).update({

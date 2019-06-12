@@ -35,7 +35,7 @@ export default class App extends React.Component {
           {/* Setting up routes here, will add more edge cases and routes later */}
           <Route exact path="/" render={(props) => <HomePage {...props}/>} />
           <Route path="/chat-list" render={(props) => <ChatList {...props}/>} />
-          <Route path="/create_chat_room" render={() => <CreateChatRoom />} />
+          <Route path="/create_chat_room" render={(props) => <CreateChatRoom {...props}/>} />
           <Route path="/chatroom/:id" render={(props) => <Chatroom {...props}/>} />
         </Provider>
       </NativeRouter>
