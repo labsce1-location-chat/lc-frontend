@@ -13,6 +13,7 @@ import HomePage from './screens/HomePage';
 import ChatList from './screens/ChatList';
 import CreateChatRoom from './screens/CreateChatRoom';
 import Chatroom from './screens/Chatroom';
+import NavBar from './components/Global/NavBar';
 
 const store = createStore(
   reducer,
@@ -33,6 +34,7 @@ export default class App extends React.Component {
         {/* Provider for the redux store */}
         <Provider store={store}>
           {/* Setting up routes here, will add more edge cases and routes later */}
+          <Route path="/" render={(props) => <NavBar {...props}/>} />
           <Route exact path="/" render={(props) => <HomePage {...props}/>} />
           <Route path="/chat-list" render={(props) => <ChatList {...props}/>} />
           <Route path="/create_chat_room" render={() => <CreateChatRoom />} />
