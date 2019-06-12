@@ -74,6 +74,7 @@ class ChatList extends React.Component{
                 <TextInput 
                     value="Search by zipcode"
                 />
+                <Text>{this.props.user.userName}</Text>
 
                 <ButtonGroup 
                     buttons={[{element : this.btn2}, {element : this.btn1}]}
@@ -106,6 +107,7 @@ class ChatList extends React.Component{
 }
 
 const mapStateToProps = state => {
+    console.log("state from chatlist ", state)
     return {
         test : state.test,
         user : state.user,

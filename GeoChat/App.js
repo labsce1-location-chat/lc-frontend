@@ -37,7 +37,7 @@ export default class App extends React.Component {
           <Route path={'/'} render={(props) => <NavBar {...props}/>} />
           <Route exact path="/" render={(props) => <HomePage {...props}/>} />
           <Route path="/chat-list" render={(props) => <ChatList {...props}/>} />
-          <Route path="/create_chat_room" render={() => <CreateChatRoom />} />
+          <Route path="/create_chat_room" render={(props) => <CreateChatRoom {...props}/>} />
           <Route path="/chatroom/:id" render={(props) => <Chatroom {...props}/>} />
           {/* <Route render={()=> <ErrorPage />} />  This will be for the error page that we will hopefully not need */}
         </Provider>
