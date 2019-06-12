@@ -1,6 +1,6 @@
 import React from 'react';
 import {  View, TextInput, ActivityIndicator } from 'react-native';
-import {  Text, Button, ThemeProvider  } from 'react-native-elements';
+import {  Text, Button, ThemeProvider, ButtonGroup  } from 'react-native-elements';
 import styles from '../styles/chatListStyles'
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
@@ -54,35 +54,31 @@ class ChatList extends React.Component{
     }
 
     logout = () => {
-      console.log("the props during logout", this.props)
-      this.props.handleLogOut()
-      this.props.history.push("/")
+        console.log("the props during logout", this.props)
+        this.props.handleLogOut()
+        this.props.history.push("/")
     }
+
+    btn1 = () => <Text
+        onPress={() => this.setState({view : "map"})} 
+    >Map View</Text>
+
+    btn2 = () => <Text
+        onPress={() => this.setState({view : "list"})} 
+    >List View</Text>
 
     render(){
         return(
             <View style={styles.container}>
-                <Button title="To Array test" onPress={this.filterChatrooms} />
-                <Button onPress={()=>console.log(this.state)} title="Console Log state" />
                 <Text h3>Join a Chat Room</Text>
                 <TextInput 
                     value="Search by zipcode"
                 />
 
-                <View style={styles.viewBtns}>
-
-
-                    <Button
-                      onPress={() => this.setState({view : "map"})}
-                      style={this.state.view === "map" ? styles.selected : styles.viewBtn } 
-                      title="Map View"
-                    />
-                    <Button
-                      onPress={() => this.setState({view : "list"})}
-                      style={this.state.view === "list" ? styles.selected : styles.viewBtn } 
-                      title="List View"
-                    />
-                </View>
+                <ButtonGroup 
+                    buttons={[{element : this.btn2}, {element : this.btn1}]}
+                    selectedIndex={this.state.view === "list" ? 0 : 1}
+                />
 
                 { this.state.loading ? <ActivityIndicator size="large" color="#0000ff" /> : null }
                 {this.state.view === "list" 
