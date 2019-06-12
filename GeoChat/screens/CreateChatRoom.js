@@ -31,6 +31,8 @@ class CreateChatRoom extends React.Component{
       // console.log("newRoom function: ", this.props.user.uid, "chatroom name", this.state.roomName)
       console.log("location", this.props.location)
       this.props.createChatRoom("ChatRoomOWner", "avatar url", this.state.roomName, this.props.location)
+      // this.props.history.push(new chatroom)
+      // we have to go to the new chatroom.
     }
 
     handleChange = (e) => {
@@ -40,10 +42,15 @@ class CreateChatRoom extends React.Component{
       console.log("state change", this.state.roomName)
     }
 
+    goBack = () => {
+      this.props.history.push('/chat-list')
+    }
+
     render(){
         return(
 
             <View style={styles.container}>
+                <Button title="Go back" onPress={this.goBack} />
                 <Link to="/chat-list" ><Text>Back to Chat list</Text></Link>
                 <Text>This is where you create chat room</Text>
                 <Text>User Id: {this.props.user.uid}</Text>

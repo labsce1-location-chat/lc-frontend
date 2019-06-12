@@ -43,7 +43,7 @@ export const setChatRooms = chatrooms => dispatch => {
 
 export const createChatRoom = (userName, avatarURL, chatRoomName, location) => dispatch => {
 
-    dispatch({type : CREATE_CHATROOM})
+    dispatch({type : CREATE_CHATROOM, payload: "hello"})
     const key = firebase.database().ref("chatrooms").push().key
 
     firebase.database().ref("chatrooms").child(key).update({
