@@ -50,8 +50,8 @@ class HomePage extends React.Component {
     signInAnonymously = () => {
         firebase.auth().signInAnonymously().then(user => {
         if(user){
-            console.log("Signing the user in")
             this.props.handleSignIn(user, this.state.location);
+            console.log("Signing the user in")
             this.props.history.push("/chat-list")
         }
         else{

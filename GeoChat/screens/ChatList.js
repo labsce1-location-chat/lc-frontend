@@ -68,6 +68,7 @@ class ChatList extends React.Component{
                 <TextInput 
                     value="Search by zipcode"
                 />
+                <Text>{this.props.user.userName}</Text>
 
                 <View style={styles.viewBtns}>
 
@@ -110,6 +111,7 @@ class ChatList extends React.Component{
 }
 
 const mapStateToProps = state => {
+    console.log("state from chatlist ", state)
     return {
         test : state.test,
         user : state.user,

@@ -21,8 +21,9 @@ export const reducer = (state = initialState, action) => {
     switch(action.type){
 
         case SIGN_IN:
-            console.log("SIGN IN FUNCTION CALLED")
-            return {...state, user : action.payload.user, loggedIn : true, location : action.location};
+            console.log("SIGN IN FUNCTION CALLED", "*********Payload**********", action.payload)
+
+            return {...state, user : action.payload, loggedIn : true, location : action.location};
 
         case LOGOUT:
             console.log("LOGOUT IN FUNCTION CALLED")

@@ -11,34 +11,25 @@ export const LOGOUT = "LOGOUT"
 
 
 export const handleSignIn = (payload, location) => dispatch => {
-    dispatch({type : SIGN_IN, payload : payload, location : location})
-    const key = firebase.database().ref("users").push().key
-    firebase.database().ref("users").child(key).update({
-      userName: faker.internet.userName(),
-      avatar: `${faker.internet.avatar()}`,
-      dateCreate: new Date(),
-      id: key,
-      joinedRooms: [],
-      lat: location.lat,
-      lon: location.lon,
-    })
-
-    const db = firebase.database()
-    const users = db.ref('users')
-    // console.log("db firebase users", users)
-    const query = users
-        .orderByChild('id')
-        .equalTo(`${key}`)
-        .limitToFirst(1)
-        query.on('value', snap => {
-          console.log("snapshot data", snap.child("userName").val())
-
-        });
+         const key = firebase.database().ref("users").push().key
+           firebase.database().ref("users").child(key).update({
+             userName: faker.internet.userName(),
+             avatar: `${faker.internet.avatar()}`,
+             dateCreated: new Date(),
+             id: key,
+             joinedRooms: [],
+             lat: location.lat,
+             lon: location.lon,
+             accountType: "temp",
+           })
+         // there's got to be a better way to do this. 
+        const db = firebase.database().ref(`users/${key}`)
+          db.once("value")
+          .then(snapshot => {
+            dispatch({type : SIGN_IN, payload : snapshot.val(), location : location})
+          })
 
 
-
-    // console.log("data from FB??", firebaseData)
-    //
 }
 
 export const userLogout = (user) => dispatch => {
