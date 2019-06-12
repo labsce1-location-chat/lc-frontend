@@ -22,7 +22,23 @@ export const handleSignIn = (payload, location) => dispatch => {
       lat: location.lat,
       lon: location.lon,
     })
-    // console.log("key from FB", key)
+
+    const db = firebase.database()
+    const users = db.ref('users')
+    // console.log("db firebase users", users)
+    const query = users
+        .orderByChild('id')
+        .equalTo(`${key}`)
+        .limitToFirst(1)
+        query.on('value', snap => {
+          console.log("snapshot data", snap.child("userName").val())
+
+        });
+
+
+
+    // console.log("data from FB??", firebaseData)
+    //
 }
 
 export const userLogout = (user) => dispatch => {
