@@ -1,7 +1,7 @@
 import React from 'react';
 import {Header, Icon, Overlay, Divider, Button} from 'react-native-elements';
 import {View, Text} from 'react-native';
-import {Link} from 'react-router-native';
+import {Link, withRouter} from 'react-router-native';
 
 
 class NavBar extends React.Component{
@@ -15,6 +15,9 @@ class NavBar extends React.Component{
     }
 
     render(){
+        if(this.props.location.pathname === '/'){
+            return null;
+        }
         return(
             <View>
                 <Header
@@ -86,4 +89,4 @@ class NavBar extends React.Component{
     }
 }
 
-export default NavBar
+export default withRouter(NavBar);
