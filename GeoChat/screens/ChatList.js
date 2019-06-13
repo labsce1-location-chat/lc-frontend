@@ -1,6 +1,6 @@
 import React from 'react';
-import {  View, TextInput, ActivityIndicator } from 'react-native';
-import {  Text, Button, ThemeProvider, ButtonGroup, ListItem  } from 'react-native-elements';
+import {  View, TextInput, ActivityIndicator, ScrollView } from 'react-native';
+import {  Text, Button, ThemeProvider, ButtonGroup, ListItem } from 'react-native-elements';
 import styles from '../styles/chatListStyles'
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
@@ -102,6 +102,7 @@ class ChatList extends React.Component{
                 />
 
                 { this.state.loading ? <ActivityIndicator size="large" color="#0000ff" /> : null }
+                <ScrollView>
                 {this.state.view === "list" 
                 ?
                 this.state.chatrooms 
@@ -128,6 +129,7 @@ class ChatList extends React.Component{
                 :
                 <Map />
                 }
+                </ScrollView>
                 <Button onPress={this.filterChatrooms} title="filter rooms" />
                 <Button onPress={this.newRoom} title="New Chatroom" />
                 <Button onPress={this.logout} title="Logout" />
