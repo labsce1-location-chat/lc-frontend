@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View,TextInput} from 'react-native';
+import { StyleSheet, View,TextInput, Image} from 'react-native';
 import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 import {FormLabel, FormInput, FormValidationMessage} from 'react'
 import styles from '../styles/createChatroomStyles'
@@ -9,6 +9,7 @@ import TempLogo from '../assets/TempLogo.png';
 // import * as firebase from 'firebase';
 import {test, createChatRoom} from '../Redux/actions/index';
 import {Link} from 'react-router-native';
+import {ImagePicker, Permissions, Constants} from 'expo';
 
 
 
@@ -21,7 +22,8 @@ class CreateChatRoom extends React.Component{
         super();
         this.state = {
           roomName: "",
-
+          roomDescription : "",
+          roomAvatar : "",
         }
     }
 
@@ -30,7 +32,7 @@ class CreateChatRoom extends React.Component{
     newRoom = (userId) => {
       // console.log("newRoom function: ", this.props.user.uid, "chatroom name", this.state.roomName)
       console.log("location", this.props.location)
-      this.props.createChatRoom("ChatRoomOWner", "avatar url", this.state.roomName, this.props.location)
+      this.props.createChatRoom("ChatRoomOWner", "avatar url", this.state.roomName, this.props.location/*, this.state.roomAvatar*/)
       // this.props.history.push(new chatroom)
       // we have to go to the new chatroom.
     }
@@ -46,15 +48,38 @@ class CreateChatRoom extends React.Component{
       this.props.history.push('/chat-list')
     }
 
+    getPermission = async() => {
+      if (Constants.platform.ios) {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    }
+
+    pickImage = async () => {
+      this.getPermission();
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+      });
+  
+      console.log(result);
+  
+      if (!result.cancelled) {
+        this.setState({ roomAvatar: result.uri });
+      }
+    };
+
     render(){
         return(
 
             <View style={styles.container}>
                 <Button title="Go back" onPress={this.goBack} />
-                <Link to="/chat-list" ><Text>Back to Chat list</Text></Link>
-                <Text>This is where you create chat room</Text>
-                <Text>User Id: {this.props.user.uid}</Text>
                 <TextInput style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange} value={this.state.roomName} maxLength={20} />
+                <Button title="Choose your chatroom Image" onPress={this.pickImage} />
+                {this.state.roomAvatar ? <Image source={{uri : this.state.roomAvatar}} style={{width:200, height:200}}/> : null}
                 <Button title="Submit" onPress={this.newRoom} />
             </View>
         )

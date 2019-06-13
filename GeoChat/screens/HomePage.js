@@ -17,7 +17,7 @@ class HomePage extends React.Component {
 
             location:{},
             // switch this to false to actually find your location.
-            development: true
+            development: false 
         }
     }
 

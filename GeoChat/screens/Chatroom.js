@@ -1,10 +1,11 @@
 import React from 'react';
 import {View,  TextInput, StyleSheet} from 'react-native';
-import {  Text, Button, ThemeProvider  } from 'react-native-elements';
+import {  Text, Button, ThemeProvider, ListItem  } from 'react-native-elements';
 import * as firebase from 'firebase';
 import {Link} from 'react-router-native';
 import styles from '../styles/ChatroomStyles'
 import {connect} from 'react-redux';
+import moment from 'moment'
 
 
 class Chatroom extends React.Component{
@@ -35,7 +36,12 @@ class Chatroom extends React.Component{
         }
         const key = firebase.database().ref('/messages/' + this.props.match.params.id).push().key;
         firebase.database().ref('/messages/' + this.props.match.params.id).child(key).update({
-            content : this.state.newMessage
+            content : this.state.newMessage,
+            timestamp : Date.now(),
+            user : {
+                avatar : this.props.user.avatar,
+                userName : this.props.user.userName
+            }
         });
         this.setState({newMessage : ""});
         firebase.database().ref('/typing/'+ this.props.match.params.id).child("Drew Johnson").remove();
@@ -92,16 +98,24 @@ class Chatroom extends React.Component{
         }
     }
 
+    timeFromNow = (timestamp) => {
+        return moment(timestamp).fromNow()
+    }
+
     render(){
         return(
             <View style={styles.container}>
                 <Link to="/chat-list"><Text>Back to chat list</Text></Link>
                 <Text>{this.state.chatroom ? this.state.chatroom.name : "Loading..."}</Text>
                 <Text>{this.state.chatroom ? this.state.chatroom.description : "Loading..."}</Text>
-                {this.state.messages ? this.state.messages.map((message, index) => 
-                    <View key={index}>
-                        <Text>{message.content}</Text>
-                    </View>
+                {this.state.messages ? this.state.messages.map((message, i) => 
+                    <ListItem
+                        key={i}
+                        leftAvatar={{ source: { uri: message.user.avatar } }}
+                        title={message.user.userName}
+                        subtitle={message.content}
+                        rightTitle={this.timeFromNow(message.timestamp)}
+                    />
                 ) : <Text>Loading Messages... or no messages</Text>}
                 <Text>{this.state.typing ? `Someone is typing` : ""}</Text>
                 <TextInput 
