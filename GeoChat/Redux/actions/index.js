@@ -48,11 +48,18 @@ export const setChatRooms = chatrooms => dispatch => {
     dispatch({type: SET_CHATROOMS, payload : chatrooms});
 }
 
-export const createChatRoom = (userName, avatarURL, chatRoomName, location) => dispatch => {
+export const createChatRoom = (userName, avatarURL, chatRoomName, location, roomAvatar) => dispatch => {
 
     dispatch({type : CREATE_CHATROOM, payload: "hello"})
     const key = firebase.database().ref("chatrooms").push().key
-
+    console.log("UPLOADING THE IMAGE NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    uploadImageToFirebase(roomAvatar, key).then(() => {
+      console.log("Successful Upload")
+    })
+    .catch(err => {
+      console.log(err)
+    })
+    
     firebase.database().ref("chatrooms").child(key).update({
       name: chatRoomName,
       description: "user created",
@@ -60,9 +67,17 @@ export const createChatRoom = (userName, avatarURL, chatRoomName, location) => d
       lon: location.lon,
       createdAt: new Date(),
       id: key,
-      numberOfUsers: 0,
+      numberOfUsers: 1,
       userName: userName,
       userAvatar: avatarURL,
+      roomAvatar : ""
     })
+}
+
+uploadImageToFirebase = async(uri, imageName) => { // imageName will be the key created by firebase for the chatroom
+  const response = await fetch(uri);
+  const blob = await response.blob();
+  const ref = firebase.storage().ref('chatroom-avatars').child(imageName);
+  ref.put(blob);
 }
 
