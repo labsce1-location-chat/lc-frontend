@@ -1,6 +1,6 @@
 import React from 'react';
 import {  View, TextInput, ActivityIndicator } from 'react-native';
-import {  Text, Button, ThemeProvider, ButtonGroup  } from 'react-native-elements';
+import {  Text, Button, ThemeProvider, ButtonGroup, ListItem  } from 'react-native-elements';
 import styles from '../styles/chatListStyles'
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
@@ -59,6 +59,28 @@ class ChatList extends React.Component{
         this.props.history.push("/")
     }
 
+    distance(lat1, lon1, lat2, lon2, unit) {
+        if ((lat1 == lat2) && (lon1 == lon2)) {
+            return 0;
+        }
+        else {
+            var radlat1 = Math.PI * lat1/180;
+            var radlat2 = Math.PI * lat2/180;
+            var theta = lon1-lon2;
+            var radtheta = Math.PI * theta/180;
+            var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            if (dist > 1) {
+                dist = 1;
+            }
+            dist = Math.acos(dist);
+            dist = dist * 180/Math.PI;
+            dist = dist * 60 * 1.1515;
+            if (unit=="K") { dist = dist * 1.609344 }
+            if (unit=="N") { dist = dist * 0.8684 }
+            return Math.floor(dist);
+        }
+    }
+
     btn1 = () => <Text
         onPress={() => this.setState({view : "map"})} 
     >Map View</Text>
@@ -86,11 +108,22 @@ class ChatList extends React.Component{
                 ?
                 this.state.chatrooms 
                     ? this.state.chatrooms.map(room => 
-                        <View key={room.id}>
-                            <Text>{room.name}</Text>
-                            <Text>{room.description}</Text>
-                            <Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>
-                        </View>
+                        // <View key={room.id}>
+                        //     <Text>{room.name}</Text>
+                        //     <Text>{room.description}</Text>
+                        //     <Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>
+                        // </View>
+                        <ListItem 
+                            key={room.id}
+                            leftIcon={{name: "chat"}}
+                            title={room.name}
+                            subtitle={room.description}
+                            rightTitle={`${this.distance(this.props.location.lat, room.lat, this.props.location.lon, room.lon)} Miles`}
+                            rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
+                            containerStyle={{width:300}}
+                            bottomDivider={true}
+                            topDivider={true}
+                        />
                     )
                     : 
                     <Text>No Chatrooms in your area</Text>
