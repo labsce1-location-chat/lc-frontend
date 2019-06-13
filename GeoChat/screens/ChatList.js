@@ -59,7 +59,7 @@ class ChatList extends React.Component{
         this.props.history.push("/")
     }
 
-    distance(lat1, lon1, lat2, lon2, unit) {
+    distance(lat1, lon1, lat2, lon2) {
         if ((lat1 == lat2) && (lon1 == lon2)) {
             return 0;
         }
@@ -75,9 +75,7 @@ class ChatList extends React.Component{
             dist = Math.acos(dist);
             dist = dist * 180/Math.PI;
             dist = dist * 60 * 1.1515;
-            if (unit=="K") { dist = dist * 1.609344 }
-            if (unit=="N") { dist = dist * 0.8684 }
-            return Math.floor(dist);
+            return dist < 10 ? Math.round(100*dist)/100 : Math.floor(dist);
         }
     }
 
@@ -118,7 +116,7 @@ class ChatList extends React.Component{
                             leftIcon={{name: "chat"}}
                             title={room.name}
                             subtitle={room.description}
-                            rightTitle={`${this.distance(this.props.location.lat, room.lat, this.props.location.lon, room.lon)} Miles`}
+                            rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
                             rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
                             containerStyle={{width:300}}
                             bottomDivider={true}
