@@ -14,19 +14,18 @@ const initialState = {
     loggedIn : false,
     chatroom: "",
     location:{lat:0, lon:0},
-    chatrooms : {},
+    chatrooms : [],
+    loading: true,
 }
 
 export const reducer = (state = initialState, action) => {
     switch(action.type){
 
         case SIGN_IN:
-            console.log("SIGN IN FUNCTION CALLED", "*********Payload**********", action.payload)
 
             return {...state, user : action.payload, loggedIn : true, location : action.location};
 
         case LOGOUT:
-            console.log("LOGOUT IN FUNCTION CALLED")
             return {...state, loggedIn : false };
 
         case TEST:
