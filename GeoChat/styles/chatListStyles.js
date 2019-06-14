@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         textAlign : "center",
     },
     joinBtn : {
-        backgroundColor : "red",
+        color : "blue",
         fontSize : 20,
     }
 
