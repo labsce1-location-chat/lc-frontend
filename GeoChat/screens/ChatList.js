@@ -29,7 +29,7 @@ class ChatList extends React.Component{
         ref.once('value').then(snap => {
             this.props.setChatRooms(Object.values(snap.val()))
             this.setState({ chatrooms : Object.values(snap.val()) })
-            console.log("Changed state boii", console.log(this.state.chatrooms))
+            // console.log("Changed state boii", console.log(this.state.chatrooms))
             this.setState({loading : false});
         })
         .catch(err => {
