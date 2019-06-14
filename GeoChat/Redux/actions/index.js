@@ -44,8 +44,13 @@ export const test = (payload) => dispatch => {
     dispatch({type : TEST})
 }
 
-export const setChatRooms = chatrooms => dispatch => {
-    dispatch({type: SET_CHATROOMS, payload : chatrooms});
+export const setChatRooms = () => dispatch => {
+    const ref = firebase.database().ref('chatrooms');
+    ref.once('value').then(snap => {
+    console.log("*****what is this coming back from the DB*****", Object.values(snap.val()))
+    dispatch({type: SET_CHATROOMS, payload: Object.values(snap.val()) });
+    })
+    .catch(err => console.log("Error getting chatrooms", err))
 }
 
 export const createChatRoom = (userName, avatarURL, chatRoomName, location, roomAvatar) => dispatch => {

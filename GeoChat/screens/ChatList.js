@@ -16,30 +16,16 @@ class ChatList extends React.Component{
     constructor(){
         super();
         this.state = {
-            chatrooms : [],
-            loading : true,
             view : "list"
         }
     }
 
     getChatrooms = () => {
-        this.setState({loading : true})
-        console.log(this.props)
-        const ref = firebase.database().ref('chatrooms');
-        ref.once('value').then(snap => {
-            this.props.setChatRooms(Object.values(snap.val()))
-            this.setState({ chatrooms : Object.values(snap.val()) })
-            console.log("Changed state boii", console.log(this.state.chatrooms))
-            this.setState({loading : false});
-        })
-        .catch(err => {
-            console.log(err);
-        })
-        // this.props.test();
+        this.props.setChatRooms()
     }
 
     filterChatrooms = () => {
-        console.log(Object.values(this.state.chatrooms))
+      console.log(Object.values(this.state.chatrooms))
     }
 
     componentDidMount(){
@@ -101,17 +87,12 @@ class ChatList extends React.Component{
                     selectedIndex={this.state.view === "list" ? 0 : 1}
                 />
 
-                { this.state.loading ? <ActivityIndicator size="large" color="#0000ff" /> : null }
+                { this.props.loading ? <ActivityIndicator size="large" color="#0000ff" /> : null }
                 <ScrollView>
                 {this.state.view === "list" 
                 ?
-                this.state.chatrooms 
-                    ? this.state.chatrooms.map(room => 
-                        // <View key={room.id}>
-                        //     <Text>{room.name}</Text>
-                        //     <Text>{room.description}</Text>
-                        //     <Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>
-                        // </View>
+                this.props.chatrooms 
+                    ? this.props.chatrooms.map(room => 
                         <ListItem 
                             key={room.id}
                             leftIcon={{name: "chat"}}
@@ -140,7 +121,6 @@ class ChatList extends React.Component{
 }
 
 const mapStateToProps = state => {
-    console.log("state from chatlist ", state)
     return {
         test : state.test,
         user : state.user,
