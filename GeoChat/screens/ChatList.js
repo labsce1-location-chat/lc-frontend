@@ -22,6 +22,7 @@ class ChatList extends React.Component{
 
     getChatrooms = () => {
         this.props.setChatRooms()
+
     }
 
     filterChatrooms = () => {
