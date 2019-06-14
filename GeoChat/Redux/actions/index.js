@@ -48,17 +48,16 @@ export const setChatRooms = chatrooms => dispatch => {
     dispatch({type: SET_CHATROOMS, payload : chatrooms});
 }
 
-export const createChatRoom = (userName, avatarURL, chatRoomName, location, roomAvatar) => dispatch => {
+export const createChatRoom = (userName, avatarURL, chatRoomName, location/*, roomAvatar*/) => dispatch => {
 
     dispatch({type : CREATE_CHATROOM, payload: "hello"})
     const key = firebase.database().ref("chatrooms").push().key
-    console.log("UPLOADING THE IMAGE NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    uploadImageToFirebase(roomAvatar, key).then(() => {
-      console.log("Successful Upload")
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    // uploadImageToFirebase(roomAvatar, key).then(() => {
+    //   console.log("Successful Upload")
+    // })
+    // .catch(err => {
+    //   console.log(err)
+    // })
     
     firebase.database().ref("chatrooms").child(key).update({
       name: chatRoomName,
