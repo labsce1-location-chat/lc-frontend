@@ -1,6 +1,6 @@
 import React from 'react';
-import {View,  TextInput, StyleSheet, ScrollView} from 'react-native';
-import {  Text, Button, ThemeProvider, ListItem, Input  } from 'react-native-elements';
+import {View,  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Keyboard} from 'react-native';
+import {  Text, Button, ThemeProvider, ListItem, Input } from 'react-native-elements';
 import * as firebase from 'firebase';
 import {Link} from 'react-router-native';
 import styles from '../styles/ChatroomStyles'
@@ -29,6 +29,7 @@ class Chatroom extends React.Component{
         }
 
     sendMessage = () => {
+        Keyboard.dismiss();
         if(this.state.newMessage.length === 0){
             this.setState({error : 'Please input a message'});
             setTimeout(()=>{this.setState({error : ""})}, 2500);
@@ -104,7 +105,8 @@ class Chatroom extends React.Component{
 
     render(){
         return(
-            <View style={styles.container}>
+
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <Link to="/chat-list"><Text>Back to chat list</Text></Link>
                 <Text>{this.state.chatroom ? this.state.chatroom.name : "Loading..."}</Text>
                 <Text>{this.state.chatroom ? this.state.chatroom.description : "Loading..."}</Text>
@@ -135,7 +137,7 @@ class Chatroom extends React.Component{
                 />
                 <Text>{this.state.error}</Text>
                 <Button onPress={this.sendMessage} title="Send Message" />
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 
