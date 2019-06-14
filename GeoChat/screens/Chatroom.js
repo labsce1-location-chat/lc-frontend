@@ -2,7 +2,6 @@ import React from 'react';
 import {View,  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Keyboard} from 'react-native';
 import {  Text, Button, ThemeProvider, ListItem, Input } from 'react-native-elements';
 import * as firebase from 'firebase';
-import {Link} from 'react-router-native';
 import styles from '../styles/ChatroomStyles'
 import {connect} from 'react-redux';
 import moment from 'moment'
@@ -107,7 +106,6 @@ class Chatroom extends React.Component{
         return(
 
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-                <Link to="/chat-list"><Text>Back to chat list</Text></Link>
                 <Text>{this.state.chatroom ? this.state.chatroom.name : "Loading..."}</Text>
                 <Text>{this.state.chatroom ? this.state.chatroom.description : "Loading..."}</Text>
                 <ScrollView style={{height: "90%"}}>
@@ -122,12 +120,6 @@ class Chatroom extends React.Component{
                     ) : <Text>Loading Messages... or no messages</Text>}
                 </ScrollView>
                 <Text>{this.state.typing ? `Someone is typing` : ""}</Text>
-                {/* <TextInput 
-                    style={styles.input}
-                    value={this.state.newMessage} 
-                    onChangeText={(text) => this.handleChange(text)} 
-                    placeholder="Your Message" 
-                /> */}
                 <Input
                     style={styles.input}
                     placeholder='Your Message'
