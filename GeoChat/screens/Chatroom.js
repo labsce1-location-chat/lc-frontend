@@ -1,6 +1,6 @@
 import React from 'react';
-import {View,  TextInput, StyleSheet} from 'react-native';
-import {  Text, Button, ThemeProvider, ListItem  } from 'react-native-elements';
+import {View,  TextInput, StyleSheet, ScrollView} from 'react-native';
+import {  Text, Button, ThemeProvider, ListItem, Input  } from 'react-native-elements';
 import * as firebase from 'firebase';
 import {Link} from 'react-router-native';
 import styles from '../styles/ChatroomStyles'
@@ -26,7 +26,7 @@ class Chatroom extends React.Component{
         this.messageListener();
         this.chattingListener();
         this.typingOffListener();
-    }
+        }
 
     sendMessage = () => {
         if(this.state.newMessage.length === 0){
@@ -108,21 +108,30 @@ class Chatroom extends React.Component{
                 <Link to="/chat-list"><Text>Back to chat list</Text></Link>
                 <Text>{this.state.chatroom ? this.state.chatroom.name : "Loading..."}</Text>
                 <Text>{this.state.chatroom ? this.state.chatroom.description : "Loading..."}</Text>
-                {this.state.messages ? this.state.messages.map((message, i) => 
-                    <ListItem
-                        key={i}
-                        leftAvatar={{ source: { uri: message.user.avatar } }}
-                        title={message.user.userName}
-                        subtitle={message.content}
-                        rightTitle={this.timeFromNow(message.timestamp)}
-                    />
-                ) : <Text>Loading Messages... or no messages</Text>}
+                <ScrollView style={{height: "90%"}}>
+                    {this.state.messages ? this.state.messages.map((message, i) => 
+                        <ListItem
+                            key={i}
+                            leftAvatar={{ source: { uri: message.user.avatar } }}
+                            title={message.user.userName}
+                            subtitle={message.content}
+                            rightTitle={this.timeFromNow(message.timestamp)}
+                        />
+                    ) : <Text>Loading Messages... or no messages</Text>}
+                </ScrollView>
                 <Text>{this.state.typing ? `Someone is typing` : ""}</Text>
-                <TextInput 
+                {/* <TextInput 
                     style={styles.input}
                     value={this.state.newMessage} 
                     onChangeText={(text) => this.handleChange(text)} 
                     placeholder="Your Message" 
+                /> */}
+                <Input
+                    style={styles.input}
+                    placeholder='Your Message'
+                    leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+                    onChangeText={(text) => this.handleChange(text)} 
+                    value={this.state.newMessage} 
                 />
                 <Text>{this.state.error}</Text>
                 <Button onPress={this.sendMessage} title="Send Message" />

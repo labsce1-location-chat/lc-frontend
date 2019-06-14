@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {MapView} from 'expo';
+import {MapView, Overlay} from 'expo';
 import {connect} from 'react-redux';
 import TempLogo from '../../assets/TempLogo.png';
 import {Link} from 'react-router-native';
@@ -11,7 +11,8 @@ class Map extends React.Component{
         this.state = {
             chatroom : {
 
-            }
+            },
+            open : false,
         }
     }
     render(){
@@ -61,7 +62,9 @@ class Map extends React.Component{
                 :
                     null
                 }
-                    
+                {/* <Overlay isVisible={this.state.open}>
+                    <Text></Text>
+                </Overlay> */}
             </View>
         );
     }

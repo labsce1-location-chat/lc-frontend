@@ -21,9 +21,9 @@ class ChatList extends React.Component{
         }
     }
 
-    getChatrooms = async() => {
-        await this.props.setChatRooms();
-        this.setState({loading : false})
+    getChatrooms = () => {
+        this.props.setChatRooms()
+
     }
 
     filterChatrooms = () => {
