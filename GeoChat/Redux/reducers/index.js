@@ -5,6 +5,7 @@ import {SIGN_IN,
         SET_CHATROOMS,
         CREATE_CHATROOM,
         LOGOUT,
+        UPDATE_USER, 
        } from '../actions/index';
 
 
@@ -35,6 +36,8 @@ export const reducer = (state = initialState, action) => {
             return {...state, chatrooms : action.payload}
 
         case CREATE_CHATROOM:
+            return {...state, chatrooms: [...state.chatrooms, action.payload.chatRoomData], user: {...state.user, currentRoom: action.payload.roomKey}}
+        case UPDATE_USER:
             return {...state, chatrooms: [...state.chatrooms, action.payload.chatRoomData], user: {...state.user, currentRoom: action.payload.roomKey}}
         case LOGOUT:
             return {...state, test : "logout is true"}

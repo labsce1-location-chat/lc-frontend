@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
 
-import {test, setChatRooms, createChatRoom, handleLogOut} from '../Redux/actions/index';
+import {test, setChatRooms, createChatRoom, handleLogOut, updateUserChatroom} from '../Redux/actions/index';
 
 
 import Map from '../components/ChatList/Map'
@@ -44,6 +44,7 @@ class ChatList extends React.Component{
     goToRoom = (id) => {
       console.log("This is getting pressed somehow")
       this.props.history.push(`/chatroom/${id}`)
+      this.props.updateUserChatroom("id")
     }
 
 
@@ -143,4 +144,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {test, setChatRooms, createChatRoom,handleLogOut})(ChatList);
+export default connect(mapStateToProps, {test, setChatRooms, createChatRoom,handleLogOut, updateUserChatroom})(ChatList);

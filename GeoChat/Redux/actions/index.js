@@ -7,6 +7,7 @@ export const TEST = "TEST";
 export const SET_CHATROOMS = "SET_CHATROOMS"
 export const CREATE_CHATROOM = "CREATE_CHATROOM"
 export const LOGOUT = "LOGOUT"
+export const UPDATE_USER = "UPDATE_USER"
 
 
 
@@ -54,6 +55,8 @@ export const setChatRooms = () => dispatch => {
     .catch(err => console.log("Error getting chatrooms", err))
 }
 
+
+
 export const createChatRoom = (userName, avatarURL, userID, chatRoomName, location, roomAvatar) => dispatch => {
      
 
@@ -78,7 +81,7 @@ export const createChatRoom = (userName, avatarURL, userID, chatRoomName, locati
       roomAvatar : ""
     })
 
-
+ 
 
 
     const chatroom = firebase.database().ref(`chatrooms/${key}`)
@@ -95,3 +98,7 @@ uploadImageToFirebase = async(uri, imageName) => { // imageName will be the key 
   ref.put(blob);
 }
 
+
+export const updateUserChatroom = (chatRoomID) => {
+  console.log("updating the place where the user is.")
+}
