@@ -41,10 +41,10 @@ class ChatList extends React.Component{
       // this.props.createChatRoom(this.props.user.uid)
     }
 
-    goToRoom = (id) => {
+    goToRoom = (roomID) => {
       console.log("This is getting pressed somehow")
-      this.props.history.push(`/chatroom/${id}`)
-      this.props.updateUserChatroom("id")
+      this.props.history.push(`/chatroom/${roomID}`)
+      this.props.updateUserChatroom(roomID, this.props.user.id)
     }
 
 

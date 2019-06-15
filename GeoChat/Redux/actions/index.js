@@ -80,10 +80,6 @@ export const createChatRoom = (userName, avatarURL, userID, chatRoomName, locati
       userAvatar: avatarURL,
       roomAvatar : ""
     })
-
- 
-
-
     const chatroom = firebase.database().ref(`chatrooms/${key}`)
       chatroom.once("value")
       .then(snapshot => {
@@ -99,6 +95,9 @@ uploadImageToFirebase = async(uri, imageName) => { // imageName will be the key 
 }
 
 
-export const updateUserChatroom = (chatRoomID) => {
-  console.log("updating the place where the user is.")
+export const updateUserChatroom = (chatRoomID, userID) => dispatch => {
+  firebase.database().ref("users").child(`${userID}`).update({
+    currentRoom: chatRoomID
+  })
+  dispatch({type: UPDATE_USER, payload: chatRoomID})
 }
