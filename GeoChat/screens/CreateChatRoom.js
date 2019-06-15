@@ -31,13 +31,8 @@ class CreateChatRoom extends React.Component{
 
     newRoom = (userId) => {
       const {userName, avatar, id} = this.props.user 
-      // console.log("newRoom function: ", this.props.user.uid, "chatroom name", this.state.roomName)
+      console.log("user id or key", id)
       this.props.createChatRoom(userName, avatar, id, this.state.roomName, this.props.location)
-      //
-      // this down here is  reference to send the user to the chatroom they just created
-       // rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
-      // this.props.history.push(new chatroom)
-      // we have to go to the new chatroom.
     }
 
     handleChange = (e) => {

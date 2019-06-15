@@ -35,7 +35,7 @@ export const reducer = (state = initialState, action) => {
             return {...state, chatrooms : action.payload}
 
         case CREATE_CHATROOM:
-            return {...state, test : "this is the create chatroom reducer"}
+            return {...state, chatrooms: [...state.chatrooms, action.payload.chatRoomData], user: {...state.user, currentRoom: action.payload.roomKey}}
         case LOGOUT:
             return {...state, test : "logout is true"}
         default:

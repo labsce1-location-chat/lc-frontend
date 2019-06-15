@@ -18,9 +18,11 @@ export const handleSignIn = (payload, location) => dispatch => {
              dateCreated: new Date(),
              id: key,
              joinedRooms: [],
+             currentRoom: "",
              lat: location.lat,
              lon: location.lon,
              accountType: "temp",
+             // this will be a string with the current room they are in.
            })
          // there's got to be a better way to do this. 
         const db = firebase.database().ref(`users/${key}`)
@@ -47,22 +49,20 @@ export const test = (payload) => dispatch => {
 export const setChatRooms = () => dispatch => {
     const ref = firebase.database().ref('chatrooms');
     ref.once('value').then(snap => {
-    console.log("*****what is this coming back from the DB*****", Object.values(snap.val()))
     dispatch({type: SET_CHATROOMS, payload: Object.values(snap.val()) });
     })
     .catch(err => console.log("Error getting chatrooms", err))
 }
 
 export const createChatRoom = (userName, avatarURL, userID, chatRoomName, location, roomAvatar) => dispatch => {
+     
 
     const key = firebase.database().ref("chatrooms").push().key
-    // uploadImageToFirebase(roomAvatar, key).then(() => {
-    //   console.log("Successful Upload")
-    // })
-    // .catch(err => {
-    //   console.log(err)
-    // })
-    
+    const user = firebase.database().ref('users')
+    firebase.database().ref("users").child(`${userID}`).update({
+      currentRoom: key
+    })
+
     firebase.database().ref("chatrooms").child(key).update({
       name: chatRoomName,
       description: "user created",
@@ -77,11 +77,14 @@ export const createChatRoom = (userName, avatarURL, userID, chatRoomName, locati
       roomAvatar : ""
     })
 
-    // const chatroom = firebase.database().ref(`chatrooms/${key}`)
-    //   chatroom.once("value")
-    //   .then(snapshot => {
-    //     dispatch({type : CREATE_CHATROOM, payload: snapshot})
-    //   })
+
+
+
+    const chatroom = firebase.database().ref(`chatrooms/${key}`)
+      chatroom.once("value")
+      .then(snapshot => {
+        dispatch({type : CREATE_CHATROOM, payload: {chatRoomData: snapshot, roomKey: chatroom}})
+      })
 }
 
 uploadImageToFirebase = async(uri, imageName) => { // imageName will be the key created by firebase for the chatroom
