@@ -57,8 +57,9 @@ export const setChatRooms = () => dispatch => {
 export const createChatRoom = (userName, avatarURL, userID, chatRoomName, location, roomAvatar) => dispatch => {
      
 
+    // I'm creating the key for the new chatroom
     const key = firebase.database().ref("chatrooms").push().key
-    const user = firebase.database().ref('users')
+    // then add it to the user's current room field
     firebase.database().ref("users").child(`${userID}`).update({
       currentRoom: key
     })

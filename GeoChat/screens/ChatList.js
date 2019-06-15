@@ -41,6 +41,13 @@ class ChatList extends React.Component{
       // this.props.createChatRoom(this.props.user.uid)
     }
 
+    goToRoom = (id) => {
+      console.log("This is getting pressed somehow")
+      this.props.history.push(`/chatroom/${id}`)
+    }
+
+
+
     logout = () => {
         console.log("the props during logout", this.props)
         this.props.handleLogOut()
@@ -95,17 +102,22 @@ class ChatList extends React.Component{
                 ?
                 this.props.chatrooms 
                     ? this.props.chatrooms.map(room => 
-                        <ListItem 
-                            key={room.id}
-                            leftIcon={{name: "chat"}}
-                            title={room.name}
-                            subtitle={room.description}
-                            rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
-                            rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
-                            containerStyle={{width:300}}
-                            bottomDivider={true}
-                            topDivider={true}
-                        />
+                        {
+                          return <View>
+                                  <ListItem 
+                                     key={room.id}
+                                     leftIcon={{name: "chat"}}
+                                    title={room.name}
+                                     subtitle={room.description}
+                                     rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
+                                     rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
+                                     containerStyle={{width:300}}
+                                    bottomDivider={true}
+                                     topDivider={true}
+                                   />
+                                  <Button onPress={() => this.goToRoom(room.id)} title="Join" />
+                                </View>
+                        }
                     )
                     : 
                     <Text>No Chatrooms in your area</Text>

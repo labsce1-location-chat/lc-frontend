@@ -31,15 +31,14 @@ class CreateChatRoom extends React.Component{
 
     newRoom = (userId) => {
       const {userName, avatar, id} = this.props.user 
-      console.log("user id or key", id)
       this.props.createChatRoom(userName, avatar, id, this.state.roomName, this.props.location)
+      this.props.history.push("/chat-list")
     }
 
     handleChange = (e) => {
 
       this.setState({roomName: e})
       // console.log("", e)
-      console.log("state change", this.state.roomName)
     }
 
     goBack = () => {
