@@ -1,8 +1,7 @@
 import React from 'react';
-import {View,  TextInput, StyleSheet} from 'react-native';
-import {  Text, Button, ThemeProvider, ListItem  } from 'react-native-elements';
+import {View,  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Keyboard} from 'react-native';
+import {  Text, Button, ThemeProvider, ListItem, Input } from 'react-native-elements';
 import * as firebase from 'firebase';
-import {Link} from 'react-router-native';
 import styles from '../styles/ChatroomStyles'
 import {connect} from 'react-redux';
 import moment from 'moment'
@@ -26,9 +25,10 @@ class Chatroom extends React.Component{
         this.messageListener();
         this.chattingListener();
         this.typingOffListener();
-    }
+        }
 
     sendMessage = () => {
+        Keyboard.dismiss();
         if(this.state.newMessage.length === 0){
             this.setState({error : 'Please input a message'});
             setTimeout(()=>{this.setState({error : ""})}, 2500);
@@ -104,29 +104,32 @@ class Chatroom extends React.Component{
 
     render(){
         return(
-            <View style={styles.container}>
-                <Link to="/chat-list"><Text>Back to chat list</Text></Link>
+
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <Text>{this.state.chatroom ? this.state.chatroom.name : "Loading..."}</Text>
                 <Text>{this.state.chatroom ? this.state.chatroom.description : "Loading..."}</Text>
-                {this.state.messages ? this.state.messages.map((message, i) => 
-                    <ListItem
-                        key={i}
-                        leftAvatar={{ source: { uri: message.user.avatar } }}
-                        title={message.user.userName}
-                        subtitle={message.content}
-                        rightTitle={this.timeFromNow(message.timestamp)}
-                    />
-                ) : <Text>Loading Messages... or no messages</Text>}
+                <ScrollView style={{height: "90%"}}>
+                    {this.state.messages ? this.state.messages.map((message, i) => 
+                        <ListItem
+                            key={i}
+                            leftAvatar={{ source: { uri: message.user.avatar } }}
+                            title={message.user.userName}
+                            subtitle={message.content}
+                            rightTitle={this.timeFromNow(message.timestamp)}
+                        />
+                    ) : <Text>Loading Messages... or no messages</Text>}
+                </ScrollView>
                 <Text>{this.state.typing ? `Someone is typing` : ""}</Text>
-                <TextInput 
+                <Input
                     style={styles.input}
-                    value={this.state.newMessage} 
+                    placeholder='Your Message'
+                    leftIcon={{ type: 'font-awesome', name: 'envelope' }}
                     onChangeText={(text) => this.handleChange(text)} 
-                    placeholder="Your Message" 
+                    value={this.state.newMessage} 
                 />
                 <Text>{this.state.error}</Text>
                 <Button onPress={this.sendMessage} title="Send Message" />
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 

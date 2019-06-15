@@ -26,6 +26,7 @@ class NavBar extends React.Component{
                         <Icon 
                             onPress={()=>this.setState({open : true})} 
                             name="menu"
+                            size={50}
                         />
                     }
                     centerComponent={{ text: 'GeoChat', style: { color: '#fff' } }}

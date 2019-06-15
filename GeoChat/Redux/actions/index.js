@@ -56,13 +56,12 @@ export const setChatRooms = () => dispatch => {
 export const createChatRoom = (userName, avatarURL, userID, chatRoomName, location, roomAvatar) => dispatch => {
 
     const key = firebase.database().ref("chatrooms").push().key
-    console.log("UPLOADING THE IMAGE NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    uploadImageToFirebase(roomAvatar, key).then(() => {
-      console.log("Successful Upload")
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    // uploadImageToFirebase(roomAvatar, key).then(() => {
+    //   console.log("Successful Upload")
+    // })
+    // .catch(err => {
+    //   console.log(err)
+    // })
     
     firebase.database().ref("chatrooms").child(key).update({
       name: chatRoomName,

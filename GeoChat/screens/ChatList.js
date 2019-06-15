@@ -16,7 +16,8 @@ class ChatList extends React.Component{
     constructor(){
         super();
         this.state = {
-            view : "list"
+            view : "list",
+            loading : true,
         }
     }
 
@@ -78,18 +79,18 @@ class ChatList extends React.Component{
         return(
             <View style={styles.container}>
                 <Text h3>Join a Chat Room</Text>
+
                 <TextInput 
                     value="Search by zipcode"
                 />
-                <Text>{this.props.user.userName}</Text>
 
                 <ButtonGroup 
                     buttons={[{element : this.btn2}, {element : this.btn1}]}
                     selectedIndex={this.state.view === "list" ? 0 : 1}
                 />
 
-                { this.props.loading ? <ActivityIndicator size="large" color="#0000ff" /> : null }
                 <ScrollView>
+                {!this.props.chatrooms.length ? <ActivityIndicator size="large" color="#0000ff" /> : null}
                 {this.state.view === "list" 
                 ?
                 this.props.chatrooms 
@@ -112,7 +113,6 @@ class ChatList extends React.Component{
                 <Map />
                 }
                 </ScrollView>
-                <Button onPress={this.filterChatrooms} title="filter rooms" />
                 <Button onPress={this.newRoom} title="New Chatroom" />
                 <Button onPress={this.logout} title="Logout" />
 
