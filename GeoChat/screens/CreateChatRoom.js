@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View,TextInput, Image} from 'react-native';
+import { StyleSheet, View,TextInput, Image, KeyboardAvoidingView} from 'react-native';
 import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 import {FormLabel, FormInput, FormValidationMessage} from 'react'
 import styles from '../styles/createChatroomStyles'
