@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.labsc1_geochat.by.drew.courtney.chad"
+    },
+    "android": {
+      "package": "com.labsc1_geochat.by.drew.courtney.chad"
     }
   }
 }
