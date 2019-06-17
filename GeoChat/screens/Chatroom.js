@@ -1,10 +1,11 @@
 import React from 'react';
-import {View,  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Keyboard, ActivityIndicator} from 'react-native';
+import {View,  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Keyboard, ActivityIndicator, Image} from 'react-native';
 import {  Text, Button, ThemeProvider, ListItem, Input } from 'react-native-elements';
 import * as firebase from 'firebase';
 import styles from '../styles/ChatroomStyles'
 import {connect} from 'react-redux';
-import moment from 'moment'
+import moment from 'moment';
+import CustomLoad from '../assets/TempLogo.gif'
 
 
 class Chatroom extends React.Component{

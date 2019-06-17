@@ -27,7 +27,7 @@ class ChatList extends React.Component{
     }
 
     filterChatrooms = () => {
-      console.log(Object.values(this.state.chatrooms))
+        console.log(Object.values(this.state.chatrooms))
     }
 
     componentDidMount(){
