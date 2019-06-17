@@ -2,7 +2,8 @@ import React from 'react';
 import {Header, Icon, Overlay, Divider, Button} from 'react-native-elements';
 import {View, Text} from 'react-native';
 import {Link, withRouter} from 'react-router-native';
-
+import {connect} from 'react-redux';
+import {handleLogOut} from '../../Redux/actions/index';
 
 class NavBar extends React.Component{
     state = {
@@ -13,6 +14,19 @@ class NavBar extends React.Component{
         this.setState({open : false});
         this.props.history.push(`/${path}`)
     }
+
+    logout = () => {
+        console.log("the props during logout", this.props)
+        this.props.handleLogOut()
+        this.props.history.push("/")
+    }
+
+    newRoom = () => {
+        // this.props.history.push("/create_chat_room")
+          console.log('user id', this.props.history.push("/create_chat_room"))
+          this.props.history.push('/create_chat_room')
+        // this.props.createChatRoom(this.props.user.uid)
+      }
 
     render(){
         if(this.props.location.pathname === '/'){
@@ -36,7 +50,7 @@ class NavBar extends React.Component{
                     isVisible={this.state.open}
                     onBackdropPress={() => this.setState({ open: false })}
                 >
-                    <View onPress={()=>this.setState({open : false})}>
+                    <View onPress={()=>this.setState({open : false})} style={{justifyContent : "space-between"}}>
                         <Link to="/chat-list">
                             <Button
                                 icon={
@@ -82,6 +96,29 @@ class NavBar extends React.Component{
                                     onPress={()=>this.redirect('settings')}
                                 />
                         </Link>
+
+                        <Button 
+                            icon={
+                                <Icon
+                                name="report"
+                                size={20}
+                                color="red"
+                                />
+                            }
+                            onPress={this.logout} 
+                            title="Logout" 
+                        />
+                        <Button 
+                            icon={
+                                <Icon
+                                name="add"
+                                size={15}
+                                color="white"
+                                />
+                            }
+                            onPress={this.newRoom} 
+                            title="New Chatroom" 
+                        />
                     </View>
 
                 </Overlay>
@@ -90,4 +127,14 @@ class NavBar extends React.Component{
     }
 }
 
-export default withRouter(NavBar);
+const mapStateToProps = state => {
+    return {
+        test : state.test,
+        user : state.user,
+        loggedIn : state.loggedIn,
+        location : state.location,
+        chatrooms : state.chatrooms,
+    };
+};
+
+export default connect(mapStateToProps, {handleLogOut})(withRouter(NavBar));

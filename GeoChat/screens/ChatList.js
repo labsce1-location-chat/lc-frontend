@@ -41,12 +41,6 @@ class ChatList extends React.Component{
       // this.props.createChatRoom(this.props.user.uid)
     }
 
-    logout = () => {
-        console.log("the props during logout", this.props)
-        this.props.handleLogOut()
-        this.props.history.push("/")
-    }
-
     distance(lat1, lon1, lat2, lon2) {
         if ((lat1 == lat2) && (lon1 == lon2)) {
             return 0;
@@ -113,8 +107,6 @@ class ChatList extends React.Component{
                 <Map />
                 }
                 </ScrollView>
-                <Button onPress={this.newRoom} title="New Chatroom" />
-                <Button onPress={this.logout} title="Logout" />
 
             </View>
         )
