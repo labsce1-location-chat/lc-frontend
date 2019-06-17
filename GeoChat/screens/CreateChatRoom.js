@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View,TextInput, Image} from 'react-native';
+import { StyleSheet, View,TextInput, Image, KeyboardAvoidingView} from 'react-native';
 import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 import {FormLabel, FormInput, FormValidationMessage} from 'react'
 import styles from '../styles/createChatroomStyles'
@@ -31,20 +31,14 @@ class CreateChatRoom extends React.Component{
 
     newRoom = (userId) => {
       const {userName, avatar, id} = this.props.user 
-      // console.log("newRoom function: ", this.props.user.uid, "chatroom name", this.state.roomName)
       this.props.createChatRoom(userName, avatar, id, this.state.roomName, this.props.location)
-      //
-      // this down here is  reference to send the user to the chatroom they just created
-       // rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
-      // this.props.history.push(new chatroom)
-      // we have to go to the new chatroom.
+      this.props.history.push("/chat-list")
     }
 
     handleChange = (e) => {
 
       this.setState({[e.target.name] : e.target.value})
       // console.log("", e)
-      console.log("state change", this.state.roomName)
     }
 
     goBack = () => {

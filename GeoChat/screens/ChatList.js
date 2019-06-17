@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
 
-import {test, setChatRooms, createChatRoom, handleLogOut} from '../Redux/actions/index';
+import {test, setChatRooms, createChatRoom, handleLogOut, updateUserChatroom} from '../Redux/actions/index';
 
 
 import Map from '../components/ChatList/Map'
@@ -39,6 +39,20 @@ class ChatList extends React.Component{
         console.log('user id', this.props.history.push("/create_chat_room"))
         this.props.history.push('/create_chat_room')
       // this.props.createChatRoom(this.props.user.uid)
+    }
+
+    goToRoom = (roomID) => {
+      console.log("This is getting pressed somehow")
+      this.props.history.push(`/chatroom/${roomID}`)
+      this.props.updateUserChatroom(roomID, this.props.user.id)
+    }
+
+
+
+    logout = () => {
+        console.log("the props during logout", this.props)
+        this.props.handleLogOut()
+        this.props.history.push("/")
     }
 
     distance(lat1, lon1, lat2, lon2) {
@@ -89,17 +103,22 @@ class ChatList extends React.Component{
                 ?
                 this.props.chatrooms 
                     ? this.props.chatrooms.map(room => 
-                        <ListItem 
-                            key={room.id}
-                            leftIcon={{name: "chat"}}
-                            title={room.name}
-                            subtitle={room.description}
-                            rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
-                            rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
-                            containerStyle={{width:300}}
-                            bottomDivider={true}
-                            topDivider={true}
-                        />
+                        {
+                          return <View>
+                                  <ListItem 
+                                        key={room.id}
+                                        leftIcon={{name: "chat"}}
+                                        title={room.name}
+                                        subtitle={room.description}
+                                        rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
+                                        rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
+                                        containerStyle={{width:300}}
+                                        bottomDivider={true}
+                                        topDivider={true}
+                                   />
+                                  <Button onPress={() => this.goToRoom(room.id)} title="Join" />
+                                </View>
+                        }
                     )
                     : 
                     <Text>No Chatrooms in your area</Text>
@@ -123,4 +142,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {test, setChatRooms, createChatRoom,handleLogOut})(ChatList);
+export default connect(mapStateToProps, {test, setChatRooms, createChatRoom,handleLogOut, updateUserChatroom})(ChatList);
