@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {MapView, Overlay} from 'expo';
+import {MapView} from 'expo';
+import {Overlay, Button} from 'react-native-elements';
 import {connect} from 'react-redux';
 import TempLogo from '../../assets/TempLogo.png';
 import {Link} from 'react-router-native';
@@ -14,6 +15,11 @@ class Map extends React.Component{
             },
             open : false,
         }
+    }
+
+    setChatroom = room => {
+        this.setState({chatroom : room})
+        this.setState({open : true})
     }
     render(){
         return(
@@ -44,24 +50,21 @@ class Map extends React.Component{
                             coordinate={{latitude : room.lat, longitude: room.lon}}
                             key={room.id}
                             image={TempLogo}
-                            onPress={() => {this.setState({chatroom : room})}}
+                            onPress={() => this.setChatroom(room)}
                         />
                         )
                     :
                     null
                     }
                 </MapView>
-                {this.state.chatroom 
-                ?
-                    <View style={{flex : 1, justifyContent:"center", alignItems:"center", width:"100%"}}>
-                        <Text>Chatroom Details</Text>
+
+                <Overlay onBackdropPress={() => this.setState({ open: false })} isVisible={this.state.open}>
+                    <View>
                         <Text>{this.state.chatroom.name}</Text>
                         <Text>{this.state.chatroom.description}</Text>
-                        <Link to={`/chatroom/${this.state.chatroom.id}`}><Text>Join {this.state.chatroom.name}</Text></Link>
+                        <Link to={`/chatroom/${this.state.chatroom.id}`}><Button title={`Join ${this.state.chatroom.name}`}/></Link>
                     </View>
-                :
-                    null
-                }
+                </Overlay>
                 {/* <Overlay isVisible={this.state.open}>
                     <Text></Text>
                 </Overlay> */}

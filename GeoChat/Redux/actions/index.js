@@ -8,6 +8,7 @@ export const SET_CHATROOMS = "SET_CHATROOMS"
 export const CREATE_CHATROOM = "CREATE_CHATROOM"
 export const LOGOUT = "LOGOUT"
 export const UPDATE_USER = "UPDATE_USER"
+export const UPDATE_CHATLIST = "UPDATE_CHATLIST"
 
 
 
@@ -41,7 +42,10 @@ export const userLogout = (user) => dispatch => {
 }
 
 export const handleLogOut = (user, location) => dispatch => {
-    dispatch({type : LOGOUT, payload: user})
+  if(user.accountType === "temp"){
+    firebase.database().ref('users').child(user.id).remove();
+  }
+  dispatch({type : LOGOUT, payload: user})
 }
 export const test = (payload) => dispatch => {
     dispatch({type : TEST})
@@ -100,4 +104,8 @@ export const updateUserChatroom = (chatRoomID, userID) => dispatch => {
     currentRoom: chatRoomID
   })
   dispatch({type: UPDATE_USER, payload: chatRoomID})
+}
+
+export const updateChatlist = (chatrooms) => dispatch => {
+  dispatch({type : UPDATE_CHATLIST, payload : chatrooms})
 }

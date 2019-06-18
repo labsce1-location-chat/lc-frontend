@@ -1,16 +1,18 @@
 import React from 'react';
-import {View,  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Keyboard} from 'react-native';
+import {View,  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Keyboard, ActivityIndicator, Image} from 'react-native';
 import {  Text, Button, ThemeProvider, ListItem, Input } from 'react-native-elements';
 import * as firebase from 'firebase';
 import styles from '../styles/ChatroomStyles'
 import {connect} from 'react-redux';
-import moment from 'moment'
+import moment from 'moment';
+import CustomLoad from '../assets/TempLogo.gif'
 
 
 class Chatroom extends React.Component{
 
     constructor(){
         super();
+        this.scrollView = null;
         this.state = {
             chatroom : {},
             messages : [],
@@ -25,6 +27,7 @@ class Chatroom extends React.Component{
         this.messageListener();
         this.chattingListener();
         this.typingOffListener();
+        this.scrollToBottom();
         }
 
     sendMessage = () => {
@@ -47,12 +50,13 @@ class Chatroom extends React.Component{
         firebase.database().ref('/typing/'+ this.props.match.params.id).child("Drew Johnson").remove();
     }
 
-    messageListener = () => {
+    messageListener = async() => {
         const loadedMessages = [];
-        firebase.database().ref('messages').child(this.props.match.params.id).on('child_added', snap => {
+        await firebase.database().ref('messages').child(this.props.match.params.id).on('child_added', snap => {
             loadedMessages.push(snap.val())
             this.setState({messages : loadedMessages});
         })
+        this.scrollToBottom();
     }
 
     chattingListener = () => {
@@ -102,14 +106,29 @@ class Chatroom extends React.Component{
         return moment(timestamp).fromNow()
     }
 
+    scrollToBottom() {
+        if(this._scrollView){
+            this._scrollView.scrollTo({x:0, y: this.state.messages.length, animated : true})
+        }else{
+            console.log("Not scrolling")
+        }
+        // scrollTo({x:0, y: this.state.messages.length, animated : true});
+    }
+
+    _setScrollView = scrollView => {
+        // NOTE: scrollView will be null when the component is unmounted
+        this._scrollView = scrollView;
+    };
+
     render(){
         return(
 
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <Text>{this.state.chatroom ? this.state.chatroom.name : "Loading..."}</Text>
                 <Text>{this.state.chatroom ? this.state.chatroom.description : "Loading..."}</Text>
-                <ScrollView style={{height: "90%"}}>
-                    {this.state.messages ? this.state.messages.map((message, i) => 
+                {/* <Button onPress={this.scrollToBottom} title="scroll to bottom" /> */}
+                <ScrollView style={{height: "90%"}} ref={this._setScrollView}>
+                    {this.state.messages.length ? this.state.messages.map((message, i) => 
                         <ListItem
                             key={i}
                             leftAvatar={{ source: { uri: message.user.avatar } }}
@@ -117,7 +136,7 @@ class Chatroom extends React.Component{
                             subtitle={message.content}
                             rightTitle={this.timeFromNow(message.timestamp)}
                         />
-                    ) : <Text>Loading Messages... or no messages</Text>}
+                    ) : <ActivityIndicator size="large" />}
                 </ScrollView>
                 <Text>{this.state.typing ? `Someone is typing` : ""}</Text>
                 <Input
