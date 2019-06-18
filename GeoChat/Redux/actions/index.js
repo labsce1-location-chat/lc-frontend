@@ -42,7 +42,10 @@ export const userLogout = (user) => dispatch => {
 }
 
 export const handleLogOut = (user, location) => dispatch => {
-    dispatch({type : LOGOUT, payload: user})
+  if(user.accountType === "temp"){
+    firebase.database().ref('users').child(user.id).remove();
+  }
+  dispatch({type : LOGOUT, payload: user})
 }
 export const test = (payload) => dispatch => {
     dispatch({type : TEST})

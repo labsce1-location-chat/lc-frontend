@@ -17,7 +17,7 @@ class NavBar extends React.Component{
 
     logout = () => {
         console.log("the props during logout", this.props)
-        this.props.handleLogOut()
+        this.props.handleLogOut(this.props.user)
         this.props.history.push("/")
     }
 
