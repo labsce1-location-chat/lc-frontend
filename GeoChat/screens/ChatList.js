@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
 
-import {test, setChatRooms, createChatRoom, handleLogOut, updateUserChatroom} from '../Redux/actions/index';
+import {test, setChatRooms, createChatRoom, handleLogOut, updateUserChatroom, updateChatlist} from '../Redux/actions/index';
 
 
 import Map from '../components/ChatList/Map'
@@ -18,7 +18,8 @@ class ChatList extends React.Component{
         this.state = {
             view : "list",
             loading : true,
-            distanceFilter : 100,
+            distanceFilter : 50,
+            filteredRooms : [],
         }
     }
 
@@ -35,6 +36,7 @@ class ChatList extends React.Component{
             }
         })
         console.log(final)
+        this.props.updateChatlist(final);
     }
 
     componentDidMount(){
@@ -94,6 +96,7 @@ class ChatList extends React.Component{
         return(
             <View style={styles.container}>
                 <Text h3>Join a Chat Room</Text>
+                <Button onPress={this.filterChatrooms} title="test filter" />
 
                 <TextInput 
                     value="Search by zipcode"
@@ -149,4 +152,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {test, setChatRooms, createChatRoom,handleLogOut, updateUserChatroom})(ChatList);
+export default connect(mapStateToProps, {test, setChatRooms, createChatRoom,handleLogOut, updateUserChatroom, updateChatlist})(ChatList);
