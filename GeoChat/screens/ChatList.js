@@ -18,6 +18,7 @@ class ChatList extends React.Component{
         this.state = {
             view : "list",
             loading : true,
+            distanceFilter : 100,
         }
     }
 
@@ -27,7 +28,13 @@ class ChatList extends React.Component{
     }
 
     filterChatrooms = () => {
-        console.log(Object.values(this.state.chatrooms))
+        let copy = [...this.props.chatrooms];
+        const final = copy.filter(room => {
+            if(this.distance(room.lat, room.lon, this.props.location.lat, this.props.location.lon) < this.state.distanceFilter){
+                return room
+            }
+        })
+        console.log(final)
     }
 
     componentDidMount(){

@@ -21,13 +21,6 @@ class NavBar extends React.Component{
         this.props.history.push("/")
     }
 
-    newRoom = () => {
-        // this.props.history.push("/create_chat_room")
-          console.log('user id', this.props.history.push("/create_chat_room"))
-          this.props.history.push('/create_chat_room')
-        // this.props.createChatRoom(this.props.user.uid)
-      }
-
     render(){
         if(this.props.location.pathname === '/'){
             return null;
@@ -116,7 +109,7 @@ class NavBar extends React.Component{
                                 color="white"
                                 />
                             }
-                            onPress={this.newRoom} 
+                            onPress={()=> this.redirect('create_chat_room')} 
                             title="New Chatroom" 
                         />
                     </View>
