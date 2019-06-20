@@ -142,48 +142,10 @@ class Chatroom extends React.Component{
     
         if (!result.cancelled) {
             this.uploadImage(result.base64)
-            // const response = await fetch(result.uri);
-            // const blob = await response.blob();
-            // const key = `${Date.now()}`;
-            // const ref = firebase.storage().ref().child(`messages/${this.props.match.params.id}/${key}`);
-            // ref.put(blob, {contentType : "image/jpeg"}).then(() => {
-            //         const dbkey = firebase.database().ref('/messages/' + this.props.match.params.id).push().key;
-            //         firebase.database().ref('/messages/' + this.props.match.params.id).child(dbkey).update({
-            //         image : `geochat-ce1.appspot.com/messages/${this.props.match.params.id}/${key}.jpg`,
-            //         timestamp : Date.now(),
-            //         user : {
-            //             avatar : this.props.user.avatar,
-            //             userName : this.props.user.userName
-            //         }
-            //     });
-            // }).catch(err => {
-            //     console.log(err);
-            // })
         }
     };
 
     uploadImage = async base => {
-        // const response = fetch('data:image/jpg;base64,' + base).then(res => res.blob()).then(blob => {
-        //     const key = `${Date.now()}`;
-        //     const ref = firebase.storage().ref().child(`messages/${this.props.match.params.id}/testImage.jpg`);
-        //     ref.put(blob, {contentType : "image/jpeg"}).then(res => {
-        //         console.log("Completed uploaded base64 string")
-        //     })
-        //     .catch(err => console.log(err))
-        // })
-        // .then(() => {
-        //         const dbkey = firebase.database().ref('/messages/' + this.props.match.params.id).push().key;
-        //         firebase.database().ref('/messages/' + this.props.match.params.id).child(dbkey).update({
-        //         image : `geochat-ce1.appspot.com/messages/${this.props.match.params.id}/${key}.jpg`,
-        //         timestamp : Date.now(),
-        //         user : {
-        //             avatar : this.props.user.avatar,
-        //             userName : this.props.user.userName
-        //         }
-        //     });
-        // }).catch(err => {
-        //     console.log(err);
-        // })
         console.log("BASE : ", base)
         await fetch('https://geochat-node-backend.herokuapp.com/upload', {
             method: 'POST',
