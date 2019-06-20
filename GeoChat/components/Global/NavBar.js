@@ -10,6 +10,13 @@ class NavBar extends React.Component{
         open : false,
     }
 
+    keyValues = {
+        "/chat-list" : "Choose a Chatroom",
+        "/chatroom" : "Chatting",
+        "/settings" : "Settings",
+        "/create_chat_4v0-room" : "Create a New Chatroom"
+    }
+
     redirect = path => {
         this.setState({open : false});
         this.props.history.push(`/${path}`)
@@ -22,6 +29,7 @@ class NavBar extends React.Component{
     }
 
     render(){
+        console.log("Current Path" , this.props.location.pathname)
         if(this.props.location.pathname === '/'){
             return null;
         }
@@ -36,7 +44,7 @@ class NavBar extends React.Component{
                             size={50}
                         />
                     }
-                    centerComponent={{ text: 'GeoChat', style: { color: '#fff' } }}
+                    centerComponent={{ text: this.keyValues[this.props.location.pathname], style: { color: '#fff' } }}
                 />
 
                 <Overlay
@@ -123,11 +131,10 @@ class NavBar extends React.Component{
 const mapStateToProps = state => {
     return {
         test : state.test,
-        user : state.user,
-        loggedIn : state.loggedIn,
-        location : state.location,
         chatrooms : state.chatrooms,
+        user : state.user
+        // currentScreen : state.currentScreen,
     };
 };
 
-export default connect(mapStateToProps, {handleLogOut})(withRouter(NavBar));
+export default connect(mapStateToProps, {handleLogOut})(NavBar);

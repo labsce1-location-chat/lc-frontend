@@ -9,6 +9,7 @@ export const CREATE_CHATROOM = "CREATE_CHATROOM"
 export const LOGOUT = "LOGOUT"
 export const UPDATE_USER = "UPDATE_USER"
 export const UPDATE_CHATLIST = "UPDATE_CHATLIST"
+export const CHANGE_SCREEN = "CHANGE_SCREEN"
 
 
 
@@ -109,3 +110,7 @@ export const updateUserChatroom = (chatRoomID, userID) => dispatch => {
 export const updateChatlist = (chatrooms) => dispatch => {
   dispatch({type : UPDATE_CHATLIST, payload : chatrooms})
 }
+
+// export const changeScreen = screen => dispatch => {
+//   dispatch({type : CHANGE_SCREEN, payload : screen})
+// }

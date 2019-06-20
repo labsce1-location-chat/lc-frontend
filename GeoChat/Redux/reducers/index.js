@@ -7,6 +7,7 @@ import {SIGN_IN,
         LOGOUT,
         UPDATE_USER,
         UPDATE_CHATLIST, 
+        CHANGE_SCREEN
        } from '../actions/index';
 
 
@@ -18,6 +19,7 @@ const initialState = {
     location:{lat:0, lon:0},
     chatrooms : [],
     loading: true,
+    // chat-list, chatroom, create-chat-room, settings
 }
 
 export const reducer = (state = initialState, action) => {

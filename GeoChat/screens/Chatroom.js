@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import CustomLoad from '../assets/TempLogo.gif'
 import {ImagePicker, Constants, Permissions} from 'expo';
+import {withRouter} from 'react-router-native';
 
 
 class Chatroom extends React.Component{
@@ -20,6 +21,7 @@ class Chatroom extends React.Component{
             newMessage : "",
             error : '',
             typing : false,
+            uploadingImage : true,
         }
     }
 
@@ -146,6 +148,7 @@ class Chatroom extends React.Component{
     };
 
     uploadImage = async base => {
+        this.setState({uploadingImage : true})
         console.log("BASE : ", base)
         await fetch('https://geochat-node-backend.herokuapp.com/upload', {
             method: 'POST',
@@ -174,6 +177,7 @@ class Chatroom extends React.Component{
         .catch(err => {
             console.log(err)
         })
+        this.setState({uploadingImage : false})
     }
 
     render(){
@@ -204,7 +208,13 @@ class Chatroom extends React.Component{
                     rightIcon={<Icon type="font-awesome" name="upload" onPress={this.pickImage}/>}
                 />
                 <Text>{this.state.error}</Text>
-                <Button onPress={this.sendMessage} title="Send Message" />
+                <Button 
+                    onPress={this.sendMessage} 
+                    title={this.state.uploadingImage 
+                        ? "Uploading Image..."
+                        : "Send Message"} 
+                    disabled={this.state.uploadingImage}
+                />
             </KeyboardAvoidingView>
         );
     }
@@ -223,5 +233,5 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(Chatroom);
+export default connect(mapStateToProps)(withRouter(Chatroom));
 
