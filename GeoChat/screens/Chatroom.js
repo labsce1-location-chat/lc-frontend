@@ -21,7 +21,7 @@ class Chatroom extends React.Component{
             newMessage : "",
             error : '',
             typing : false,
-            uploadingImage : true,
+            uploadingImage : false,
         }
     }
 
