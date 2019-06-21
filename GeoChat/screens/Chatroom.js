@@ -1,11 +1,13 @@
 import React from 'react';
 import {View,  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Keyboard, ActivityIndicator, Image} from 'react-native';
-import {  Text, Button, ThemeProvider, ListItem, Input } from 'react-native-elements';
+import {  Text, Button, ThemeProvider, ListItem, Input, Icon } from 'react-native-elements';
 import * as firebase from 'firebase';
 import styles from '../styles/ChatroomStyles'
 import {connect} from 'react-redux';
 import moment from 'moment';
 import CustomLoad from '../assets/TempLogo.gif'
+import {ImagePicker, Constants, Permissions} from 'expo';
+import {withRouter} from 'react-router-native';
 
 
 class Chatroom extends React.Component{
@@ -19,6 +21,7 @@ class Chatroom extends React.Component{
             newMessage : "",
             error : '',
             typing : false,
+            uploadingImage : false,
         }
     }
 
@@ -120,6 +123,63 @@ class Chatroom extends React.Component{
         this._scrollView = scrollView;
     };
 
+    getPermission = async() => {
+        if (Constants.platform.ios) {
+            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+            if (status !== 'granted') {
+                alert('Sorry, we need camera roll permissions to make this work!');
+            }
+        }
+    }
+
+    pickImage = async () => {
+        this.getPermission();
+        let result = await ImagePicker.launchImageLibraryAsync({
+            base64 : true,
+            quality : 0.1,
+            allowsEditing : true
+        });
+    
+        // console.log("RESULT",result);
+    
+        if (!result.cancelled) {
+            this.uploadImage(result.base64)
+        }
+    };
+
+    uploadImage = async base => {
+        this.setState({uploadingImage : true})
+        console.log("BASE : ", base)
+        await fetch('https://geochat-node-backend.herokuapp.com/upload', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                image: base,
+            }),
+        }).then(async res => {
+            // console.log(res);
+            let parsed = await JSON.parse(res._bodyText);
+            // console.log("parsed", parsed);
+            console.log(parsed.url)
+            const key = firebase.database().ref('/messages/' + this.props.match.params.id).push().key;
+            firebase.database().ref('/messages/' + this.props.match.params.id).child(key).update({
+                image : parsed.url,
+                timestamp : Date.now(),
+                user : {
+                    avatar : this.props.user.avatar,
+                    userName : this.props.user.userName
+                }
+            });
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        this.setState({uploadingImage : false})
+    }
+
     render(){
         return(
 
@@ -133,7 +193,7 @@ class Chatroom extends React.Component{
                             key={i}
                             leftAvatar={{ source: { uri: message.user.avatar } }}
                             title={message.user.userName}
-                            subtitle={message.content}
+                            subtitle={message.content ? message.content : <Image source={{uri : message.image}} style={{width : 200,height : 190}}/>}
                             rightTitle={this.timeFromNow(message.timestamp)}
                         />
                     ) : <ActivityIndicator size="large" />}
@@ -145,9 +205,16 @@ class Chatroom extends React.Component{
                     leftIcon={{ type: 'font-awesome', name: 'envelope' }}
                     onChangeText={(text) => this.handleChange(text)} 
                     value={this.state.newMessage} 
+                    rightIcon={<Icon type="font-awesome" name="upload" onPress={this.pickImage}/>}
                 />
                 <Text>{this.state.error}</Text>
-                <Button onPress={this.sendMessage} title="Send Message" />
+                <Button 
+                    onPress={this.sendMessage} 
+                    title={this.state.uploadingImage 
+                        ? "Uploading Image..."
+                        : "Send Message"} 
+                    disabled={this.state.uploadingImage}
+                />
             </KeyboardAvoidingView>
         );
     }
@@ -166,5 +233,5 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(Chatroom);
+export default connect(mapStateToProps)(withRouter(Chatroom));
 

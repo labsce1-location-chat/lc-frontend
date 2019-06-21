@@ -6,7 +6,7 @@ import styles from '../styles/createChatroomStyles'
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 // import {MapView} from 'expo';
-// import * as firebase from 'firebase';
+import * as firebase from 'firebase';
 import {test, createChatRoom} from '../Redux/actions/index';
 import {Link} from 'react-router-native';
 import {ImagePicker, Permissions, Constants} from 'expo';
@@ -66,6 +66,10 @@ class CreateChatRoom extends React.Component{
   
       if (!result.cancelled) {
         this.setState({ roomAvatar: result.uri });
+        const response = await fetch(result.uri);
+        const blob = await response.blob();
+        const ref = firebase.storage().ref('chatroom-avatars').child("testImage");
+        ref.put(blob);
       }
     };
 

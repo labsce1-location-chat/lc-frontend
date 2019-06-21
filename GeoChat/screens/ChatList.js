@@ -114,7 +114,7 @@ class ChatList extends React.Component{
                 this.props.chatrooms 
                     ? this.props.chatrooms.map(room => 
                         {
-                          return <View>
+                          return <View key={room.id}>
                                   <ListItem 
                                         key={room.id}
                                         leftIcon={{name: "chat"}}
