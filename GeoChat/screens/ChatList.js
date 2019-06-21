@@ -1,6 +1,6 @@
 import React from 'react';
-import {  View, TextInput, ActivityIndicator, ScrollView } from 'react-native';
-import {  Text, Button, ThemeProvider, ButtonGroup, ListItem } from 'react-native-elements';
+import {  View, TextInput, ActivityIndicator, ScrollView, Alert } from 'react-native';
+import {  Text, Button, ThemeProvider, ButtonGroup, ListItem, Slider } from 'react-native-elements';
 import styles from '../styles/chatListStyles'
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
@@ -20,6 +20,7 @@ class ChatList extends React.Component{
             loading : true,
             distanceFilter : 50,
             filteredRooms : [],
+            filtering : false,
         }
     }
 
@@ -29,14 +30,21 @@ class ChatList extends React.Component{
     }
 
     filterChatrooms = () => {
-        let copy = [...this.props.chatrooms];
-        const final = copy.filter(room => {
-            if(this.distance(room.lat, room.lon, this.props.location.lat, this.props.location.lon) < this.state.distanceFilter){
-                return room
-            }
+        this.setState({filtering : true})
+        let copy;
+        firebase.database().ref('chatrooms').once('value').then(snap => {
+            copy = Object.values(snap.val());
+            const final = copy.filter(room => {
+                if(this.distance(room.lat, room.lon, this.props.location.lat, this.props.location.lon) < this.state.distanceFilter){
+                    return room
+                }
+            })
+            console.log(final)
+            this.setState({filtering : false})
+            this.props.updateChatlist(final);
+        }).catch(err => {
+            Alert.alert("Error getting the chatrooms")
         })
-        console.log(final)
-        this.props.updateChatlist(final);
     }
 
     componentDidMount(){
@@ -95,16 +103,19 @@ class ChatList extends React.Component{
     render(){
         return(
             <View style={styles.container}>
-                <Text h3>Join a Chat Room</Text>
-                <Button onPress={this.filterChatrooms} title="test filter" />
-
-                <TextInput 
-                    value="Search by zipcode"
-                />
-
                 <ButtonGroup 
                     buttons={[{element : this.btn2}, {element : this.btn1}]}
                     selectedIndex={this.state.view === "list" ? 0 : 1}
+                />
+                <Text>{this.state.distanceFilter} miles</Text>
+                <Slider 
+                    maximumValue={1000} 
+                    minimumValue={25} 
+                    step={5} 
+                    value={this.state.distanceFilter} 
+                    onValueChange={value => this.setState({distanceFilter : value})}
+                    style={{width : "80%"}}
+                    onSlidingComplete={this.filterChatrooms}
                 />
 
                 <ScrollView>
@@ -112,24 +123,31 @@ class ChatList extends React.Component{
                 {this.state.view === "list" 
                 ?
                 this.props.chatrooms 
-                    ? this.props.chatrooms.map(room => 
-                        {
-                          return <View key={room.id}>
-                                  <ListItem 
-                                        key={room.id}
-                                        leftIcon={{name: "chat"}}
-                                        title={room.name}
-                                        subtitle={room.description}
-                                        rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
-                                        rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
-                                        containerStyle={{width:300}}
-                                        bottomDivider={true}
-                                        topDivider={true}
-                                   />
-                                  <Button onPress={() => this.goToRoom(room.id)} title="Join" />
-                                </View>
-                        }
-                    )
+                    ? 
+                    this.state.filtering ?
+                        <View>
+                            <ActivityIndicator size="large" color="red" />
+                            <Text>Filtering Chatrooms</Text>
+                        </View>
+                        :
+                        this.props.chatrooms.map(room => 
+                            {
+                            return <View key={room.id}>
+                                    <ListItem 
+                                            key={room.id}
+                                            leftIcon={{name: "chat"}}
+                                            title={room.name}
+                                            subtitle={room.description}
+                                            rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
+                                            rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
+                                            containerStyle={{width:300}}
+                                            bottomDivider={true}
+                                            topDivider={true}
+                                    />
+                                    <Button onPress={() => this.goToRoom(room.id)} title="Join" />
+                                    </View>
+                            }
+                        )
                     : 
                     <Text>No Chatrooms in your area</Text>
                 :
