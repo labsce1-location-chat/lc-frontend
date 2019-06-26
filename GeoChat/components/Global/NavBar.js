@@ -12,9 +12,8 @@ class NavBar extends React.Component{
 
     keyValues = {
         "/chat-list" : "Choose a Chatroom",
-        "/chatroom" : "Chatting",
         "/settings" : "Settings",
-        "/create_chat_4v0-room" : "Create a New Chatroom"
+        "/create_chat_room" : "Create a New Chatroom"
     }
 
     redirect = path => {
@@ -26,6 +25,10 @@ class NavBar extends React.Component{
         console.log("the props during logout", this.props)
         this.props.handleLogOut(this.props.user)
         this.props.history.push("/")
+    }
+
+    componentDidMount(){
+        console.log("isTemp", this.isTemp)
     }
 
     render(){
@@ -44,7 +47,10 @@ class NavBar extends React.Component{
                             size={50}
                         />
                     }
-                    centerComponent={{ text: this.keyValues[this.props.location.pathname], style: { color: '#fff' } }}
+                    centerComponent={{ 
+                        text: this.keyValues[this.props.location.pathname] ? this.keyValues[this.props.location.pathname] : "Chatting",
+                        style: { color: '#fff' } 
+                    }}
                 />
 
                 <Overlay
@@ -52,22 +58,6 @@ class NavBar extends React.Component{
                     onBackdropPress={() => this.setState({ open: false })}
                 >
                     <View onPress={()=>this.setState({open : false})} style={{justifyContent : "space-between"}}>
-                        <Link to="/chat-list">
-                            <Button
-                                icon={
-                                    <Icon
-                                    name="list"
-                                    size={15}
-                                    color="white"
-                                    />
-                                }
-                                title="Chat List"
-                                onPress={()=>this.redirect('chat-list')}
-                            />
-                        </Link>
-
-                        <Divider/>
-
                         <Link to="/">
                             <Button
                                 icon={
@@ -84,6 +74,22 @@ class NavBar extends React.Component{
 
                         <Divider/>
 
+                        <Link to="/chat-list">
+                            <Button
+                                icon={
+                                    <Icon
+                                    name="list"
+                                    size={15}
+                                    color="white"
+                                    />
+                                }
+                                title="Chat List"
+                                onPress={()=>this.redirect('chat-list')}
+                            />
+                        </Link>
+
+                        <Divider/>
+
                         <Link to="/settings">
                             <Button
                                     icon={
@@ -93,8 +99,9 @@ class NavBar extends React.Component{
                                         color="white"
                                         />
                                     }
-                                    title="Settings"
+                                    title={this.props.user.accountType === "temp" ? "Settings Only available for Signed in users" : "Settings"}
                                     onPress={()=>this.redirect('settings')}
+                                    disabled={this.props.user.accountType === "temp"}
                                 />
                         </Link>
 
@@ -119,6 +126,7 @@ class NavBar extends React.Component{
                             }
                             onPress={()=> this.redirect('create_chat_room')} 
                             title="New Chatroom" 
+                            disabled={this.props.user.accountType === "temp"}
                         />
                     </View>
 
