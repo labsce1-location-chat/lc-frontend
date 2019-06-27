@@ -24,7 +24,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.geochat"
+      "bundleIdentifier": "com.geochat.labsCE"
     },
     "android": {
       "package": "com.geochat"
