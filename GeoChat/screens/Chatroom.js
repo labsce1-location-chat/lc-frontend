@@ -55,10 +55,10 @@ class Chatroom extends React.Component{
         firebase.database().ref('messages').child(this.props.match.params.id).on('child_added', snap => {
             loadedMessages.push(snap.val());
             this.setState({messages : loadedMessages})
-            setTimeout(()=>this.scrollToBottom(),0);
+            setTimeout(()=>this.scrollToBottom(), 0);
             // this.scrollToBottom()
         })
-        this.scrollToBottom();
+        // setTimeout(()=>this.scrollToBottom(), 0);
     }
 
     componentDidUpdate(){
