@@ -50,13 +50,19 @@ class Chatroom extends React.Component{
         firebase.database().ref('/typing/'+ this.props.match.params.id).child("Drew Johnson").remove();
     }
 
-    messageListener = async() => {
+    messageListener = () => {
         const loadedMessages = [];
-        await firebase.database().ref('messages').child(this.props.match.params.id).on('child_added', snap => {
-            loadedMessages.push(snap.val())
-            this.setState({messages : loadedMessages});
-            this.scrollToBottom();
+        firebase.database().ref('messages').child(this.props.match.params.id).on('child_added', snap => {
+            loadedMessages.push(snap.val());
+            this.setState({messages : loadedMessages})
+            setTimeout(()=>this.scrollToBottom(),0);
+            // this.scrollToBottom()
         })
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate(){
+        this.scrollToBottom();
     }
 
     chattingListener = () => {
@@ -182,12 +188,13 @@ class Chatroom extends React.Component{
                                 key={i}
                                 leftAvatar={{ source: { uri: message.user.avatar } }}
                                 title={message.user.userName}
-                                subtitle={message.content ? message.content : <Image source={{uri : message.image}} style={{width : 200,height : 190}}/>}
+                                subtitle={message.content ? message.content : <Image defaultSource={CustomLoad} source={{uri : message.image}} style={{width : 200,height : 190}}/>}
                                 rightTitle={this.timeFromNow(message.timestamp)}
                             />
                         ) : <ActivityIndicator size="large" />}
                     </View>
                 </ScrollView>
+                
                 <Text>{this.state.typing ? `Someone is typing` : ""}</Text>
                 <Input
                     style={styles.input}
