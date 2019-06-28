@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "GeoChat",
+    "name": "GeoChatLSCE",
+    "description": "A geographical chat application",
     "slug": "GeoChat",
     "privacy": "public",
     "sdkVersion": "32.0.0",
@@ -24,10 +25,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.geochat.labsCE"
+      "bundleIdentifier": "GeoChatLSCE-com.geochat.labsCE.LS"
     },
     "android": {
-      "package": "com.geochat"
+      "package": "com.geochat.labsCE.LS"
     }
   }
 }
