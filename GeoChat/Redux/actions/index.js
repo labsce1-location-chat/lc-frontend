@@ -74,7 +74,6 @@ export const createChatRoom = (userName, avatarURL, userID, chatRoomName, locati
 
     firebase.database().ref("chatrooms").child(key).update({
       name: chatRoomName,
-      description: "user created",
       lat: location.lat,
       lon: location.lon,
       createdAt: new Date(),
