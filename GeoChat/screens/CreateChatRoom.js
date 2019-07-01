@@ -22,7 +22,6 @@ class CreateChatRoom extends React.Component{
         super();
         this.state = {
           roomName: "",
-          roomDescription : "",
           roomAvatar : "",
         }
     }
@@ -79,7 +78,9 @@ class CreateChatRoom extends React.Component{
             <View style={styles.container}>
                 <Button title="Go back" onPress={this.goBack} />
                 <TextInput name="roomName" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange} value={this.state.roomName} maxLength={20} />
-                <TextInput name="roomDescription" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange} value={this.state.roomDescription} maxLength={200} />
+
+
+
                 <Button title="Choose your chatroom Image" onPress={this.pickImage} />
                 {this.state.roomAvatar ? <Image source={{uri : this.state.roomAvatar}} style={{width:200, height:200}}/> : null}
                 <Button title="Submit" onPress={this.newRoom} />
