@@ -34,10 +34,9 @@ class CreateChatRoom extends React.Component{
       this.props.history.push("/chat-list")
     }
 
-    handleChange = (e) => {
-
-      this.setState({[e.target.name] : e.target.value})
-      // console.log("", e)
+    handleChange = (field, value) => {
+      // console.log("field: ", field, "value: ", value)
+      this.setState({[field]: value})
     }
 
     goBack = () => {
@@ -77,10 +76,15 @@ class CreateChatRoom extends React.Component{
 
             <View style={styles.container}>
                 <Button title="Go back" onPress={this.goBack} />
+<<<<<<< HEAD
                 <TextInput name="roomName" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange} value={this.state.roomName} maxLength={20} />
 
 
 
+=======
+                <TextInput name="roomName" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange.bind(this, "roomName")} value={this.state.roomName} maxLength={20} />
+                <TextInput name="roomDescription" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange.bind(this, "roomDescription")} value={this.state.roomDescription} maxLength={200} />
+>>>>>>> master
                 <Button title="Choose your chatroom Image" onPress={this.pickImage} />
                 {this.state.roomAvatar ? <Image source={{uri : this.state.roomAvatar}} style={{width:200, height:200}}/> : null}
                 <Button title="Submit" onPress={this.newRoom} />
