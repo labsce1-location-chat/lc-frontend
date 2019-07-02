@@ -18,7 +18,7 @@ class ChatList extends React.Component{
         this.state = {
             view : "list",
             loading : true,
-            distanceFilter : 10,
+            distanceFilter : 5,
             filteredRooms : [],
             filtering : false,
         }
@@ -111,7 +111,7 @@ class ChatList extends React.Component{
                 <Slider 
                     maximumValue={10} 
                     minimumValue={1} 
-                    step={2} 
+                    step={1} 
                     value={this.state.distanceFilter} 
                     onValueChange={value => this.setState({distanceFilter : value})}
                     style={{width : "80%"}}
@@ -139,7 +139,6 @@ class ChatList extends React.Component{
                                             title={room.name}
                                             subtitle={room.description}
                                             rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
-                                            rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
                                             containerStyle={{width:300}}
                                             bottomDivider={true}
                                             topDivider={true}
