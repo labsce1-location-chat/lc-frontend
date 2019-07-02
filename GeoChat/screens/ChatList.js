@@ -18,7 +18,7 @@ class ChatList extends React.Component{
         this.state = {
             view : "list",
             loading : true,
-            distanceFilter : 50,
+            distanceFilter : 10,
             filteredRooms : [],
             filtering : false,
         }
@@ -109,9 +109,9 @@ class ChatList extends React.Component{
                 />
                 <Text>{this.state.distanceFilter} miles</Text>
                 <Slider 
-                    maximumValue={1000} 
-                    minimumValue={25} 
-                    step={5} 
+                    maximumValue={10} 
+                    minimumValue={1} 
+                    step={2} 
                     value={this.state.distanceFilter} 
                     onValueChange={value => this.setState({distanceFilter : value})}
                     style={{width : "80%"}}
