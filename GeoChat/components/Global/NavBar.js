@@ -14,7 +14,7 @@ class NavBar extends React.Component{
         "/chat-list" : "Choose a Chatroom",
         "/chatroom" : "Chatting",
         "/settings" : "Settings",
-        "/create_chat_4v0-room" : "Create a New Chatroom"
+        "/create_chat_room" : "Create a New Chatroom"
     }
 
     redirect = path => {
