@@ -18,7 +18,7 @@ class ChatList extends React.Component{
         this.state = {
             view : "list",
             loading : true,
-            distanceFilter : 5,
+            distanceFilter : 10,
             filteredRooms : [],
             filtering : false,
         }
@@ -26,7 +26,6 @@ class ChatList extends React.Component{
 
     getChatrooms = () => {
         this.props.setChatRooms()
-
     }
 
     filterChatrooms = () => {
@@ -52,10 +51,7 @@ class ChatList extends React.Component{
     }
 
     newRoom = () => {
-      // this.props.history.push("/create_chat_room")
-        console.log('user id', this.props.history.push("/create_chat_room"))
         this.props.history.push('/create_chat_room')
-      // this.props.createChatRoom(this.props.user.uid)
     }
 
     goToRoom = (roomID) => {

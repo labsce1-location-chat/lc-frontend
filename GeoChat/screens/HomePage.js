@@ -85,7 +85,7 @@ class HomePage extends React.Component {
                 />
                 <Button
                   onPress={this.testRooms}
-                  title="Create temp chat rooms"
+                  title="Create temp chat rooms For testing only"
                 />
             </View>
         );
