@@ -14,7 +14,7 @@ class NavBar extends React.Component{
         "/chat-list" : "Choose a Chatroom",
         "/chatroom" : "Chatting",
         "/settings" : "Settings",
-        "/create_chat_4v0-room" : "Create a New Chatroom"
+        "/create_chat_room" : "Create a New Chatroom"
     }
 
     redirect = path => {
@@ -23,13 +23,12 @@ class NavBar extends React.Component{
     }
 
     logout = () => {
-        console.log("the props during logout", this.props)
+        // console.log("the props during logout", this.props)
         this.props.handleLogOut(this.props.user)
         this.props.history.push("/")
     }
 
     render(){
-        console.log("Current Path" , this.props.location.pathname)
         if(this.props.location.pathname === '/'){
             return null;
         }
