@@ -1,6 +1,6 @@
 import React from 'react';
 import {Header, Icon, Overlay, Divider, Button} from 'react-native-elements';
-import {View, Text} from 'react-native';
+import {View, Text, Modal} from 'react-native';
 import {Link, withRouter} from 'react-router-native';
 import {connect} from 'react-redux';
 import {handleLogOut} from '../../Redux/actions/index';
@@ -31,6 +31,10 @@ class NavBar extends React.Component{
         console.log("isTemp", this.isTemp)
     }
 
+    buttonStyle={
+        width:"100%",
+    }
+
     render(){
         if(this.props.location.pathname === '/'){
             return null;
@@ -52,12 +56,25 @@ class NavBar extends React.Component{
                     }}
                 />
 
-                <Overlay
-                    isVisible={this.state.open}
-                    onBackdropPress={() => this.setState({ open: false })}
+                <Modal
+                    visible={this.state.open}
+                    animationType="slide"
+                    transparent={true}
                 >
-                    <View onPress={()=>this.setState({open : false})} style={{justifyContent : "space-between"}}>
-                        <Link to="/">
+                    <View onPress={()=>this.setState({open : false})} style={{justifyContent : "center", width:"70%", padding:0, margin:0, backgroundColor : "rgba(0,0,0,0.8)", height : "100%"}}>
+                        <Button
+                            icon={
+                                <Icon
+                                    name="cancel"
+                                    size={25}
+                                    color="red"
+                                />
+                            }
+                            title="Close Menu"
+                            onPress={()=>this.setState({open : false})}
+                            style={this.buttonStyle}
+                        />
+                        {/* <Link to="/">
                             <Button
                                 icon={
                                     <Icon
@@ -69,16 +86,16 @@ class NavBar extends React.Component{
                                 title="Home"
                                 onPress={()=>this.redirect('')}
                             />
-                        </Link>
+                        </Link> */}
 
                         <Divider/>
 
-                        <Link to="/chat-list">
+                        <Link to="/chat-list" style={this.buttonStyle}>
                             <Button
                                 icon={
                                     <Icon
                                     name="list"
-                                    size={15}
+                                    size={25}
                                     color="white"
                                     />
                                 }
@@ -89,12 +106,12 @@ class NavBar extends React.Component{
 
                         <Divider/>
 
-                        <Link to="/settings">
+                        <Link to="/settings" style={this.buttonStyle}>
                             <Button
                                     icon={
                                         <Icon
                                         name="settings"
-                                        size={15}
+                                        size={25}
                                         color="white"
                                         />
                                     }
@@ -103,33 +120,40 @@ class NavBar extends React.Component{
                                     disabled={this.props.user.accountType === "temp"}
                                 />
                         </Link>
+                        
+                        <Divider/>
 
                         <Button 
                             icon={
                                 <Icon
                                 name="report"
-                                size={20}
+                                size={25}
                                 color="red"
                                 />
                             }
                             onPress={this.logout} 
                             title="Logout" 
+                            style={this.buttonStyle}
                         />
+
+                        <Divider/>
+
                         <Button 
                             icon={
                                 <Icon
                                 name="add"
-                                size={15}
+                                size={25}
                                 color="white"
                                 />
                             }
                             onPress={()=> this.redirect('create_chat_room')} 
                             title="New Chatroom" 
                             disabled={this.props.user.accountType === "temp"}
+                            style={this.buttonStyle}
                         />
                     </View>
 
-                </Overlay>
+                </Modal>
             </View>
         )
     }
