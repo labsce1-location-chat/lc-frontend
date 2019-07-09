@@ -20,6 +20,9 @@ export default function InitializeFirebase(){
     firebase.initializeApp(firebaseConfig)
 };
 
+
+
+
 // Firebase product	                                Namespace	Web
 // Authentication	                                firebase.auth()		
 // Cloud Firestore	                                firebase.firestore()		
