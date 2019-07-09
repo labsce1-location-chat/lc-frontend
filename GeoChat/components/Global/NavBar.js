@@ -22,7 +22,7 @@ class NavBar extends React.Component{
     }
 
     logout = () => {
-        console.log("the props during logout", this.props)
+        // console.log("the props during logout", this.props)
         this.props.handleLogOut(this.props.user)
         this.props.history.push("/")
     }
@@ -32,7 +32,6 @@ class NavBar extends React.Component{
     }
 
     render(){
-        console.log("Current Path" , this.props.location.pathname)
         if(this.props.location.pathname === '/'){
             return null;
         }

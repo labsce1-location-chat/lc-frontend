@@ -5,7 +5,7 @@ import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 
 // Redux Imports
 import {connect} from 'react-redux'
-import {handleSignIn} from '../Redux/actions/index';
+import {handleSignIn, createTestRooms} from '../Redux/actions/index';
 import styles from '../styles/homepageStyles'
 import TempLogo from '../assets/TempLogo.png';
 class HomePage extends React.Component {
@@ -28,6 +28,7 @@ class HomePage extends React.Component {
       } else {
         this.getUsersCoords()
       }
+
     }
 
     getUsersCoords = () => {
@@ -50,7 +51,6 @@ class HomePage extends React.Component {
         firebase.auth().signInAnonymously().then(user => {
         if(user){
             this.props.handleSignIn(user, this.state.location);
-            console.log("Signing the user in")
             this.props.history.push("/chat-list")
         }
         else{
@@ -60,6 +60,11 @@ class HomePage extends React.Component {
         .catch(err => {
         console.log("Error signing in :", err)
         })
+
+    }
+    
+    testRooms = () => {
+      this.props.createTestRooms()
     }
 
 
@@ -78,6 +83,10 @@ class HomePage extends React.Component {
                     disabled={this.state.coords.length ? false : true} 
                     title="Continue Anonymously" 
                 />
+                <Button
+                  onPress={this.testRooms}
+                  title="Create temp chat rooms For testing only"
+                />
             </View>
         );
     }
@@ -92,5 +101,5 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {handleSignIn})(HomePage);
+export default connect(mapStateToProps, {handleSignIn, createTestRooms})(HomePage);
 

@@ -22,7 +22,6 @@ class CreateChatRoom extends React.Component{
         super();
         this.state = {
           roomName: "",
-          roomDescription : "",
           roomAvatar : "",
         }
     }
@@ -35,10 +34,9 @@ class CreateChatRoom extends React.Component{
       this.props.history.push("/chat-list")
     }
 
-    handleChange = (e) => {
-
-      this.setState({[e.target.name] : e.target.value})
-      // console.log("", e)
+    handleChange = (field, value) => {
+      // console.log("field: ", field, "value: ", value)
+      this.setState({[field]: value})
     }
 
     goBack = () => {
@@ -62,7 +60,7 @@ class CreateChatRoom extends React.Component{
         aspect: [4, 3],
       });
   
-      console.log(result);
+      // console.log(result);
   
       if (!result.cancelled) {
         this.setState({ roomAvatar: result.uri });
@@ -77,12 +75,13 @@ class CreateChatRoom extends React.Component{
         return(
 
             <View style={styles.container}>
-                <Button title="Go back" onPress={this.goBack} />
-                <TextInput name="roomName" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange} value={this.state.roomName} maxLength={20} />
-                <TextInput name="roomDescription" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange} value={this.state.roomDescription} maxLength={200} />
+                <Button style={styles.buttonStyle}title="Go back" onPress={this.goBack} />
+                <TextInput name="roomName" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange.bind(this, "roomName")} value={this.state.roomName} maxLength={20} />
+
                 <Button title="Choose your chatroom Image" onPress={this.pickImage} />
+                <Button style={styles.buttonStyle}title="Choose your chatroom Image" onPress={this.pickImage} />
                 {this.state.roomAvatar ? <Image source={{uri : this.state.roomAvatar}} style={{width:200, height:200}}/> : null}
-                <Button title="Submit" onPress={this.newRoom} />
+                <Button style={styles.buttonStyle}title="Submit" onPress={this.newRoom} />
             </View>
         )
     }

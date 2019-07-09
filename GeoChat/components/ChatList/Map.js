@@ -49,7 +49,9 @@ class Map extends React.Component{
                             title={room.name} 
                             coordinate={{latitude : room.lat, longitude: room.lon}}
                             key={room.id}
-                            image={TempLogo}
+                            // removed to use default map pins
+                            // Leaving it in for future image icons
+                            // image={TempLogo}
                             onPress={() => this.setChatroom(room)}
                         />
                     )

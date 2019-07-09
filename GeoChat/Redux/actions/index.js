@@ -10,6 +10,7 @@ export const LOGOUT = "LOGOUT"
 export const UPDATE_USER = "UPDATE_USER"
 export const UPDATE_CHATLIST = "UPDATE_CHATLIST"
 export const CHANGE_SCREEN = "CHANGE_SCREEN"
+export const CREATE_TEST_ROOMS = "CREATE_TEST_ROOMS"
 
 
 
@@ -74,7 +75,6 @@ export const createChatRoom = (userName, avatarURL, userID, chatRoomName, locati
 
     firebase.database().ref("chatrooms").child(key).update({
       name: chatRoomName,
-      description: "user created",
       lat: location.lat,
       lon: location.lon,
       createdAt: new Date(),
@@ -109,6 +109,33 @@ export const updateUserChatroom = (chatRoomID, userID) => dispatch => {
 
 export const updateChatlist = (chatrooms) => dispatch => {
   dispatch({type : UPDATE_CHATLIST, payload : chatrooms})
+}
+
+export const createTestRooms = () => dispatch => {
+  const lat = 40.7484;
+  const lon = -73.9857
+  let latDistance = 0
+  let lonDistance = 0
+    console.log("Trying to create test rooms")
+
+    for(let i=0;i<10;i++) {
+      let key = firebase.database().ref("chatrooms").push().key
+
+      firebase.database().ref("chatrooms").child(key).update({
+        name: "TestChatRoom",
+        lat: lat + latDistance,
+        lon: lon + lonDistance,
+        createdAt: new Date(),
+        userKey: "this is a fake user",
+        id: key,
+        numberOfUsers: 1,
+        userName: "Test User",
+        userAvatar: "",
+        roomAvatar : ""
+      })
+      latDistance += 0.01
+      lonDistance += 0.01
+    }
 }
 
 // export const changeScreen = screen => dispatch => {
