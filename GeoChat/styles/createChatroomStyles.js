@@ -30,5 +30,14 @@ const styles = StyleSheet.create({
 
 });
 
+const theme = {
+  buttonStyle: {
+    backgroundColor: 'red'
+  }
+}
 
-export default styles;
+
+
+
+
+export default {styles, theme};
