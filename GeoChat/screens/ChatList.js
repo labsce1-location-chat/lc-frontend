@@ -55,17 +55,9 @@ class ChatList extends React.Component{
     }
 
     goToRoom = (roomID) => {
-      console.log("This is getting pressed somehow")
-      this.props.history.push(`/chatroom/${roomID}`)
-      this.props.updateUserChatroom(roomID, this.props.user.id)
-    }
-
-
-
-    logout = () => {
-        console.log("the props during logout", this.props)
-        this.props.handleLogOut()
-        this.props.history.push("/")
+        console.log("This is getting pressed somehow")
+        this.props.history.push(`/chatroom/${roomID}`)
+        this.props.updateUserChatroom(roomID, this.props.user.id)
     }
 
     distance(lat1, lon1, lat2, lon2) {

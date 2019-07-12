@@ -1,6 +1,6 @@
 import React from 'react';
 import {Header, Icon, Overlay, Divider, Button} from 'react-native-elements';
-import {View, Text} from 'react-native';
+import {View, Text, Modal} from 'react-native';
 import {Link, withRouter} from 'react-router-native';
 import {connect} from 'react-redux';
 import {handleLogOut} from '../../Redux/actions/index';
@@ -12,7 +12,6 @@ class NavBar extends React.Component{
 
     keyValues = {
         "/chat-list" : "Choose a Chatroom",
-        "/chatroom" : "Chatting",
         "/settings" : "Settings",
         "/create_chat_room" : "Create a New Chatroom"
     }
@@ -26,6 +25,14 @@ class NavBar extends React.Component{
         // console.log("the props during logout", this.props)
         this.props.handleLogOut(this.props.user)
         this.props.history.push("/")
+    }
+
+    componentDidMount(){
+        console.log("isTemp", this.isTemp)
+    }
+
+    buttonStyle={
+        width:"100%",
     }
 
     render(){
@@ -43,31 +50,31 @@ class NavBar extends React.Component{
                             size={50}
                         />
                     }
-                    centerComponent={{ text: this.keyValues[this.props.location.pathname], style: { color: '#fff' } }}
+                    centerComponent={{ 
+                        text: this.keyValues[this.props.location.pathname] ? this.keyValues[this.props.location.pathname] : "Chatting",
+                        style: { color: '#fff' } 
+                    }}
                 />
 
-                <Overlay
-                    isVisible={this.state.open}
-                    onBackdropPress={() => this.setState({ open: false })}
+                <Modal
+                    visible={this.state.open}
+                    animationType="slide"
+                    transparent={true}
                 >
-                    <View onPress={()=>this.setState({open : false})} style={{justifyContent : "space-between"}}>
-                        <Link to="/chat-list">
-                            <Button
-                                icon={
-                                    <Icon
-                                    name="list"
-                                    size={15}
-                                    color="white"
-                                    />
-                                }
-                                title="Chat List"
-                                onPress={()=>this.redirect('chat-list')}
-                            />
-                        </Link>
-
-                        <Divider/>
-
-                        <Link to="/">
+                    <View onPress={()=>this.setState({open : false})} style={{justifyContent : "center", width:"70%", padding:0, margin:0, backgroundColor : "rgba(0,0,0,0.8)", height : "100%"}}>
+                        <Button
+                            icon={
+                                <Icon
+                                    name="cancel"
+                                    size={25}
+                                    color="red"
+                                />
+                            }
+                            title="Close Menu"
+                            onPress={()=>this.setState({open : false})}
+                            style={this.buttonStyle}
+                        />
+                        {/* <Link to="/">
                             <Button
                                 icon={
                                     <Icon
@@ -79,49 +86,74 @@ class NavBar extends React.Component{
                                 title="Home"
                                 onPress={()=>this.redirect('')}
                             />
+                        </Link> */}
+
+                        <Divider/>
+
+                        <Link to="/chat-list" style={this.buttonStyle}>
+                            <Button
+                                icon={
+                                    <Icon
+                                    name="list"
+                                    size={25}
+                                    color="white"
+                                    />
+                                }
+                                title="Chat List"
+                                onPress={()=>this.redirect('chat-list')}
+                            />
                         </Link>
 
                         <Divider/>
 
-                        <Link to="/settings">
+                        <Link to="/settings" style={this.buttonStyle}>
                             <Button
                                     icon={
                                         <Icon
                                         name="settings"
-                                        size={15}
+                                        size={25}
                                         color="white"
                                         />
                                     }
-                                    title="Settings"
+                                    title={this.props.user.accountType === "temp" ? "Settings Only available for Signed in users" : "Settings"}
                                     onPress={()=>this.redirect('settings')}
+                                    disabled={this.props.user.accountType === "temp"}
                                 />
                         </Link>
+                        
+                        <Divider/>
 
                         <Button 
                             icon={
                                 <Icon
                                 name="report"
-                                size={20}
+                                size={25}
                                 color="red"
                                 />
                             }
                             onPress={this.logout} 
                             title="Logout" 
+                            style={this.buttonStyle}
                         />
+
+                        <Divider/>
+
                         <Button 
                             icon={
                                 <Icon
                                 name="add"
-                                size={15}
+                                size={25}
                                 color="white"
                                 />
                             }
                             onPress={()=> this.redirect('create_chat_room')} 
                             title="New Chatroom" 
+                            disabled={this.props.user.accountType === "temp"}
+                            style={this.buttonStyle}
                         />
                     </View>
 
-                </Overlay>
+                </Modal>
             </View>
         )
     }
