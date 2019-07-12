@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View,TextInput, Image, KeyboardAvoidingView} from 'react-native';
 import {  Text, ThemeProvider, Button  } from 'react-native-elements';
 import {FormLabel, FormInput, FormValidationMessage} from 'react'
-import {styles, theme}from '../styles/createChatroomStyles'
+import  {styles, cancelButton} from '../styles/createChatroomStyles'
 import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 // import {MapView} from 'expo';
@@ -12,7 +12,12 @@ import {Link} from 'react-router-native';
 import {ImagePicker, Permissions, Constants} from 'expo';
 
 
+const theme = {
+  Button: {
 
+    backgroundColor: 'red',
+  }
+}
 
 
 
@@ -74,13 +79,13 @@ class CreateChatRoom extends React.Component{
         return(
 
             <View style={styles.container}>
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={cancelButton}>
                   <Button  title="Cancel" onPress={this.goBack} />
                 </ThemeProvider> 
                 <TextInput name="roomName" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange.bind(this, "roomName")} value={this.state.roomName} maxLength={20} />
-                <Button style={styles.buttonStyle} title="Choose your chatroom Image" onPress={this.pickImage} />
+                <Button style={styles.normalButton} title="Choose your chatroom Image" onPress={this.pickImage} />
                 {this.state.roomAvatar ? <Image source={{uri : this.state.roomAvatar}} style={{width:200, height:200}}/> : null}
-                <Button style={styles.buttonStyle}title="Submit" onPress={this.newRoom} />
+                <Button style={styles.normalButton}title="Submit" onPress={this.newRoom} />
             </View>
         )
     }
