@@ -49,10 +49,12 @@ class Map extends React.Component{
                             title={room.name} 
                             coordinate={{latitude : room.lat, longitude: room.lon}}
                             key={room.id}
-                            image={TempLogo}
+                            // removed to use default map pins
+                            // Leaving it in for future image icons
+                            // image={TempLogo}
                             onPress={() => this.setChatroom(room)}
                         />
-                        )
+                    )
                     :
                     null
                     }
@@ -62,7 +64,7 @@ class Map extends React.Component{
                     <View>
                         <Text>{this.state.chatroom.name}</Text>
                         <Text>{this.state.chatroom.description}</Text>
-                        <Link to={`/chatroom/${this.state.chatroom.id}`}><Button title={`Join ${this.state.chatroom.name}`}/></Link>
+                        <Link to={`/chatroom/${this.state.chatroom.id}`}><Text style={{fontSize : 26}}>Join {this.state.chatroom.name}</Text></Link>
                     </View>
                 </Overlay>
                 {/* <Overlay isVisible={this.state.open}>

@@ -7,7 +7,8 @@ import {SIGN_IN,
         LOGOUT,
         UPDATE_USER,
         UPDATE_CHATLIST, 
-        CHANGE_SCREEN
+        CHANGE_SCREEN,
+        CREATE_TEST_ROOMS,
        } from '../actions/index';
 
 
@@ -45,6 +46,8 @@ export const reducer = (state = initialState, action) => {
         case LOGOUT:
             return {...state, test : "logout is true"}
         case UPDATE_CHATLIST:
+            return {...state, chatrooms : action.payload}
+        case CREATE_TEST_ROOMS:
             return {...state, chatrooms : action.payload}
         default:
             return state;

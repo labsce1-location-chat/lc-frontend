@@ -18,7 +18,7 @@ class ChatList extends React.Component{
         this.state = {
             view : "list",
             loading : true,
-            distanceFilter : 50,
+            distanceFilter : 10,
             filteredRooms : [],
             filtering : false,
         }
@@ -26,7 +26,6 @@ class ChatList extends React.Component{
 
     getChatrooms = () => {
         this.props.setChatRooms()
-
     }
 
     filterChatrooms = () => {
@@ -52,24 +51,13 @@ class ChatList extends React.Component{
     }
 
     newRoom = () => {
-      // this.props.history.push("/create_chat_room")
-        console.log('user id', this.props.history.push("/create_chat_room"))
         this.props.history.push('/create_chat_room')
-      // this.props.createChatRoom(this.props.user.uid)
     }
 
     goToRoom = (roomID) => {
-      console.log("This is getting pressed somehow")
-      this.props.history.push(`/chatroom/${roomID}`)
-      this.props.updateUserChatroom(roomID, this.props.user.id)
-    }
-
-
-
-    logout = () => {
-        console.log("the props during logout", this.props)
-        this.props.handleLogOut()
-        this.props.history.push("/")
+        console.log("This is getting pressed somehow")
+        this.props.history.push(`/chatroom/${roomID}`)
+        this.props.updateUserChatroom(roomID, this.props.user.id)
     }
 
     distance(lat1, lon1, lat2, lon2) {
@@ -109,9 +97,9 @@ class ChatList extends React.Component{
                 />
                 <Text>{this.state.distanceFilter} miles</Text>
                 <Slider 
-                    maximumValue={1000} 
-                    minimumValue={25} 
-                    step={5} 
+                    maximumValue={10} 
+                    minimumValue={1} 
+                    step={1} 
                     value={this.state.distanceFilter} 
                     onValueChange={value => this.setState({distanceFilter : value})}
                     style={{width : "80%"}}
@@ -139,7 +127,6 @@ class ChatList extends React.Component{
                                             title={room.name}
                                             subtitle={room.description}
                                             rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
-                                            rightSubtitle={<Link to={`/chatroom/${room.id}`}><Text style={styles.joinBtn}>Join</Text></Link>}
                                             containerStyle={{width:300}}
                                             bottomDivider={true}
                                             topDivider={true}

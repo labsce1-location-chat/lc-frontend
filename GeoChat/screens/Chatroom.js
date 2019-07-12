@@ -9,12 +9,10 @@ import CustomLoad from '../assets/TempLogo.gif'
 import {ImagePicker, Constants, Permissions} from 'expo';
 import {withRouter} from 'react-router-native';
 
-
 class Chatroom extends React.Component{
 
     constructor(){
         super();
-        this.scrollView = null;
         this.state = {
             chatroom : {},
             messages : [],
@@ -30,8 +28,7 @@ class Chatroom extends React.Component{
         this.messageListener();
         this.chattingListener();
         this.typingOffListener();
-        this.scrollToBottom();
-        }
+    }
 
     sendMessage = () => {
         Keyboard.dismiss();
@@ -53,12 +50,18 @@ class Chatroom extends React.Component{
         firebase.database().ref('/typing/'+ this.props.match.params.id).child("Drew Johnson").remove();
     }
 
-    messageListener = async() => {
+    messageListener = () => {
         const loadedMessages = [];
-        await firebase.database().ref('messages').child(this.props.match.params.id).on('child_added', snap => {
-            loadedMessages.push(snap.val())
-            this.setState({messages : loadedMessages});
+        firebase.database().ref('messages').child(this.props.match.params.id).on('child_added', snap => {
+            loadedMessages.push(snap.val());
+            this.setState({messages : loadedMessages})
+            setTimeout(()=>this.scrollToBottom(), 0);
+            // this.scrollToBottom()
         })
+        // setTimeout(()=>this.scrollToBottom(), 0);
+    }
+
+    componentDidUpdate(){
         this.scrollToBottom();
     }
 
@@ -110,18 +113,8 @@ class Chatroom extends React.Component{
     }
 
     scrollToBottom() {
-        if(this._scrollView){
-            this._scrollView.scrollTo({x:0, y: this.state.messages.length, animated : true})
-        }else{
-            console.log("Not scrolling")
-        }
-        // scrollTo({x:0, y: this.state.messages.length, animated : true});
+        this.scrollView.scrollToEnd();
     }
-
-    _setScrollView = scrollView => {
-        // NOTE: scrollView will be null when the component is unmounted
-        this._scrollView = scrollView;
-    };
 
     getPermission = async() => {
         if (Constants.platform.ios) {
@@ -182,22 +175,26 @@ class Chatroom extends React.Component{
 
     render(){
         return(
-
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-                <Text>{this.state.chatroom ? this.state.chatroom.name : "Loading..."}</Text>
-                <Text>{this.state.chatroom ? this.state.chatroom.description : "Loading..."}</Text>
+                <View style={{flexDirection : "row", width : "100%", justifyContent : "space-between"}}>
+                    <Text>{this.state.chatroom ? this.state.chatroom.name : "Loading..."}</Text>
+                    <Text>{this.state.chatroom ? this.state.chatroom.description : "Loading..."}</Text>
+                    <Button title="Scroll To Most Recent" onPress={()=>this.scrollToBottom()} />
+                </View>
                 {/* <Button onPress={this.scrollToBottom} title="scroll to bottom" /> */}
-                <ScrollView style={{height: "90%"}} ref={this._setScrollView}>
-                    {this.state.messages.length ? this.state.messages.map((message, i) => 
-                        <ListItem
-                            key={i}
-                            leftAvatar={{ source: { uri: message.user.avatar } }}
-                            title={message.user.userName}
-                            subtitle={message.content ? message.content : <Image source={{uri : message.image}} style={{width : 200,height : 190}}/>}
-                            rightTitle={this.timeFromNow(message.timestamp)}
-                        />
-                    ) : <ActivityIndicator size="large" />}
+                <ScrollView style={{height: "90%"}} ref={(scrollView) => { this.scrollView = scrollView }}>
+                    <View style={{ flexGrow: 1 }}>
+                        {this.state.messages.length ? this.state.messages.map((message, i) => <ListItem
+                                key={i}
+                                leftAvatar={{ source: { uri: message.user.avatar } }}
+                                title={message.user.userName}
+                                subtitle={message.content ? message.content : <Image defaultSource={CustomLoad} source={{uri : message.image}} style={{width : 200,height : 190}}/>}
+                                rightTitle={this.timeFromNow(message.timestamp)}
+                            />
+                        ) : <ActivityIndicator size="large" />}
+                    </View>
                 </ScrollView>
+                
                 <Text>{this.state.typing ? `Someone is typing` : ""}</Text>
                 <Input
                     style={styles.input}

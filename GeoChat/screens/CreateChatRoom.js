@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View,TextInput, Image, KeyboardAvoidingView} from 'react-native';
-import {  Text, Button, ThemeProvider  } from 'react-native-elements';
+import {  Text, ThemeProvider, Button  } from 'react-native-elements';
 import {FormLabel, FormInput, FormValidationMessage} from 'react'
 import styles from '../styles/createChatroomStyles'
 import {connect} from 'react-redux';
@@ -15,14 +15,24 @@ import {ImagePicker, Permissions, Constants} from 'expo';
 
 
 
+const theme = {
+  Button: {
+    titleStyle: {
+      color: 'white',
 
+    },
+    buttonStyle: {
+      backgroundColor: 'red',
+    }
+
+  }
+}
 
 class CreateChatRoom extends React.Component{
     constructor(){
         super();
         this.state = {
           roomName: "",
-          roomDescription : "",
           roomAvatar : "",
         }
     }
@@ -61,7 +71,7 @@ class CreateChatRoom extends React.Component{
         aspect: [4, 3],
       });
   
-      console.log(result);
+      // console.log(result);
   
       if (!result.cancelled) {
         this.setState({ roomAvatar: result.uri });
@@ -76,12 +86,15 @@ class CreateChatRoom extends React.Component{
         return(
 
             <View style={styles.container}>
-                <Button backgroundColor="#DC143C" style={styles.cancelButton} title="Cancel" onPress={this.goBack} />
+                <ThemeProvider theme={theme}>
+                  <Button  title="Cancel" onPress={this.goBack} />
+                </ThemeProvider> 
                 <TextInput name="roomName" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange.bind(this, "roomName")} value={this.state.roomName} maxLength={20} />
-                <TextInput name="roomDescription" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange.bind(this, "roomDescription")} value={this.state.roomDescription} maxLength={200} />
+
                 <Button title="Choose your chatroom Image" onPress={this.pickImage} />
+                <Button style={styles.buttonStyle}title="Choose your chatroom Image" onPress={this.pickImage} />
                 {this.state.roomAvatar ? <Image source={{uri : this.state.roomAvatar}} style={{width:200, height:200}}/> : null}
-                <Button title="Submit" onPress={this.newRoom} />
+                <Button style={styles.buttonStyle}title="Submit" onPress={this.newRoom} />
             </View>
         )
     }
