@@ -25,7 +25,7 @@ export const handleSignIn = (payload, location) => dispatch => {
              currentRoom: "",
              lat: location.lat,
              lon: location.lon,
-             accountType: "temp",
+             accountType: true,
              // this will be a string with the current room they are in.
            })
          // there's got to be a better way to do this. 

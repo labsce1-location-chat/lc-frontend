@@ -18,14 +18,26 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
-  buttonStyle: {
+
+  normalButton : {
     marginTop: 5,
     marginBottom: 5,
     width: "95%",
-  }
-
-
+  },
 });
 
+const cancelButton = {
+  Button: {
+    buttonStyle: {
+      backgroundColor: 'red',
+    }
+  }
 
-export default styles;
+}
+
+
+
+
+
+
+export {styles, cancelButton};
