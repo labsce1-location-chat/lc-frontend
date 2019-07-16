@@ -79,7 +79,7 @@ class CreateChatRoom extends React.Component{
         return(
 
             <View style={styles.container}>
-                <TextInput name="roomName" style={styles.textBox} placeholder="Chat room name" onChangeText={this.handleChange.bind(this, "roomName")} value={this.state.roomName} maxLength={20} />
+                <TextInput name="roomName" style={styles.textBox} label="Chat Room Name" placeholder="Testing" onChangeText={this.handleChange.bind(this, "roomName")} value={this.state.roomName} maxLength={20} />
                 <Button style={styles.normalButton} title="Choose your chatroom Image" onPress={this.pickImage} />
                 {this.state.roomAvatar ? <Image source={{uri : this.state.roomAvatar}} style={{width:200, height:200}}/> : null}
                 <Button style={styles.normalButton}title="Submit" onPress={this.newRoom} />
