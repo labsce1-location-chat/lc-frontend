@@ -12,6 +12,8 @@ export const UPDATE_CHATLIST = "UPDATE_CHATLIST"
 export const CHANGE_SCREEN = "CHANGE_SCREEN"
 export const CREATE_TEST_ROOMS = "CREATE_TEST_ROOMS"
 
+import {AsyncStorage} from 'react-native';
+
 
 
 export const handleSignIn = (payload, location) => dispatch => {
@@ -31,8 +33,14 @@ export const handleSignIn = (payload, location) => dispatch => {
          // there's got to be a better way to do this. 
         const db = firebase.database().ref(`users/${key}`)
           db.once("value")
-          .then(snapshot => {
-            dispatch({type : SIGN_IN, payload : snapshot.val(), location : location})
+          .then(async snapshot => {
+            dispatch({type : SIGN_IN, payload : snapshot.val(), location : location});
+            try{
+              await AsyncStorage.setItem('USER', JSON.stringify(snapshot.val().id));
+              console.log("successful save to async")
+            }catch(err){
+                console.log("Error saving user to async", err)
+            }
           })
 
 
@@ -40,6 +48,7 @@ export const handleSignIn = (payload, location) => dispatch => {
 
 export const userLogout = (user) => dispatch => {
   console.log("Logout action")
+  AsyncStorage.removeItem('USER');
   dispatch({type: LOGOUT, payload: payload, location: location})
 }
 
@@ -59,6 +68,17 @@ export const setChatRooms = () => dispatch => {
     dispatch({type: SET_CHATROOMS, payload: Object.values(snap.val()) });
     })
     .catch(err => console.log("Error getting chatrooms", err))
+}
+
+export const handleLogIn = (userId, location) => dispatch => {
+  console.log("handle log in ", userId)
+  const ref = firebase.database().ref('users');
+  ref.child(`${userId}`).once('value').then(snap => {
+    dispatch({type: SIGN_IN, payload : snap.val(), location : location});
+  })
+  .catch(err => {
+    console.log("error logging user in")
+  })
 }
 
 

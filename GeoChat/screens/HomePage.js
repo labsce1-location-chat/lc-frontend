@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Image} from 'react-native';
+import { StyleSheet, View, Image, AsyncStorage} from 'react-native';
 import * as firebase from 'firebase';
 import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 
 // Redux Imports
 import {connect} from 'react-redux'
-import {handleSignIn, createTestRooms} from '../Redux/actions/index';
+import {handleSignIn, createTestRooms, handleLogIn} from '../Redux/actions/index';
 import styles from '../styles/homepageStyles'
 import TempLogo from '../assets/TempLogo.png';
 class HomePage extends React.Component {
@@ -17,7 +17,7 @@ class HomePage extends React.Component {
 
             location:{},
             // switch this to false to actually find your location.
-            development: true
+            development: false
         }
     }
 
@@ -27,6 +27,15 @@ class HomePage extends React.Component {
         this.setState({coords: "X: 40.7484, Y: -73.9857"})
       } else {
         this.getUsersCoords()
+        this.checkForSavedUser().then(res => {
+            if(res){
+                console.log("saved user detected logging in", res)
+                this.props.handleLogIn(res, this.state.location);
+                this.props.history.push('/chat-list')
+            }
+        }).catch(err => {
+            console.log("Error signing user in", err)
+        })
       }
 
     }
@@ -51,7 +60,7 @@ class HomePage extends React.Component {
         firebase.auth().signInAnonymously().then(user => {
         if(user){
             this.props.handleSignIn(user, this.state.location);
-            this.props.history.push("/chat-list")
+            this.props.history.push("/chat-list");
         }
         else{
             console.log("user signed out")
@@ -65,6 +74,17 @@ class HomePage extends React.Component {
     
     testRooms = () => {
       this.props.createTestRooms()
+    }
+
+    checkForSavedUser = async() =>{
+        try {
+            const retrievedItem =  await AsyncStorage.getItem("USER");
+            const item = JSON.parse(retrievedItem);
+            return item;
+        } catch (error) {
+            console.log(error.message);
+        }
+        return false;
     }
 
 
@@ -101,5 +121,5 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {handleSignIn, createTestRooms})(HomePage);
+export default connect(mapStateToProps, {handleSignIn, createTestRooms, handleLogIn})(HomePage);
 
