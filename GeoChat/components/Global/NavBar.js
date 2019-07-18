@@ -45,10 +45,13 @@ class NavBar extends React.Component{
                 <Header
                     placement="left"
                     leftComponent={
-                        <Icon 
+                        <Button
                             onPress={()=>this.setState({open : true})} 
                             name="menu"
                             size={50}
+                            title="Menu"
+                            color="white"
+                            backgroundColor="white"
                         />
                     }
                     centerComponent={{ 
