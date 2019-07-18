@@ -3,6 +3,7 @@ import {Header, Icon, Overlay, Divider, Button} from 'react-native-elements';
 import {View, Text, Modal} from 'react-native';
 import {Link, withRouter} from 'react-router-native';
 import {connect} from 'react-redux';
+import  styles from '../../styles/NavbarStyles'
 import {handleLogOut} from '../../Redux/actions/index';
 
 class NavBar extends React.Component{
@@ -31,9 +32,9 @@ class NavBar extends React.Component{
         console.log("isTemp", this.isTemp)
     }
 
-    buttonStyle={
-        width:"100%",
-    }
+    // buttonStyle={
+    //     width:"100%",
+    // }
 
     render(){
         if(this.props.location.pathname === '/'){
@@ -61,96 +62,40 @@ class NavBar extends React.Component{
                     animationType="slide"
                     transparent={true}
                 >
-                    <View onPress={()=>this.setState({open : false})} style={{justifyContent : "center", width:"70%", padding:0, margin:0, backgroundColor : "rgba(0,0,0,0.8)", height : "100%"}}>
-                        <Button
-                            icon={
-                                <Icon
-                                    name="cancel"
-                                    size={25}
-                                    color="red"
-                                />
-                            }
-                            title="Close Menu"
-                            onPress={()=>this.setState({open : false})}
-                            style={this.buttonStyle}
-                        />
-                        {/* <Link to="/">
-                            <Button
-                                icon={
-                                    <Icon
-                                    name="home"
-                                    size={15}
-                                    color="white"
-                                    />
-                                }
-                                title="Home"
-                                onPress={()=>this.redirect('')}
-                            />
-                        </Link> */}
-
-                        <Divider/>
-
-                        <Link to="/chat-list" style={this.buttonStyle}>
-                            <Button
-                                icon={
-                                    <Icon
-                                    name="list"
-                                    size={25}
-                                    color="white"
-                                    />
-                                }
-                                title="Chat List"
-                                onPress={()=>this.redirect('chat-list')}
-                            />
-                        </Link>
-
-                        <Divider/>
-
-                        <Link to="/settings" style={this.buttonStyle}>
-                            <Button
-                                    icon={
-                                        <Icon
-                                        name="settings"
-                                        size={25}
-                                        color="white"
-                                        />
-                                    }
-                                    title={this.props.user.accountType === "temp" ? "Settings Only available for Signed in users" : "Settings"}
-                                    onPress={()=>this.redirect('settings')}
-                                    disabled={this.props.user.accountType === "temp"}
-                                />
-                        </Link>
-                        
-                        <Divider/>
-
+                    <View onPress={()=>this.setState({open : false})} style={styles.modalView}>
                         <Button 
-                            icon={
-                                <Icon
-                                name="report"
-                                size={25}
-                                color="red"
-                                />
-                            }
-                            onPress={this.logout} 
-                            title="Logout" 
-                            style={this.buttonStyle}
-                        />
-
-                        <Divider/>
-
-                        <Button 
-                            icon={
-                                <Icon
-                                name="add"
-                                size={25}
-                                color="white"
-                                />
-                            }
                             onPress={()=> this.redirect('create_chat_room')} 
                             title="New Chatroom" 
                             disabled={this.props.user.accountType === "temp"}
-                            style={this.buttonStyle}
+                            style={styles.navButtons}
                         />
+
+                            <Button
+                                title="Chats"
+                                onPress={()=>this.redirect('chat-list')}
+                                style={styles.navButtons}
+                            />
+
+
+                            <Button
+                                    title={this.props.user.accountType === "temp" ? "Settings Only available for Signed in users" : "Settings"}
+                                    onPress={()=>this.redirect('settings')}
+                                    disabled={this.props.user.accountType === "temp"}
+                                    style={styles.navButtons}
+                                />
+
+                        <Button 
+                            onPress={this.logout} 
+                            title="Logout" 
+                            style={styles.navButtons}
+                        />
+
+                        <Button
+                            title="Close Menu"
+                            onPress={()=>this.setState({open : false})}
+                            style={styles.navButtons}
+                        />
+
                     </View>
 
                 </Modal>
