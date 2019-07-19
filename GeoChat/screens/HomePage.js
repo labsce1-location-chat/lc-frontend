@@ -54,7 +54,6 @@ class HomePage extends React.Component {
     parseCoords = position => {
         this.setState({coords : `X : ${position.coords.latitude} Y : ${position.coords.longitude}`})
         this.setState({location : {lat : position.coords.latitude, lon : position.coords.longitude }})
-        console.log(position.coords.latitude, position.coords.longitude)
     }
 
     signInAnonymously = () => {
@@ -94,20 +93,22 @@ class HomePage extends React.Component {
             <View style={styles.container}>
                 <Image 
                     source={TempLogo}
-                    style={{width: 150, height: 150}} 
+                    style={styles.imageStyle} 
                 />
                 <Text h3>Welcome To GeoChat</Text>
                 <Text style={styles.subText}>Chat with local people in your area anonymously and securely. </Text>
-                <Text>{this.state.coords ? this.state.coords : "Loading Coordinates..."}</Text>
                 <Button 
                     onPress={this.signInAnonymously} 
                     disabled={this.state.coords.length ? false : true} 
                     title="Continue Anonymously" 
                 />
+                {/* 
+                  //this button is for testing. The adding of test chat rooms. 
                 <Button
                   onPress={this.testRooms}
                   title="Create temp chat rooms For testing only"
                 />
+                */}
             </View>
         );
     }
