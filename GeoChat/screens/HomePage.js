@@ -22,10 +22,12 @@ class HomePage extends React.Component {
     }
 
     componentDidMount = async() => {
+        // await AsyncStorage.removeItem("USER");
         if(this.state.development) {
             this.setState({location: {lat: 40.7484, lon: -73.9857}})
             this.setState({coords: "X: 40.7484, Y: -73.9857"})
         }else {
+
             this.getUsersCoords();
         }
     }
