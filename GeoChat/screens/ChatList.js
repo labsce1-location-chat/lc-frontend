@@ -77,7 +77,7 @@ class ChatList extends React.Component{
             dist = dist * 60 * 1.1515;
             // return dist < 10 ? Math.round(100*dist)/100 : Math.floor(dist);
             // I think this is a more useful metric. This is conversational.
-            return dist < 1 ? "less than 1" : Math.floor(dist);
+            return dist <= 1 ? "less than 1" : Math.floor(dist);
         }
     }
 
@@ -121,17 +121,21 @@ class ChatList extends React.Component{
                         :
                         this.props.chatrooms.map(room => 
                             {
-                            return <View key={room.id}>
-                                    <ListItem 
+                            return <View styles={styles.listStyles} key={room.id}>
+                            <Text styles={{width: "100%", color: "green"}}>{room.name}</Text>
+                            <Text>{`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}</Text>
+
+
+                            {/*<ListItem 
+                                            styles={styles.listStyles}
                                             key={room.id}
                                             leftIcon={{name: "chat"}}
                                             title={room.name}
-                                            // subtitle={room.description}
                                             rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
                                             containerStyle={{width:300}}
                                             bottomDivider={true}
                                             topDivider={true}
-                                    />
+                                    />*/}
                                     <Button onPress={() => this.goToRoom(room.id)} title="Join" />
                                     </View>
                             }

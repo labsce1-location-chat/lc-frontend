@@ -28,7 +28,12 @@ const styles = StyleSheet.create({
     joinBtn : {
         color : "blue",
         fontSize : 20,
-    }
+    },
+  listStyles: {
+    display: "flex",
+    flexDirection: "column",
+
+  }
 
 });
 
