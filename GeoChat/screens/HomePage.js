@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Image} from 'react-native';
+import { StyleSheet, View, Image, AsyncStorage} from 'react-native';
 import * as firebase from 'firebase';
 import {  Text, Button, ThemeProvider  } from 'react-native-elements';
 
 // Redux Imports
 import {connect} from 'react-redux'
-import {handleSignIn, createTestRooms} from '../Redux/actions/index';
+import {handleSignIn, createTestRooms, handleLogIn} from '../Redux/actions/index';
 import styles from '../styles/homepageStyles'
 import TempLogo from '../assets/TempLogo.png';
 class HomePage extends React.Component {
@@ -17,40 +17,40 @@ class HomePage extends React.Component {
 
             location:{},
             // switch this to false to actually find your location.
-            development: true
+            development: false
         }
     }
 
-    componentDidMount(){
-      if(this.state.development) {
-        this.setState({location: {lat: 40.7484, lon: -73.9857}})
-        this.setState({coords: "X: 40.7484, Y: -73.9857"})
-      } else {
-        this.getUsersCoords()
-      }
-
+    componentDidMount = async() => {
+        if(this.state.development) {
+            this.setState({location: {lat: 40.7484, lon: -73.9857}})
+            this.setState({coords: "X: 40.7484, Y: -73.9857"})
+        }else {
+            this.getUsersCoords();
+        }
     }
 
-    getUsersCoords = () => {
+    getUsersCoords = async() => {
         if(navigator.geolocation){
         // console.log(navigator.geolocation.getCurrentPosition())
         // gets users current coordinates and passes it to parse coords
-        navigator.geolocation.getCurrentPosition(this.parseCoords)
+        return navigator.geolocation.getCurrentPosition(this.parseCoords)
         }else{
-        this.setState({coords : "Please allow this app to use your location"})
+            this.setState({coords : "Please allow this app to use your location"})
         }
     }
 
     parseCoords = position => {
         this.setState({coords : `X : ${position.coords.latitude} Y : ${position.coords.longitude}`})
         this.setState({location : {lat : position.coords.latitude, lon : position.coords.longitude }})
+        this.checkForSavedUser();
     }
 
     signInAnonymously = () => {
         firebase.auth().signInAnonymously().then(user => {
         if(user){
             this.props.handleSignIn(user, this.state.location);
-            this.props.history.push("/chat-list")
+            this.props.history.push("/chat-list");
         }
         else{
             console.log("user signed out")
@@ -59,15 +59,28 @@ class HomePage extends React.Component {
         .catch(err => {
         console.log("Error signing in :", err)
         })
-
     }
     
     testRooms = () => {
-      this.props.createTestRooms()
+        this.props.createTestRooms()
     }
 
+    checkForSavedUser = async() => {
+        try {
+            const retrievedItem =  await AsyncStorage.getItem("USER");
+            const item = JSON.parse(retrievedItem);
+            if(item){
+                console.log("saved user detected logging in", item)
+                this.props.handleLogIn(item, this.state.location);
+                this.props.history.push('/chat-list')
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+        return false;
+    }
 
-    render() {
+    render(){
         return (
             <View style={styles.container}>
                 <Image 
@@ -102,5 +115,5 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {handleSignIn, createTestRooms})(HomePage);
+export default connect(mapStateToProps, {handleSignIn, createTestRooms, handleLogIn})(HomePage);
 

@@ -20,13 +20,11 @@ const store = createStore(
   applyMiddleware(thunk,logger)
 )
 
+try{InitializeFirebase();}
+catch{}
+
 // The goal of this component is to set up routes, the redux store, and initialize firebase
 export default class App extends React.Component {
-
-  componentDidMount(){
-    InitializeFirebase();
-  }
-
   render() {
     return (
       // Routing Component
