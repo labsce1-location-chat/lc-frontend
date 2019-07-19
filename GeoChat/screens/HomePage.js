@@ -22,11 +22,11 @@ class HomePage extends React.Component {
     }
 
     componentDidMount(){
-      if(this.state.development) {
-        this.setState({location: {lat: 40.7484, lon: -73.9857}})
-        this.setState({coords: "X: 40.7484, Y: -73.9857"})
-      } else {
-        this.getUsersCoords(),() => {
+        if(this.state.development) {
+            this.setState({location: {lat: 40.7484, lon: -73.9857}})
+            this.setState({coords: "X: 40.7484, Y: -73.9857"})
+        }else {
+            this.getUsersCoords()
             this.checkForSavedUser().then(res => {
                 if(res){
                     console.log("saved user detected logging in", res)
@@ -37,7 +37,7 @@ class HomePage extends React.Component {
                 console.log("Error signing user in", err)
             })
         }
-      }
+    }
 
     }
 
@@ -46,7 +46,6 @@ class HomePage extends React.Component {
         // console.log(navigator.geolocation.getCurrentPosition())
         // gets users current coordinates and passes it to parse coords
         navigator.geolocation.getCurrentPosition(this.parseCoords)
-        return true;
         }else{
         this.setState({coords : "Please allow this app to use your location"})
         }
