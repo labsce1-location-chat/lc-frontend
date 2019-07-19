@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        width: "100%",
     },
 
     viewBtns : {
@@ -27,10 +26,11 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         textAlign : "center",
     },
+
     joinBtn : {
         color : "blue",
         fontSize : 20,
-        width: "75%"
+        width: "100%"
     },
 
   listText: {
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     listStylesContainer: {
       display: "flex",
       flexDirection: "column",
+      alignItems: "center",
       width: "100%",
     },
 
@@ -53,6 +54,13 @@ const styles = StyleSheet.create({
       width: "100%",
       borderWidth: 3,
     },
+
+    titleStyle: {
+    },
+
+  distanceTextStyle : {
+    fontSize: 11,
+  }
 });
 
 

@@ -122,23 +122,18 @@ class ChatList extends React.Component{
                         this.props.chatrooms.map(room => 
                             {
                             return <View style={styles.listStylesContainer} key={room.id}>
-                            <View style={styles.textView}>
-                              <Text style={styles.listText}>{room.name}</Text>
-                              <Text style={styles.listText}>{`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}</Text>
-                            </View>
-
-
-                            {/*<ListItem 
-                                            styles={styles.listStyles}
+                            <ListItem 
                                             key={room.id}
                                             leftIcon={{name: "chat"}}
                                             title={room.name}
-                                            rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}
+                                            titleStyle={styles.titleStyle}
+                                            rightTitle={`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)}  Miles`}
+                                            rightTitleStyle={styles.distanceTextStyle}
                                             containerStyle={{width:300}}
                                             bottomDivider={true}
                                             topDivider={true}
-                                    />*/}
-                                    <Button style={styles.joinBtn} onPress={() => this.goToRoom(room.id)} title="Join" />
+                                    />
+                                    <Button  onPress={() => this.goToRoom(room.id)} title="Join" />
                                     </View>
                             }
                         )
