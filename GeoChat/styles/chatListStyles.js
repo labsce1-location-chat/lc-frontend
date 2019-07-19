@@ -7,7 +7,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        width: "100%",
     },
+
     viewBtns : {
         width:"100%",
         height:100,
@@ -28,13 +30,29 @@ const styles = StyleSheet.create({
     joinBtn : {
         color : "blue",
         fontSize : 20,
+        width: "75%"
     },
-  listStyles: {
-    display: "flex",
-    flexDirection: "column",
 
-  }
+  listText: {
+    marginTop: 5,
+    marginBottom: 5,
 
+  },
+
+    textView: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-around",
+      width: "90%",
+    },
+
+    listStylesContainer: {
+      display: "flex",
+      flexDirection: "column",
+      width: "100%",
+      paddingLeft: "2%",
+      paddingRight: "2%",
+    },
 });
 
 

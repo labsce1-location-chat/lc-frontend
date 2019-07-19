@@ -121,9 +121,11 @@ class ChatList extends React.Component{
                         :
                         this.props.chatrooms.map(room => 
                             {
-                            return <View styles={styles.listStyles} key={room.id}>
-                            <Text styles={{width: "100%", color: "green"}}>{room.name}</Text>
-                            <Text>{`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}</Text>
+                            return <View style={styles.listStylesContainer} key={room.id}>
+                            <View style={styles.textView}>
+                              <Text style={styles.listText}>{room.name}</Text>
+                              <Text>{`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}</Text>
+                            </View>
 
 
                             {/*<ListItem 
@@ -136,7 +138,7 @@ class ChatList extends React.Component{
                                             bottomDivider={true}
                                             topDivider={true}
                                     />*/}
-                                    <Button onPress={() => this.goToRoom(room.id)} title="Join" />
+                                    <Button style={styles.joinBtn} onPress={() => this.goToRoom(room.id)} title="Join" />
                                     </View>
                             }
                         )
