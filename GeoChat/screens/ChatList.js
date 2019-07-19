@@ -107,7 +107,7 @@ class ChatList extends React.Component{
                     onSlidingComplete={this.filterChatrooms}
                 />
 
-                <ScrollView>
+                <ScrollView style={styles.scrollWindow}>
                 {!this.props.chatrooms.length ? <ActivityIndicator size="large" color="#0000ff" /> : null}
                 {this.state.view === "list" 
                 ?
@@ -124,7 +124,7 @@ class ChatList extends React.Component{
                             return <View style={styles.listStylesContainer} key={room.id}>
                             <View style={styles.textView}>
                               <Text style={styles.listText}>{room.name}</Text>
-                              <Text>{`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}</Text>
+                              <Text style={styles.listText}>{`${this.distance(this.props.location.lat,this.props.location.lon, room.lat, room.lon)} Miles`}</Text>
                             </View>
 
 
@@ -143,7 +143,7 @@ class ChatList extends React.Component{
                             }
                         )
                     : 
-                    <Text>No Chatrooms in your area</Text>
+                    <Text style={{width: "100%"}}>No Chatrooms in your area</Text>
                 :
                 <Map />
                 }

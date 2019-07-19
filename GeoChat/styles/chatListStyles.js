@@ -36,22 +36,22 @@ const styles = StyleSheet.create({
   listText: {
     marginTop: 5,
     marginBottom: 5,
-
+    width: "100%",
   },
 
     textView: {
       display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-around",
-      width: "90%",
     },
 
     listStylesContainer: {
       display: "flex",
       flexDirection: "column",
       width: "100%",
-      paddingLeft: "2%",
-      paddingRight: "2%",
+    },
+
+    scrollWindow : {
+      width: "100%",
+      borderWidth: 3,
     },
 });
 
