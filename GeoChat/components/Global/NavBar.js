@@ -69,7 +69,7 @@ class NavBar extends React.Component{
                         <Button 
                             onPress={()=> this.redirect('create_chat_room')} 
                             title="New Chatroom" 
-                            disabled={this.props.user.accountType === "temp"}
+                            // disabled={this.props.user.accountType === "temp"}
                             style={styles.navButtons}
                         />
 

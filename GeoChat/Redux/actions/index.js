@@ -74,7 +74,10 @@ export const handleLogIn = (userId, location) => dispatch => {
   console.log("handle log in ", userId)
   const ref = firebase.database().ref('users');
   ref.child(`${userId}`).once('value').then(snap => {
-    dispatch({type: SIGN_IN, payload : snap.val(), location : location});
+    console.log("snap value", snap)
+    if(snap){
+      dispatch({type: SIGN_IN, payload : snap.val(), location : location});
+    }
   })
   .catch(err => {
     console.log("error logging user in")
@@ -97,7 +100,7 @@ export const createChatRoom = (userName, avatarURL, userID, chatRoomName, locati
       name: chatRoomName,
       lat: location.lat,
       lon: location.lon,
-      createdAt: new Date(),
+      createdAt: Date.now(),
       userKey: userID,
       id: key,
       numberOfUsers: 1,
