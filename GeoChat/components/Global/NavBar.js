@@ -55,8 +55,13 @@ class NavBar extends React.Component{
                         />
                     }
                     centerComponent={{ 
-                        text: this.keyValues[this.props.location.pathname] ? this.keyValues[this.props.location.pathname] : "Chatting",
+                        // text: this.keyValues[this.props.location.pathname] ? this.keyValues[this.props.location.pathname] : "Chatting",
+                        text : this.props.screen.name,
                         style: { color: '#fff' } 
+                    }}
+                    rightComponent={{
+                        text : this.props.screen && this.props.screen.users ? this.props.screen.users.length : "",
+                        style:{color : "#FFF"}
                     }}
                 />
 
@@ -111,8 +116,8 @@ const mapStateToProps = state => {
     return {
         test : state.test,
         chatrooms : state.chatrooms,
-        user : state.user
-        // currentScreen : state.currentScreen,
+        user : state.user,
+        screen : state.screen,
     };
 };
 
