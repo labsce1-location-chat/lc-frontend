@@ -29,10 +29,12 @@ const styles = StyleSheet.create({
 
     joinBtn : {
         color : "blue",
-        fontSize : 20,
-        width: "100%",
-        borderWidth: 2,
-    },
+        width: "50%",
+        marginLeft: "25%",
+        marginTop: 7,
+        marginBottom: 7,
+    }, 
+
 
   listText: {
     marginTop: 5,
@@ -46,14 +48,15 @@ const styles = StyleSheet.create({
 
     listStylesContainer: {
       display: "flex",
-      flexDirection: "column",
       alignItems: "center",
-      width: "100%",
+    },
+
+    listAndButton: {
+
     },
 
     scrollWindow : {
       width: "100%",
-      borderWidth: 3,
     },
 
     titleStyle: {
