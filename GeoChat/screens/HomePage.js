@@ -94,8 +94,8 @@ class HomePage extends React.Component {
                     disabled={this.state.coords.length ? false : true} 
                     title="Continue Anonymously" 
                 />
-                {/* 
-                  //this button is for testing. The adding of test chat rooms. 
+                 {/* 
+                  this button is for testing. The adding of test chat rooms. 
                 <Button
                   onPress={this.testRooms}
                   title="Create temp chat rooms For testing only"

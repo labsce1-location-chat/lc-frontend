@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     joinBtn : {
         color : "blue",
         fontSize : 20,
-        width: "100%"
+        width: "100%",
+        borderWidth: 2,
     },
 
   listText: {
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     },
 
     titleStyle: {
+      fontSize: 22,
     },
 
   distanceTextStyle : {

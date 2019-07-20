@@ -123,6 +123,7 @@ class ChatList extends React.Component{
                             {
                             return <View style={styles.listStylesContainer} key={room.id}>
                             <ListItem 
+                                            style={}
                                             key={room.id}
                                             leftIcon={{name: "chat"}}
                                             title={room.name}
@@ -133,7 +134,7 @@ class ChatList extends React.Component{
                                             bottomDivider={true}
                                             topDivider={true}
                                     />
-                                    <Button  onPress={() => this.goToRoom(room.id)} title="Join" />
+                                    <Button  style={styles.joinBtn}onPress={() => this.goToRoom(room.id)} title="Join" />
                                     </View>
                             }
                         )
