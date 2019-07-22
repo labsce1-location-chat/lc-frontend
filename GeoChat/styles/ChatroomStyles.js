@@ -13,7 +13,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightblue',
         padding: 3,
         borderRadius: 5,
-    }
+    },
+
+  timeStampText: {
+    fontSize: 9,
+  }
 
 
 });

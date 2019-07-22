@@ -190,11 +190,12 @@ class Chatroom extends React.Component{
                                 title={message.user.userName}
                                 subtitle={message.content ? message.content : <Image defaultSource={CustomLoad} source={{uri : message.image}} style={{width : 200,height : 190}}/>}
                                 rightTitle={this.timeFromNow(message.timestamp)}
+                                rightTitleStyle={styles.timeStampText}
                             />
                         ) : <ActivityIndicator size="large" />}
                     </View>
                 </ScrollView>
-                
+
                 <Text>{this.state.typing ? `Someone is typing` : ""}</Text>
                 <Input
                     style={styles.input}
