@@ -53,6 +53,7 @@ export const userLogout = (user) => dispatch => {
 }
 
 export const handleLogOut = (user, location) => dispatch => {
+  AsyncStorage.removeItem('USER');
   if(user.accountType === "temp"){
     firebase.database().ref('users').child(user.id).remove();
   }
