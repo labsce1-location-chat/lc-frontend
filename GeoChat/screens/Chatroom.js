@@ -189,7 +189,9 @@ class Chatroom extends React.Component{
                                 leftAvatar={{ source: { uri: message.user.avatar } }}
                                 title={message.user.userName}
                                 subtitle={message.content ? message.content : <Image defaultSource={CustomLoad} source={{uri : message.image}} style={{width : 200,height : 190}}/>}
+                                subtitleStyle={styles.messageStyle}
                                 rightTitle={this.timeFromNow(message.timestamp)}
+                                rightSubtitle={message.user.userName}
                                 rightTitleStyle={styles.timeStampText}
                             />
                         ) : <ActivityIndicator size="large" />}

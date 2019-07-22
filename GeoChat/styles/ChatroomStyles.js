@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
 
   timeStampText: {
     fontSize: 9,
+  },
+  messageStyle: {
+    fontSize: 16,
+  
   }
 
 
