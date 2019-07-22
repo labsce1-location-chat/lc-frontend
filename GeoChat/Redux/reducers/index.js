@@ -20,6 +20,7 @@ const initialState = {
     location:{lat:0, lon:0},
     chatrooms : [],
     loading: true,
+    screen : {name : "Chatrooms"},
     // chat-list, chatroom, create-chat-room, settings
 }
 
@@ -49,6 +50,8 @@ export const reducer = (state = initialState, action) => {
             return {...state, chatrooms : action.payload}
         case CREATE_TEST_ROOMS:
             return {...state, chatrooms : action.payload}
+        case CHANGE_SCREEN:
+            return {...state, screen : action.payload}
         default:
             return state;
     }

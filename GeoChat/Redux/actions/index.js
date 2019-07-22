@@ -53,6 +53,7 @@ export const userLogout = (user) => dispatch => {
 }
 
 export const handleLogOut = (user, location) => dispatch => {
+  AsyncStorage.removeItem('USER');
   if(user.accountType === "temp"){
     firebase.database().ref('users').child(user.id).remove();
   }
@@ -161,6 +162,7 @@ export const createTestRooms = () => dispatch => {
     }
 }
 
-// export const changeScreen = screen => dispatch => {
-//   dispatch({type : CHANGE_SCREEN, payload : screen})
-// }
+export const changeScreen = screenInfo => dispatch => {
+  // when using this a name has to be present and users for when they are in a chatroom
+  dispatch({type : CHANGE_SCREEN, payload : screenInfo})
+}
