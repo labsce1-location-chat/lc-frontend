@@ -191,9 +191,10 @@ class Chatroom extends React.Component{
                                 subtitle={message.content ? message.content : <Image defaultSource={CustomLoad} source={{uri : message.image}} style={{width : 200,height : 190}}/>}
                                 subtitleStyle={styles.messageStyle}
                                 rightTitle={this.timeFromNow(message.timestamp)}
-                                rightSubtitle={message.user.userName}
+                                rightSubtitle={this.props.user.userName === message.user.userName ? message.content : ""}
                                 rightTitleStyle={styles.timeStampText}
                             />
+                            <ListItem title={message.user.userName}></ListItem>
                         ) : <ActivityIndicator size="large" />}
                     </View>
                 </ScrollView>
@@ -225,6 +226,7 @@ class Chatroom extends React.Component{
 
 
 const mapStateToProps = state => {
+    console.log("user info: ", state.user)
     return {
         user : state.user,
         loggedIn : state.loggedIn,

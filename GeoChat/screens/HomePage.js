@@ -17,12 +17,12 @@ class HomePage extends React.Component {
 
             location:{},
             // switch this to false to actually find your location.
-            development: true 
+            development: false
         }
     }
 
     componentDidMount = async() => {
-        // await AsyncStorage.removeItem("USER");
+        await AsyncStorage.removeItem("USER");
         if(this.state.development) {
             this.setState({location: {lat: 40.7484, lon: -73.9857}})
             this.setState({coords: "X: 40.7484, Y: -73.9857"})
@@ -92,7 +92,7 @@ class HomePage extends React.Component {
                 <Text h3>Welcome To GeoChat</Text>
                 <Text style={styles.subText}>Chat with local people in your area anonymously and securely. </Text>
                 <Button 
-                    onPress={() => this.signInAnonymously} 
+                    onPress={this.signInAnonymously} 
                     disabled={this.state.coords.length ? false : true} 
                     title="Continue Anonymously" 
                 />
