@@ -1,4 +1,5 @@
 import React from 'react';
+import {GiftedChat} from 'react-native-gifted-chat'
 import {View,  TextInput, StyleSheet, ScrollView, KeyboardAvoidingView, Keyboard, ActivityIndicator, Image} from 'react-native';
 import {  Text, Button, ThemeProvider, ListItem, Input, Icon } from 'react-native-elements';
 import * as firebase from 'firebase';
@@ -184,18 +185,14 @@ class Chatroom extends React.Component{
                 {/* <Button onPress={this.scrollToBottom} title="scroll to bottom" /> */}
                 <ScrollView style={{height: "90%"}} ref={(scrollView) => { this.scrollView = scrollView }}>
                     <View style={{ flexGrow: 1 }}>
-                        {this.state.messages.length ? this.state.messages.map((message, i) => <ListItem
-                                key={i}
-                                leftAvatar={{ source: { uri: message.user.avatar } }}
-                                title={message.user.userName}
-                                subtitle={message.content ? message.content : <Image defaultSource={CustomLoad} source={{uri : message.image}} style={{width : 200,height : 190}}/>}
-                                subtitleStyle={styles.messageStyle}
-                                rightTitle={this.timeFromNow(message.timestamp)}
-                                rightSubtitle={this.props.user.userName === message.user.userName ? message.content : ""}
-                                rightTitleStyle={styles.timeStampText}
+                            <GiftedChat
+                              message={this.state.messages}
                             />
-                            <ListItem title={message.user.userName}></ListItem>
-                        ) : <ActivityIndicator size="large" />}
+                        {/*this.state.messages.length ? this.state.messages.map((message, i) => 
+                            <GiftedChat
+                              message={message.content}
+                            />
+                        ) : <ActivityIndicator size="large" />i */}
                     </View>
                 </ScrollView>
 
