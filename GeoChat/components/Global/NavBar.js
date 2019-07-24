@@ -4,7 +4,7 @@ import {View, Text, Modal} from 'react-native';
 import {Link, withRouter} from 'react-router-native';
 import {connect} from 'react-redux';
 import  styles from '../../styles/NavbarStyles'
-import {handleLogOut} from '../../Redux/actions/index';
+import {handleLogOut, changeScreen} from '../../Redux/actions/index';
 
 class NavBar extends React.Component{
     state = {
@@ -17,9 +17,10 @@ class NavBar extends React.Component{
         "/create_chat_room" : "Create a New Chatroom"
     }
 
-    redirect = path => {
+    redirect = (path, name) => {
         this.setState({open : false});
         this.props.history.push(`/${path}`)
+        this.props.changeScreen({name : name})
     }
 
     logout = () => {
@@ -72,7 +73,7 @@ class NavBar extends React.Component{
                 >
                     <View onPress={()=>this.setState({open : false})} style={styles.modalView}>
                         <Button 
-                            onPress={()=> this.redirect('create_chat_room')} 
+                            onPress={()=> this.redirect('create_chat_room', "Create A Chatroom")} 
                             title="New Chatroom" 
                             // disabled={this.props.user.accountType === "temp"}
                             style={styles.navButtons}
@@ -80,14 +81,14 @@ class NavBar extends React.Component{
 
                             <Button
                                 title="Chats"
-                                onPress={()=>this.redirect('chat-list')}
+                                onPress={()=>this.redirect('chat-list', "Chatrooms")}
                                 style={styles.navButtons}
                             />
 
 
                             <Button
                                     title={this.props.user.accountType === "temp" ? "Settings Only available for Signed in users" : "Settings"}
-                                    onPress={()=>this.redirect('settings')}
+                                    onPress={()=>this.redirect('settings', "Settings")}
                                     disabled={this.props.user.accountType === "temp"}
                                     style={styles.navButtons}
                                 />
@@ -121,4 +122,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {handleLogOut})(NavBar);
+export default connect(mapStateToProps, {handleLogOut, changeScreen})(NavBar);

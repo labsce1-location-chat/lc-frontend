@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
 
-import {test, setChatRooms, createChatRoom, handleLogOut, updateUserChatroom, updateChatlist} from '../Redux/actions/index';
+import {test, setChatRooms, createChatRoom, handleLogOut, updateUserChatroom, updateChatlist, changeScreen} from '../Redux/actions/index';
 
 
 import Map from '../components/ChatList/Map'
@@ -54,8 +54,9 @@ class ChatList extends React.Component{
         this.props.history.push('/create_chat_room')
     }
 
-    goToRoom = (roomID) => {
+    goToRoom = (roomID, roomName) => {
         this.props.history.push(`/chatroom/${roomID}`)
+        this.props.changeScreen({name : roomName})
         this.props.updateUserChatroom(roomID, this.props.user.id)
     }
 
@@ -134,7 +135,7 @@ class ChatList extends React.Component{
                                             bottomDivider={true}
                                             topDivider={true}
                                     />
-                                    <Button  style={styles.joinBtn}onPress={() => this.goToRoom(room.id)} title="Join" />
+                                    <Button style={styles.joinBtn} onPress={() => this.goToRoom(room.id, room.name)} title="Join" />
                                     </View>
                             }
                         )
@@ -160,4 +161,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {test, setChatRooms, createChatRoom,handleLogOut, updateUserChatroom, updateChatlist})(ChatList);
+export default connect(mapStateToProps, {test, setChatRooms, createChatRoom,handleLogOut, updateUserChatroom, updateChatlist, changeScreen})(ChatList);
