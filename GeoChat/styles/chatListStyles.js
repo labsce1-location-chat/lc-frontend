@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     viewBtns : {
         width:"100%",
         height:100,
@@ -25,11 +26,46 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         textAlign : "center",
     },
+
     joinBtn : {
         color : "blue",
-        fontSize : 20,
-    }
+        width: "50%",
+        marginLeft: "25%",
+        marginTop: 7,
+        marginBottom: 7,
+    }, 
 
+
+  listText: {
+    marginTop: 5,
+    marginBottom: 5,
+    width: "100%",
+  },
+
+    textView: {
+      display: "flex",
+    },
+
+    listStylesContainer: {
+      display: "flex",
+      alignItems: "center",
+    },
+
+    listAndButton: {
+
+    },
+
+    scrollWindow : {
+      width: "100%",
+    },
+
+    titleStyle: {
+      fontSize: 22,
+    },
+
+  distanceTextStyle : {
+    fontSize: 11,
+  }
 });
 
 

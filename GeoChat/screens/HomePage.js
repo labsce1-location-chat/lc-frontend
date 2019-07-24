@@ -17,7 +17,7 @@ class HomePage extends React.Component {
 
             location:{},
             // switch this to false to actually find your location.
-            development: false
+            development: false 
         }
     }
 
@@ -27,7 +27,6 @@ class HomePage extends React.Component {
             this.setState({location: {lat: 40.7484, lon: -73.9857}})
             this.setState({coords: "X: 40.7484, Y: -73.9857"})
         }else {
-
             this.getUsersCoords();
         }
     }
@@ -96,8 +95,8 @@ class HomePage extends React.Component {
                     disabled={this.state.coords.length ? false : true} 
                     title="Continue Anonymously" 
                 />
-                {/* 
-                  //this button is for testing. The adding of test chat rooms. 
+                 {/* 
+                  this button is for testing. The adding of test chat rooms. 
                 <Button
                   onPress={this.testRooms}
                   title="Create temp chat rooms For testing only"
