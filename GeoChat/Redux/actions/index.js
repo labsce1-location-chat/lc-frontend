@@ -67,7 +67,7 @@ export const setChatRooms = (shouldFilter = false, location = {}) => dispatch =>
     const ref = firebase.database().ref('chatrooms');
     ref.once('value').then(snap => {
       if(shouldFilter){
-        let final = filterChatrooms(Object.values(snap.val()), 10000, location)
+        let final = filterChatrooms(Object.values(snap.val()), 10, location)
         return dispatch({type: SET_CHATROOMS, payload: final });
       }else{
         return dispatch({type: SET_CHATROOMS, payload: Object.values(snap.val())});
