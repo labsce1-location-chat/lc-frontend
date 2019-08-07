@@ -21,15 +21,22 @@ class ChatList extends React.Component{
             distanceFilter : 10,
             filteredRooms : [],
             filtering : false,
+            noResults : false,
         }
     }
 
     getChatrooms = () => {
-        this.props.setChatRooms()
+        this.props.setChatRooms(true, this.props.location);
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.chatrooms !== this.props.chatrooms && !this.props.chatrooms.length){
+            this.setState({noResults : true})
+        }
     }
 
     filterChatrooms = () => {
-        this.setState({filtering : true})
+        this.setState({filtering : true, noResults : false})
         let copy;
         firebase.database().ref('chatrooms').once('value').then(snap => {
             copy = Object.values(snap.val());
@@ -40,6 +47,9 @@ class ChatList extends React.Component{
             })
             console.log(final)
             this.setState({filtering : false})
+            if(final.length === 0){
+                this.setState({noResults : true});
+            }
             this.props.updateChatlist(final);
         }).catch(err => {
             Alert.alert("Error getting the chatrooms")
@@ -109,7 +119,12 @@ class ChatList extends React.Component{
                 />
 
                 <ScrollView style={styles.scrollWindow}>
-                {!this.props.chatrooms.length ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+                {!this.props.chatrooms.length 
+                    ? this.state.noResults && !this.state.filtering 
+                        ? <View style={{width: "100%", justifyContent:"center", alignItems:"center"}}><Text>No Results</Text></View> 
+                        : this.state.filtering ? null :<ActivityIndicator size="large" color="#0000ff" /> 
+                    : null
+                }
                 {this.state.view === "list" 
                 ?
                 this.props.chatrooms 

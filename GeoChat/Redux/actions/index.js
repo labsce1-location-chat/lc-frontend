@@ -63,12 +63,48 @@ export const test = (payload) => dispatch => {
     dispatch({type : TEST})
 }
 
-export const setChatRooms = () => dispatch => {
+export const setChatRooms = (shouldFilter = false, location = {}) => dispatch => {
     const ref = firebase.database().ref('chatrooms');
     ref.once('value').then(snap => {
-    dispatch({type: SET_CHATROOMS, payload: Object.values(snap.val()) });
+      if(shouldFilter){
+        let final = filterChatrooms(Object.values(snap.val()), 10000, location)
+        return dispatch({type: SET_CHATROOMS, payload: final });
+      }else{
+        return dispatch({type: SET_CHATROOMS, payload: Object.values(snap.val())});
+      }
     })
     .catch(err => console.log("Error getting chatrooms", err))
+}
+
+const filterChatrooms = (chatrooms, maxDistance, location) => {
+  const final = chatrooms.filter(room => {
+      if(distance(room.lat, room.lon, location.lat, location.lon) < maxDistance){
+          return room
+      }
+    })
+    return final;
+}
+
+const distance = (lat1, lon1, lat2, lon2) => {
+  if ((lat1 == lat2) && (lon1 == lon2)) {
+      return 0;
+  }
+  else {
+      var radlat1 = Math.PI * lat1/180;
+      var radlat2 = Math.PI * lat2/180;
+      var theta = lon1-lon2;
+      var radtheta = Math.PI * theta/180;
+      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+          dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = dist * 180/Math.PI;
+      dist = dist * 60 * 1.1515;
+      // return dist < 10 ? Math.round(100*dist)/100 : Math.floor(dist);
+      // I think this is a more useful metric. This is conversational.
+      return dist <= 1 ? "less than 1" : Math.floor(dist);
+  }
 }
 
 export const handleLogIn = (userId, location) => dispatch => {
