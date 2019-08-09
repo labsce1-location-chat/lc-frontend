@@ -20,6 +20,7 @@ class Chatroom extends React.Component{
             error : '',
             typing : false,
             uploadingImage : false,
+            noMessages : true,
         }
     }
 
@@ -63,6 +64,7 @@ class Chatroom extends React.Component{
 
     componentDidUpdate(){
         this.scrollToBottom();
+
     }
 
     chattingListener = () => {
@@ -176,10 +178,8 @@ class Chatroom extends React.Component{
     render(){
         return(
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-                <View style={{flexDirection : "row", width : "100%", justifyContent : "space-between"}}>
-                    <Text>{this.state.chatroom ? this.state.chatroom.name : "Loading..."}</Text>
-                    <Text>{this.state.chatroom ? this.state.chatroom.description : "Loading..."}</Text>
-                    <Button title="Scroll To Most Recent" onPress={()=>this.scrollToBottom()} />
+                <View style={{flexDirection : "row", width : "100%", justifyContent : "flex-end"}}>
+                    <Button size="small" title="Scroll To Most Recent" onPress={()=>this.scrollToBottom()} />
                 </View>
                 {/* <Button onPress={this.scrollToBottom} title="scroll to bottom" /> */}
                 <ScrollView style={{height: "90%"}} ref={(scrollView) => { this.scrollView = scrollView }}>
@@ -191,7 +191,7 @@ class Chatroom extends React.Component{
                                 subtitle={message.content ? message.content : <Image defaultSource={CustomLoad} source={{uri : message.image}} style={{width : 200,height : 190}}/>}
                                 rightTitle={this.timeFromNow(message.timestamp)}
                             />
-                        ) : <ActivityIndicator size="large" />}
+                        ) : this.state.noMessages ? <Text>No Messages Yet</Text> : <ActivityIndicator size="large" />}
                     </View>
                 </ScrollView>
                 

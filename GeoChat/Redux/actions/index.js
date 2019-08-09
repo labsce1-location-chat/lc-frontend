@@ -103,7 +103,7 @@ const distance = (lat1, lon1, lat2, lon2) => {
       dist = dist * 60 * 1.1515;
       // return dist < 10 ? Math.round(100*dist)/100 : Math.floor(dist);
       // I think this is a more useful metric. This is conversational.
-      return dist <= 1 ? "less than 1" : Math.floor(dist);
+      return dist <= 1 ? 1 : Math.floor(dist);
   }
 }
 
