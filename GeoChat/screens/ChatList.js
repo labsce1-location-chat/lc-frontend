@@ -109,12 +109,8 @@ class ChatList extends React.Component{
                 />
 
                 <ScrollView style={styles.scrollWindow}>
-                {!this.props.chatrooms.length ? <ActivityIndicator size="large" color="#0000ff" /> : null}
-                {this.state.view === "list" 
-                ?
-                this.props.chatrooms 
-                    ? 
-                    this.state.filtering ?
+                {!this.props.chatrooms.length ? <ActivityIndicator size="large" color="0000ff" /> : null}
+                {this.state.view === "list" ? this.props.chatrooms ? this.state.filtering ?
                         <View>
                             <ActivityIndicator size="large" color="red" />
                             <Text>Filtering Chatrooms</Text>
