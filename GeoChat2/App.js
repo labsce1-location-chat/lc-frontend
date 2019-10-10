@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
+import {NativeRouter, Route} from 'react-router-native';
 import NavBar from './components/NavBar'
 import ChatList from './screens/ChatList'
+import CreateChatRoom from './screens/CreateChatRoom'
+import HomeScreen from './screens/HomeScreen'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -11,10 +14,13 @@ const instructions = Platform.select({
 export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <NavBar />
-        <ChatList />
-      </View>
+      <NativeRouter>
+        <View style={styles.container}>
+          <Route exact path = {"/"} HomeScreen />
+          <Route path = {"/chat-list"} ChatList />
+          <Route path = {"/create-chat-room"} CreateChatRoom />
+        </View>
+      </NativeRouter>
     );
   }
 }
