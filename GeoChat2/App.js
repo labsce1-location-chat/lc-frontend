@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import {NativeRouter, Route} from 'react-router-native';
+import {createStackNavigator} from 'react-navigation-stack'
+import {createAppContainer} from 'react-navigation'
 import getEnvVars from './config'
 import NavBar from './components/NavBar'
 import ChatList from './screens/ChatList'
@@ -13,19 +15,38 @@ const instructions = Platform.select({
   android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
 });
 
-export default class App extends Component {
-  render() {
-    return (
-      <NativeRouter>
-        <View style={styles.container}>
-          < HomeScreen />
-          <Route path = {"/chat-list"} ChatList />
-          <Route path = {"/create-chat-room"} CreateChatRoom />
-        </View>
-      </NativeRouter>
-    );
-  }
-}
+const MainNavigator = createStackNavigator({
+  Home: {screen: HomeScreen},
+  List: {screen: ChatList}
+})
+
+const App = createAppContainer(MainNavigator) 
+  // return (
+  //     <View>
+  //     <Button style={styles.continueButton} title="Continue"/>
+  //     <Text>Here's the homescreen</Text>
+  //     </View>
+  //     )
+
+
+
+
+
+export default App;
+
+// export default class App extends Component {
+//   render() {
+//     return (
+//       <NativeRouter>
+//         <View style={styles.container}>
+//           < App1 />
+//           <Route path = {"/chat-list"} ChatList />
+//           <Route path = {"/create-chat-room"} CreateChatRoom />
+//         </View>
+//       </NativeRouter>
+//     );
+//   }
+// }
 
 const styles = StyleSheet.create({
   container: {
