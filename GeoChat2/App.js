@@ -6,7 +6,7 @@ import {createAppContainer} from 'react-navigation'
 import {createStackNavigator} from 'react-navigation-stack'
 import getEnvVars from './config'
 // import NavBar from './components/NavBar'
-// import ChatList from './screens/ChatList'
+import ChatList from './screens/ChatList'
 // import CreateChatRoom from './screens/CreateChatRoom'
 import HomeScreen from './screens/HomeScreen'
     // {console.log("Dot env file", getEnvVars("__DEV__"))}
@@ -21,7 +21,8 @@ export default function App() {
 }
 
 const AppNavigator = createStackNavigator({
-  Home: { screen: HomeScreen }
+  Home: props => <HomeScreen {...props} />,
+  ChatList: {screen: ChatList},
 })
 
 const AppContainer = createAppContainer(AppNavigator)
