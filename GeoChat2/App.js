@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import {NativeRouter, Route} from 'react-router-native';
+// import {NativeRouter, Route} from 'react-router-native';
+
+import {createAppContainer} from 'react-navigation'
+import {createStackNavigator} from 'react-navigation-stack'
 import getEnvVars from './config'
-import NavBar from './components/NavBar'
-import ChatList from './screens/ChatList'
-import CreateChatRoom from './screens/CreateChatRoom'
+// import NavBar from './components/NavBar'
+// import ChatList from './screens/ChatList'
+// import CreateChatRoom from './screens/CreateChatRoom'
 import HomeScreen from './screens/HomeScreen'
     // {console.log("Dot env file", getEnvVars("__DEV__"))}
 
@@ -13,19 +16,15 @@ const instructions = Platform.select({
   android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
 });
 
-export default class App extends Component {
-  render() {
-    return (
-      <NativeRouter>
-        <View style={styles.container}>
-          < HomeScreen />
-          <Route path = {"/chat-list"} ChatList />
-          <Route path = {"/create-chat-room"} CreateChatRoom />
-        </View>
-      </NativeRouter>
-    );
-  }
+export default function App() {
+  return <AppContainer />
 }
+
+const AppNavigator = createStackNavigator({
+  Home: { screen: HomeScreen }
+})
+
+const AppContainer = createAppContainer(AppNavigator)
 
 const styles = StyleSheet.create({
   container: {

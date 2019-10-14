@@ -6,8 +6,8 @@ import { Platform, StyleSheet, Text, View, Button, Container } from 'react-nativ
 const HomeScreen = () => {
   return (
       <View>
-      <Button style={styles.continueButton} title="Continue"/>
-      <Text>Here's the homescreen</Text>
+        <Button style={styles.continueButton} title="Continue"/>
+        <Text>Here's the homescreen</Text>
       </View>
       )
 
