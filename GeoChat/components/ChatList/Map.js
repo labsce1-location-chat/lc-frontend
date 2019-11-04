@@ -40,7 +40,7 @@ class Map extends React.Component{
               >
               <Marker 
                 coordinate={{latitude : this.props.location.lat, longitude: this.props.location.lon}}
-                pinColor={"green"}
+                pinColor="blue"
               />
               {this.props.chatrooms ?
                 this.props.chatrooms.map(room => 
@@ -49,6 +49,7 @@ class Map extends React.Component{
                     title={room.lat}
                     description={room.description}
                     key={room.id}
+                    pinColor="red"
                   />
                 )
                   : null
