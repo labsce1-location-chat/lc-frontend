@@ -36,27 +36,28 @@ class Map extends React.Component{
                  latitudeDelta: 0.0822,
                  longitudeDelta: 0.0321,
                }}
-               provider={"google"}
+               provider={null}
               >
               <Marker 
-                coordinate={{latitude : this.props.location.lat, longitude: this.props.location.lon}}
+                coordinate={{latitude: 41.11828  , longitude: -112.08411 }}
                 pinColor="blue"
+                title="Current Location"
               />
-              {this.props.chatrooms ?
+              {this.props.chatrooms 
+                ?
                 this.props.chatrooms.map(room => 
                   <Marker
+                    description={room.description}
                     coordinate={{latitude: room.lat, longitude: room.lon}}
                     title={room.lat}
                     description={room.description}
                     key={room.id}
                     pinColor="red"
+                    onPress={()=> this.setChatroom(room)}
                   />
                 )
                   : null
-
-              
               }
-
               </MapView>
             </View>
         );

@@ -28,6 +28,8 @@
     },
     "android": {
       "package": "com.geochat"
-    }
+    },
+    "description": "Location-based mobile chat application for chatting with people nearby you.",
+    "githubUrl": "https://github.com/labsce1-location-chat/lc-frontend"
   }
 }
