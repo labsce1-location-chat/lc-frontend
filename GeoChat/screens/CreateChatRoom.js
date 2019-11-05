@@ -9,7 +9,9 @@ import TempLogo from '../assets/TempLogo.png';
 import * as firebase from 'firebase';
 import {test, createChatRoom} from '../Redux/actions/index';
 import {Link} from 'react-router-native';
-import {ImagePicker, Permissions, Constants} from 'expo';
+import Constants from 'expo-constants'
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
 
 const theme = {
